@@ -32,9 +32,7 @@ class Shader {
     int _mvp_matrix          ;
     int _model_matrix        ;
     int _light_position      ;
-    
-    static void initialize();
-    
+        
 public:
 
     const std::string name;

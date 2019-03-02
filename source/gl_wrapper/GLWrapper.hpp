@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include "Rect.hpp"
 #include "Color.hpp"
 
@@ -15,8 +17,28 @@
 
 struct GL {
 
+    enum CursorMode {
+        Arrow  ,
+        Text   ,
+        Drag   ,
+        HResize,
+        VResize,
+    };
+
     static inline Size screen_size;
+    static inline Size display_resolution;
+
+    static void initialize(const Size& size);
+
+    static void start_main_loop(std::function<void()> on_frame_drawn);
 
     static void set_viewport(const Rect& rect);
     static void set_clear_color(const Color& color);
+    static void clear();
+    static void enable_depth_test();
+    static void disable_depth_test();
+
+#if DESKTOP_BUILD
+    static void set_cursor_mode(CursorMode);
+#endif
 };
