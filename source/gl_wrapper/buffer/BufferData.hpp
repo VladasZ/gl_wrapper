@@ -1,6 +1,6 @@
 //
 //  BufferData.hpp
-//  TestEngine
+//  gl_wrapper
 //
 //  Created by Vladas Zakrevskis on 9/17/17.
 //  Copyright © 2017 VladasZ. All rights reserved.
@@ -9,24 +9,25 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
-#include   "GL.hpp"
 #include "Size.hpp"
+#include "Rect.hpp"
 
 class Buffer;
 
 class BufferData {
     
-    std::vector<GLfloat > vertices_data;
-    std::vector<GLushort>       indices;
+    std::vector<float>    vertices_data;
+    std::vector<unsigned short> indices;
     
     friend Buffer;
     
 public:
         
-    BufferData(const std::vector<GLfloat>& vertices_data, const std::vector<GLushort>& indices = { });
+    BufferData(const std::vector<float>& vertices_data, const std::vector<unsigned short>& indices = { });
 
-    const char* to_string(unsigned int new_line = 3) const;
+    std::string to_string(unsigned int new_line = 3) const;
     
     static BufferData* from_size               (const Size&);
     static BufferData* from_rect               (const Rect&);

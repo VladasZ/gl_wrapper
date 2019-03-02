@@ -1,6 +1,6 @@
 //
 //  Shader.hpp
-//  TestEngine
+//  gl_wrapper
 //
 //  Created by Vladas Zakrevskis on 8/30/17.
 //  Copyright © 2017 VladasZ. All rights reserved.
@@ -19,7 +19,7 @@ class Screen;
 class Shader {
     
     Shader() = default;
-    Shader(const std::string& name);
+    Shader(const std::string& directory, std::string& name);
         
     friend Screen;
     
@@ -36,18 +36,9 @@ class Shader {
     static void initialize();
     
 public:
-    
-    static Shader* ui           ;
-    static Shader* ui_texture   ;
-    static Shader* ui_monochrome;
-    
-    static Shader*   simple3D;
-    static Shader*  colored3D;
-    static Shader* textured3D;
-
-    static Shader* diffuse_colored;
 
     const std::string name;
+    const std::string path;
 
     void use() const;
 

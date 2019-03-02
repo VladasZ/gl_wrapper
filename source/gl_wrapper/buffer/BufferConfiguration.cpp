@@ -1,13 +1,13 @@
 //
 //  BufferConfiguration.cpp
-//  TestEngine
+//  gl_wrapper
 //
 //  Created by Vladas Zakrevskis on 9/23/17.
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
-#include "GL.hpp"
-#include "Debug.hpp"
+#include             "GLDebug.hpp"
+#include       "OpenGLHeaders.hpp"
 #include "BufferConfiguration.hpp"
 
 BufferConfiguration::BufferConfiguration(uint8_t first_param, uint8_t second_param, uint8_t third_param) {

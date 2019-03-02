@@ -1,6 +1,6 @@
 //
 //  BufferData.cpp
-//  TestEngine
+//  gl_wrapper
 //
 //  Created by Vladas Zakrevskis on 9/17/17.
 //  Copyright © 2017 VladasZ. All rights reserved.
@@ -10,13 +10,13 @@
 
 #include "BufferData.hpp"
 
-static const std::vector<GLushort> rect_indices = { 0, 1, 3, 2 };
+static const std::vector<unsigned short> rect_indices = { 0, 1, 3, 2 };
 
-BufferData::BufferData(const std::vector<GLfloat>& vertices, const std::vector<GLushort>& indices)
+BufferData::BufferData(const std::vector<float>& vertices, const std::vector<unsigned short>& indices)
     : vertices_data(vertices), indices(indices) { }
 
-const char* BufferData::to_string(unsigned int new_line) const {
-    static std::string string;
+std::string BufferData::to_string(unsigned int new_line) const {
+    std::string string;
     string = "\n";
 
     for (size_t i = 0; i < vertices_data.size(); i++) {
@@ -27,17 +27,17 @@ const char* BufferData::to_string(unsigned int new_line) const {
 
     string += "\n";
 
-    for (GLuint i = 0; i < indices.size(); i++) {
+    for (unsigned int i = 0; i < indices.size(); i++) {
         string += std::to_string(indices[i]) + " ";
         if ((i + 1) % (new_line) == 0)
             string += "\n";
     }
 
-    return string.c_str();
+    return string;
 }
 
 BufferData* BufferData::from_size(const Size& size) {
-    const std::vector<GLfloat> vertices = {
+    const std::vector<float> vertices = {
         0,          0,
         0,          size.height,
         size.width, size.height,
@@ -47,7 +47,7 @@ BufferData* BufferData::from_size(const Size& size) {
 }
 
 BufferData* BufferData::from_rect(const Rect& rect) {
-    const std::vector<GLfloat> vertices = {
+    const std::vector<float> vertices = {
         rect.origin.x,                   rect.origin.y,
         rect.origin.x,                   rect.size.height + rect.origin.y,
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y,
@@ -57,7 +57,7 @@ BufferData* BufferData::from_rect(const Rect& rect) {
 }
 
 BufferData* BufferData::from_rect_to_image(const Rect& rect) {
-    const std::vector<GLfloat> vertices = {
+    const std::vector<float> vertices = {
         rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
         rect.origin.x,                   rect.size.height + rect.origin.y, 0.0f,  0.0f, //|_ |
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y, 1.0f,  0.0f, //| _|
@@ -67,7 +67,7 @@ BufferData* BufferData::from_rect_to_image(const Rect& rect) {
 }
 
 BufferData* BufferData::from_rect_to_framebuffer(const Rect& rect) {
-    const std::vector<GLfloat> vertices = {
+    const std::vector<float> vertices = {
         rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
         rect.origin.x,                   rect.size.height + rect.origin.y, 0.0f,  0.0f, //| _|
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y, 1.0f,  0.0f, //| -|

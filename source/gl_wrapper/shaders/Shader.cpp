@@ -1,35 +1,20 @@
 //
 //  Shader.cpp
-//  TestEngine
+//  gl_wrapper
 //
 //  Created by Vladas Zakrevskis on 8/30/17.
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
-#include             "GL.hpp"
 #include            "Log.hpp"
-#include          "Paths.hpp"
-#include          "Debug.hpp"
-#include         "Screen.hpp"
 #include         "Shader.hpp"
+#include        "GLDebug.hpp"
+#include  "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
 
-
-Shader* Shader::ui           ;
-Shader* Shader::ui_texture   ;
-Shader* Shader::ui_monochrome;
-
-Shader* Shader::  simple3D;
-Shader* Shader:: colored3D;
-Shader* Shader::textured3D;
-
-Shader* Shader::diffuse_colored;
-
-
-
-Shader::Shader(const std::string& name) : name(name) {
-    _program = ShaderCompiler::compile(Paths::shaders_directory() + name + ".vert",
-                                       Paths::shaders_directory() + name + ".frag");
+Shader::Shader(const std::string& directory, std::string& name) : name(name), path(directory) {
+    _program = ShaderCompiler::compile(directory + name + ".vert",
+                                       directory + name + ".frag");
 
     _uniform_color  = glGetUniformLocation(_program, "uniform_color" );
     _mvp_matrix     = glGetUniformLocation(_program, "mvp_matrix"    );
@@ -43,16 +28,6 @@ void Shader::use() const {
 
 unsigned int Shader::get_program_id() const {
     return _program;
-}
-
-void Shader::initialize() {
-    ui              = new Shader("ui");
-    ui_texture      = new Shader("ui_texture");
-    ui_monochrome   = new Shader("ui_monochrome");
-    simple3D        = new Shader("simple3D");
-    colored3D       = new Shader("colored3D");
-    textured3D      = new Shader("textured3D");
-    diffuse_colored = new Shader("diffuse_colored");
 }
 
 void Shader::set_uniform_color(const Color& color) {

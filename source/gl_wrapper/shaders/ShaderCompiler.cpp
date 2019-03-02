@@ -1,13 +1,13 @@
 
 
-#include <cstdio>
-#include <vector>
-#include <fstream>
-#include <stdlib.h>
+#include    <cstdio>
+#include    <vector>
+#include   <fstream>
+#include  <stdlib.h>
 #include <algorithm>
 
-#include "GL.hpp"
-#include "Debug.hpp"
+#include        "GLDebug.hpp"
+#include  "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
 
 using namespace std;

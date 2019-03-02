@@ -1,6 +1,6 @@
 //
 //  BufferConfiguration.hpp
-//  TestEngine
+//  gl_wrapper
 //
 //  Created by Vladas Zakrevskis on 9/23/17.
 //  Copyright © 2017 VladasZ. All rights reserved.
