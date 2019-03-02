@@ -10,6 +10,8 @@
 
 #include <cstdint>
 
+namespace gl {
+
 class Buffer;
 
 class BufferConfiguration {
@@ -36,3 +38,5 @@ public:
     static const BufferConfiguration _3_3_3;
     static const BufferConfiguration _3_3_4;
 };
+
+}

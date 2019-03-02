@@ -10,6 +10,8 @@
 
 #include "BufferData.hpp"
 
+using namespace gl;
+
 static const std::vector<unsigned short> rect_indices = { 0, 1, 3, 2 };
 
 BufferData::BufferData(const std::vector<float>& vertices, const std::vector<unsigned short>& indices)

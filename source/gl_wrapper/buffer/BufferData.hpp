@@ -14,6 +14,8 @@
 #include "Size.hpp"
 #include "Rect.hpp"
 
+namespace gl {
+
 class Buffer;
 
 class BufferData {
@@ -34,3 +36,5 @@ public:
     static BufferData* from_rect_to_image      (const Rect&);
     static BufferData* from_rect_to_framebuffer(const Rect&);
 };
+
+}

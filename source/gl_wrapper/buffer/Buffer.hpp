@@ -14,6 +14,9 @@
 #include "Shader.hpp"
 
 class Size;
+
+namespace gl {
+
 class BufferData;
 class BufferConfiguration;
 
@@ -52,3 +55,5 @@ public:
     std::string to_string(unsigned int new_line = 3) const;
 
 };
+
+}

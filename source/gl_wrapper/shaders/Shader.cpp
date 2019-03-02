@@ -12,7 +12,9 @@
 #include  "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
 
-Shader::Shader(const std::string& directory, std::string& name) : name(name), path(directory) {
+using namespace gl;
+
+Shader::Shader(const std::string& directory, const std::string& name) : name(name), path(directory) {
     _program = ShaderCompiler::compile(directory + name + ".vert",
                                        directory + name + ".frag");
 

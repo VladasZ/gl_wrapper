@@ -14,17 +14,12 @@
 #include   "Color.hpp"
 #include "Matrix4.hpp"
 
-class Screen;
+namespace gl {
 
 class Shader {
-    
-    Shader() = default;
-    Shader(const std::string& directory, std::string& name);
-        
-    friend Screen;
-    
+
     unsigned int _program = 0;
-    
+
     int _uniform_color       ;
     int _viewport_translation;
     int _uniform_position    ;
@@ -32,8 +27,11 @@ class Shader {
     int _mvp_matrix          ;
     int _model_matrix        ;
     int _light_position      ;
-        
+
 public:
+    
+    Shader() = default;
+    Shader(const std::string& directory, const std::string& name);
 
     const std::string name;
     const std::string path;
@@ -47,3 +45,5 @@ public:
     void set_model_matrix  (const Matrix4&);
     void set_light_position(const Vector3&);
 };
+
+}

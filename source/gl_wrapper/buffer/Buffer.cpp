@@ -15,6 +15,8 @@
 #include       "OpenGLHeaders.hpp"
 #include "BufferConfiguration.hpp"
 
+using namespace gl;
+
 void Buffer::_initialize(BufferData* data, const BufferConfiguration& configuration, Shader* shader) {
 
     _shader = shader;
