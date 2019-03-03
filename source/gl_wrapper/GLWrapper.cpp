@@ -147,22 +147,8 @@ void GL::set_cursor_mode(CursorMode cursor_mode) {
 }
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static void size_changed(GLFWwindow* window, int width, int height) {
-
+    GL::on_window_size_change({ static_cast<float>(width), static_cast<float>(height) });
     GL(glfwSwapBuffers(window));
 }
 

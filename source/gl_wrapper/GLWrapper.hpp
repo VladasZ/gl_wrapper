@@ -12,6 +12,7 @@
 
 #include "Rect.hpp"
 #include "Color.hpp"
+#include "Event.hpp"
 
 #include "Shader.hpp"
 
@@ -31,6 +32,8 @@ struct GL {
     static void initialize(const Size& size);
 
     static void start_main_loop(std::function<void()> on_frame_drawn);
+
+    static inline Event<Size> on_window_size_change;
 
     static void set_viewport(const Rect& rect);
     static void set_clear_color(const Color& color);
