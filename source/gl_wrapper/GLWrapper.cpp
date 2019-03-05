@@ -156,21 +156,24 @@ static void mouse_button_callback([[maybe_unused]] GLFWwindow* window,
 int glfw_button,
 int action,
 [[maybe_unused]] int mods) {
-
+    auto button = GL::MouseButton::Left;
+    if      (glfw_button == GLFW_MOUSE_BUTTON_RIGHT ) button = GL::MouseButton::Right ;
+    else if (glfw_button == GLFW_MOUSE_BUTTON_MIDDLE) button = GL::MouseButton::Middle;
+    GL::on_mouse_key_pressed(button, action == GLFW_PRESS ? GL::ButtonState::Down : GL::ButtonState::Up);
 }
 
 static void cursor_position_callback([[maybe_unused]] GLFWwindow* window, double x, double y) {
-
+    GL::on_cursor_moved({ static_cast<float>(x), static_cast<float>(y) });
 }
 
 static void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double yoffset) {
-
+    GL::on_scroll_moved({ static_cast<float>(xoffset), static_cast<float>(yoffset) });
 }
 
 static void key_callback([[maybe_unused]] GLFWwindow* window,
-int key,
-int scancode,
-int action,
-int mods) {
-
+                 int key,
+[[maybe_unused]] int scancode,
+                 int action,
+[[maybe_unused]] int mods) {
+    GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
 }
