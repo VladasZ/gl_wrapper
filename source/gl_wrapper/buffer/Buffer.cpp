@@ -8,7 +8,6 @@
 
 #include <string>
 
-#include                 "Log.hpp"
 #include              "Buffer.hpp"
 #include             "GLDebug.hpp"
 #include          "BufferData.hpp"
