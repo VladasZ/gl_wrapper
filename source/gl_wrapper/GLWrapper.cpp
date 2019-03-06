@@ -10,9 +10,10 @@
 #include     "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
 
+#if DESKTOP_BUILD
+
 static GLFWwindow* window = nullptr;
 
-#if DESKTOP_BUILD
 namespace cursor {
 static GLFWcursor* arrow;
 static GLFWcursor* text;
@@ -32,7 +33,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 #endif
 
-void GL::initialize(const Size& size) {
+void GL::initialize(const gm::Size& size) {
 
 #if DESKTOP_BUILD
     glfwInit();
@@ -90,6 +91,7 @@ void GL::initialize(const Size& size) {
 #endif
 }
 
+#if DESKTOP_BUILD
 void GL::start_main_loop(std::function<void()> on_frame_drawn) {
     do {
         GL(glfwPollEvents());
@@ -100,8 +102,9 @@ void GL::start_main_loop(std::function<void()> on_frame_drawn) {
         glfwWindowShouldClose(window) == 0
     );
 }
+#endif
 
-void GL::set_viewport(const Rect& rect) {
+void GL::set_viewport(const gm::Rect& rect) {
     static const GLint scale = 2;
     glViewport(static_cast<GLint>  (rect.origin.x) * scale,
                static_cast<GLint>  (screen_size.height - rect.origin.y - rect.size.height) * scale,
@@ -109,7 +112,7 @@ void GL::set_viewport(const Rect& rect) {
                static_cast<GLsizei>(rect.size.height) * scale);
 }
 
-void GL::set_clear_color(const Color& color) {
+void GL::set_clear_color(const gm::Color& color) {
     glClearColor(color.r, color.g, color.b, color.a);
 }
 
@@ -145,7 +148,6 @@ void GL::set_cursor_mode(CursorMode cursor_mode) {
         break;
     }
 }
-#endif
 
 static void size_changed(GLFWwindow* window, int width, int height) {
     GL::on_window_size_change({ static_cast<float>(width), static_cast<float>(height) });
@@ -177,3 +179,5 @@ static void key_callback([[maybe_unused]] GLFWwindow* window,
 [[maybe_unused]] int mods) {
     GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
 }
+
+#endif

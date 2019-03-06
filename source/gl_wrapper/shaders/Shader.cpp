@@ -32,22 +32,22 @@ unsigned int Shader::get_program_id() const {
     return _program;
 }
 
-void Shader::set_uniform_color(const Color& color) {
+void Shader::set_uniform_color(const gm::Color& color) {
     if (_uniform_color != -1)
         GL(glUniform4fv(_uniform_color, 1, &color.r));
 }
 
-void Shader::set_mvp_matrix(const Matrix4& mvp) {
+void Shader::set_mvp_matrix(const gm::Matrix4& mvp) {
     if (_mvp_matrix != -1)
         GL(glUniformMatrix4fv(_mvp_matrix, 1, false, &mvp.data[0][0]));
 }
 
-void Shader::set_model_matrix(const Matrix4& model_matrix) {
+void Shader::set_model_matrix(const gm::Matrix4& model_matrix) {
     if (_model_matrix != -1)
         GL(glUniformMatrix4fv(_model_matrix, 1, false, &model_matrix.data[0][0]));
 }
 
-void Shader::set_light_position(const Vector3& light_position) {
+void Shader::set_light_position(const gm::Vector3& light_position) {
     if (_light_position != -1)
         GL(glUniform3fv(_light_position, 1, &light_position.x));
 }

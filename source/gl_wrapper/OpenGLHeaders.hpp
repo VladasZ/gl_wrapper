@@ -9,7 +9,8 @@
 #pragma once
 
 #if IOS_BUILD
-    #include <OpenGL/gl.h>
+    #include <Foundation.h>
+    #include <OpenGLES/ES3/gl.h>
 #else
     #include <GL/glew.h>
     #include <GLFW/glfw3.h>

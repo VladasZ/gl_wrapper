@@ -23,7 +23,7 @@ static unsigned int mode_for_channels(unsigned int channels) {
     }
 }
 
-TextureID TextureLoader::load(const void* data, const Size& size, unsigned int channels) {
+TextureID TextureLoader::load(const void* data, const gm::Size& size, unsigned int channels) {
 
     TextureID id;
 

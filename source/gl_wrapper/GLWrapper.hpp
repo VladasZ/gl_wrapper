@@ -37,22 +37,24 @@ struct GL {
         Down,
     };
 
-    static inline Size screen_size;
-    static inline Size display_resolution;
+    static inline gm::Size screen_size;
+    static inline gm::Size display_resolution;
 
-    static void initialize(const Size& size);
+    static void initialize(const gm::Size& size);
 
+#if DESKTOP_BUILD
     static void start_main_loop(std::function<void()> on_frame_drawn);
-
-    static inline Event<Size > on_window_size_change;
-    static inline Event<Point> on_cursor_moved      ;
-    static inline Event<Point> on_scroll_moved      ;
+#endif
+  
+    static inline Event<gm::Size > on_window_size_change;
+    static inline Event<gm::Point> on_cursor_moved      ;
+    static inline Event<gm::Point> on_scroll_moved      ;
 
     static inline Event<MouseButton, ButtonState > on_mouse_key_pressed;
     static inline Event<char       , unsigned int> on_key_pressed      ;
 
-    static void set_viewport   (const Rect &  rect);
-    static void set_clear_color(const Color& color);
+    static void set_viewport   (const gm::Rect &  rect);
+    static void set_clear_color(const gm::Color& color);
 
     static void clear();
 

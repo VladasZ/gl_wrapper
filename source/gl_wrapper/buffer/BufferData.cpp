@@ -11,6 +11,7 @@
 #include "BufferData.hpp"
 
 using namespace gl;
+using namespace gm;
 
 static const std::vector<unsigned short> rect_indices = { 0, 1, 3, 2 };
 

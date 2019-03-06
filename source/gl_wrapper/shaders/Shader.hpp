@@ -40,10 +40,10 @@ public:
 
     unsigned int get_program_id() const;
 
-    void set_uniform_color (const   Color&);
-    void set_mvp_matrix    (const Matrix4&);
-    void set_model_matrix  (const Matrix4&);
-    void set_light_position(const Vector3&);
+    void set_uniform_color (const gm::Color  &);
+    void set_mvp_matrix    (const gm::Matrix4&);
+    void set_model_matrix  (const gm::Matrix4&);
+    void set_light_position(const gm::Vector3&);
 };
 
 }

@@ -13,8 +13,6 @@
 
 #include "Shader.hpp"
 
-class Size;
-
 namespace gl {
 
 class BufferData;

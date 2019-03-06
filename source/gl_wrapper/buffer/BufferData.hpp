@@ -31,10 +31,10 @@ public:
 
     std::string to_string(unsigned int new_line = 3) const;
     
-    static BufferData* from_size               (const Size&);
-    static BufferData* from_rect               (const Rect&);
-    static BufferData* from_rect_to_image      (const Rect&);
-    static BufferData* from_rect_to_framebuffer(const Rect&);
+    static BufferData* from_size               (const gm::Size&);
+    static BufferData* from_rect               (const gm::Rect&);
+    static BufferData* from_rect_to_image      (const gm::Rect&);
+    static BufferData* from_rect_to_framebuffer(const gm::Rect&);
 };
 
 }

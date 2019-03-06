@@ -13,7 +13,7 @@ namespace gl {
 using TextureID = unsigned int;
 
 struct TextureLoader {
-    static TextureID load(const void* data, const Size& size, unsigned int channels);
+    static TextureID load(const void* data, const gm::Size& size, unsigned int channels);
     static void bind(TextureID);
     static void free(TextureID);
 };
