@@ -18,7 +18,9 @@ namespace gl {
 
 class Shader {
 
-    unsigned int _program = 0;
+    using ID = unsigned int;
+
+    ID _program = 0;
 
     int _uniform_color       ;
     int _viewport_translation;
@@ -27,6 +29,7 @@ class Shader {
     int _mvp_matrix          ;
     int _model_matrix        ;
     int _light_position      ;
+    int _size                ;
 
 public:
     
@@ -38,12 +41,13 @@ public:
 
     void use() const;
 
-    unsigned int get_program_id() const;
+    ID get_program_id() const;
 
     void set_uniform_color (const gm::Color  &);
     void set_mvp_matrix    (const gm::Matrix4&);
     void set_model_matrix  (const gm::Matrix4&);
     void set_light_position(const gm::Vector3&);
+    void set_size          (const gm::Size   &);
 };
 
 }
