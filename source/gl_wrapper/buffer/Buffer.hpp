@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "Path.hpp"
 #include "Shader.hpp"
 
 namespace gl {
@@ -43,12 +44,15 @@ public:
            const BufferConfiguration& configuration,
            Shader* shader);
 
+    Buffer(gm::Path*, Shader* shader);
+
     ~Buffer();
 
     void bind() const;
     void draw() const;
 
     Shader* shader() const;
+    BufferData* buffer_data() const;
 
     std::string to_string(unsigned int new_line = 3) const;
 

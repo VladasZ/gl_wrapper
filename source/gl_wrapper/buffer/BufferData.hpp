@@ -20,14 +20,17 @@ class Buffer;
 
 class BufferData {
     
-    std::vector<float>    vertices_data;
-    std::vector<unsigned short> indices;
+    const std::vector<float>    vertices_data;
+    const std::vector<unsigned short> indices;
+
+    const size_t vertices_count;
     
     friend Buffer;
     
 public:
         
     BufferData(const std::vector<float>& vertices_data, const std::vector<unsigned short>& indices);
+    BufferData(const std::vector<float>& vertices_data, size_t vertices_count);
 
     std::string to_string(unsigned int new_line = 3) const;
     

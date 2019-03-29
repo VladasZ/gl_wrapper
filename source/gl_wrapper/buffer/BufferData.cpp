@@ -16,7 +16,10 @@ using namespace gm;
 static const std::vector<unsigned short> rect_indices = { 0, 1, 3, 2 };
 
 BufferData::BufferData(const std::vector<float>& vertices, const std::vector<unsigned short>& indices)
-    : vertices_data(vertices), indices(indices) { }
+    : vertices_data(vertices), indices(indices), vertices_count(indices.size()) { }
+
+BufferData::BufferData(const std::vector<float>& vertices_data, size_t vertices_count)
+    : vertices_data(vertices_data), vertices_count(vertices_count) { }
 
 std::string BufferData::to_string(unsigned int new_line) const {
     std::string string;
@@ -35,6 +38,9 @@ std::string BufferData::to_string(unsigned int new_line) const {
         if ((i + 1) % (new_line) == 0)
             string += "\n";
     }
+
+    string += "\n";
+    string += std::to_string(vertices_count);
 
     return string;
 }

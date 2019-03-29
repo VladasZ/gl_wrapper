@@ -8,10 +8,10 @@
 
 #include <string>
 
-#include              "Buffer.hpp"
-#include             "GLDebug.hpp"
-#include          "BufferData.hpp"
-#include       "OpenGLHeaders.hpp"
+#include "Buffer.hpp"
+#include "GLDebug.hpp"
+#include "BufferData.hpp"
+#include "OpenGLHeaders.hpp"
 #include "BufferConfiguration.hpp"
 
 using namespace gl;
@@ -57,6 +57,12 @@ Buffer::Buffer(const std::vector<float>& vertices,
                Shader* shader)
     : Buffer(new BufferData(vertices, indices), configuration, shader) { }
 
+Buffer::Buffer(gm::Path* path, Shader* shader)
+    : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2, shader) {
+
+    draw_mode = GL_LINE_STRIP;
+}
+
 Buffer::~Buffer() {
     GL(glDeleteBuffers(1, &vertex_buffer_object));
     if (index_buffer_object != 0)
@@ -72,15 +78,19 @@ void Buffer::bind() const {
 
 void Buffer::draw() const {
     if (data->indices.empty()) {
-        GL(glDrawArrays(draw_mode, 0, static_cast<GLsizei>(data->vertices_data.size())));
+        GL(glDrawArrays(draw_mode, 0, static_cast<GLsizei>(data->vertices_count)));
     } else {
-        GL(glDrawElements(draw_mode, static_cast<GLsizei>(data->indices.size()), GL_UNSIGNED_SHORT, nullptr));
+        GL(glDrawElements(draw_mode, static_cast<GLsizei>(data->vertices_count), GL_UNSIGNED_SHORT, nullptr));
     }
     GL(glBindVertexArray(0));
 }
 
 Shader* Buffer::shader() const {
     return _shader;
+}
+
+BufferData* Buffer::buffer_data() const {
+    return data;
 }
 
 std::string Buffer::to_string(unsigned int new_line) const {
