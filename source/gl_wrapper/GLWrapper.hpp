@@ -37,6 +37,15 @@ struct GL {
         Down,
     };
 
+    struct DrawMode {
+        static const unsigned int Points;
+        static const unsigned int Lines;
+        static const unsigned int LineStrip;
+        static const unsigned int LineLoop;
+        static const unsigned int Triangles;
+        static const unsigned int TriangleStrip;
+    };
+
     static inline gm::Size screen_size;
     static inline gm::Size display_resolution;
 

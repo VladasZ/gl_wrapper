@@ -6,9 +6,16 @@
 //  Copyright © 2018 VladasZ. All rights reserved.
 //
 
-#include       "GLDebug.hpp"
-#include     "GLWrapper.hpp"
+#include "GLDebug.hpp"
+#include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
+
+const unsigned int GL::DrawMode::Points        = GL_POINT;
+const unsigned int GL::DrawMode::Lines         = GL_LINES;
+const unsigned int GL::DrawMode::LineStrip     = GL_LINE_STRIP;
+const unsigned int GL::DrawMode::LineLoop      = GL_LINE_LOOP;
+const unsigned int GL::DrawMode::Triangles     = GL_TRIANGLES;
+const unsigned int GL::DrawMode::TriangleStrip = GL_TRIANGLE_STRIP;
 
 #if DESKTOP_BUILD
 
@@ -105,7 +112,7 @@ void GL::start_main_loop(std::function<void()> on_frame_drawn) {
 #endif
 
 void GL::set_viewport(const gm::Rect& rect) {
-    static const GLint scale = 2;
+    static const GLint scale = 1;
     glViewport(static_cast<GLint>  (rect.origin.x) * scale,
                static_cast<GLint>  (screen_size.height - rect.origin.y - rect.size.height) * scale,
                static_cast<GLsizei>(rect.size.width) * scale,
