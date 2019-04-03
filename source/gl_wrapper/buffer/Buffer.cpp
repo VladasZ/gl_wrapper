@@ -57,7 +57,7 @@ Buffer::Buffer(const std::vector<float>& vertices,
                Shader* shader)
     : Buffer(new BufferData(vertices, indices), configuration, shader) { }
 
-Buffer::Buffer(gm::Path* path, Shader* shader)
+Buffer::Buffer(gm::Path::Ptr path, Shader* shader)
     : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2, shader) {
 
     draw_mode = GL_LINE_STRIP;

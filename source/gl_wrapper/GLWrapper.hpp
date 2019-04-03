@@ -55,19 +55,19 @@ struct GL {
     static void start_main_loop(std::function<void()> on_frame_drawn);
 #endif
   
-    static inline Event<gm::Size > on_window_size_change;
-    static inline Event<gm::Point> on_cursor_moved      ;
-    static inline Event<gm::Point> on_scroll_moved      ;
+    static inline Event<gm::Size> on_window_size_change;
+    static inline Event<gm::Point> on_cursor_moved;
+    static inline Event<gm::Point> on_scroll_moved;
 
-    static inline Event<MouseButton, ButtonState > on_mouse_key_pressed;
-    static inline Event<char       , unsigned int> on_key_pressed      ;
+    static inline Event<MouseButton, ButtonState> on_mouse_key_pressed;
+    static inline Event<char, unsigned int> on_key_pressed;
 
-    static void set_viewport   (const gm::Rect &  rect);
+    static void set_viewport(const gm::Rect& rect);
     static void set_clear_color(const gm::Color& color);
 
     static void clear();
 
-    static void enable_depth_test ();
+    static void enable_depth_test();
     static void disable_depth_test();
 
 #if DESKTOP_BUILD
