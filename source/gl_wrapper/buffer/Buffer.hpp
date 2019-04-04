@@ -44,7 +44,7 @@ public:
            const BufferConfiguration& configuration,
            Shader* shader);
 
-    Buffer(gm::Path::Ptr, Shader* shader);
+    Buffer(gm::Path*, Shader* shader);
 
     ~Buffer();
 

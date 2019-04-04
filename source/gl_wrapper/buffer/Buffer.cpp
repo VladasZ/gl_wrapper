@@ -10,6 +10,7 @@
 
 #include "Buffer.hpp"
 #include "GLDebug.hpp"
+#include "GLWrapper.hpp"
 #include "BufferData.hpp"
 #include "OpenGLHeaders.hpp"
 #include "BufferConfiguration.hpp"
@@ -57,10 +58,13 @@ Buffer::Buffer(const std::vector<float>& vertices,
                Shader* shader)
     : Buffer(new BufferData(vertices, indices), configuration, shader) { }
 
-Buffer::Buffer(gm::Path::Ptr path, Shader* shader)
+Buffer::Buffer(gm::Path* path, Shader* shader)
     : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2, shader) {
 
-    draw_mode = GL_LINE_STRIP;
+    draw_mode = GL::DrawMode::LineStrip;
+
+    if (path->draw_mode == gm::Path::DrawMode::Lines)
+        draw_mode = GL::DrawMode::Lines;
 }
 
 Buffer::~Buffer() {
