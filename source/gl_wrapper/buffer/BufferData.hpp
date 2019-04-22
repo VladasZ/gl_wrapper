@@ -37,6 +37,7 @@ public:
     static BufferData* from_size               (const gm::Size&);
     static BufferData* from_rect               (const gm::Rect&);
     static BufferData* from_rect_to_image      (const gm::Rect&);
+    static BufferData* from_rect_to_rectangle  (const gm::Rect&);
     static BufferData* from_rect_to_framebuffer(const gm::Rect&);
 };
 

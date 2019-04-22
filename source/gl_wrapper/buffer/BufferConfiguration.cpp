@@ -6,8 +6,8 @@
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
-#include             "GLDebug.hpp"
-#include       "OpenGLHeaders.hpp"
+#include "GLDebug.hpp"
+#include "OpenGLHeaders.hpp"
 #include "BufferConfiguration.hpp"
 
 using namespace gl;

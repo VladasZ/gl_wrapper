@@ -75,6 +75,16 @@ BufferData* BufferData::from_rect_to_image(const Rect& rect) {
     return new BufferData(vertices, rect_indices);
 }
 
+BufferData* BufferData::from_rect_to_rectangle(const gm::Rect& rect) {
+    const std::vector<float> vertices = {
+        rect.origin.x,                   rect.origin.y,
+        rect.origin.x,                   rect.size.height + rect.origin.y,
+        rect.size.width + rect.origin.x, rect.size.height + rect.origin.y,
+        rect.size.width + rect.origin.x, rect.origin.y
+    };
+    return new BufferData(vertices, { 0, 1, 2, 3 });
+}
+
 BufferData* BufferData::from_rect_to_framebuffer(const Rect& rect) {
     const std::vector<float> vertices = {
         rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
