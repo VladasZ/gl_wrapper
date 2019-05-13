@@ -13,6 +13,7 @@
 
 #include "Path.hpp"
 #include "Shader.hpp"
+#include "Vertex.hpp"
 
 namespace gl {
 
@@ -39,8 +40,8 @@ public:
 
     Buffer(BufferData* data, const BufferConfiguration& configuration, Shader* shader);
     
-    Buffer(const std::vector<float>& vertices,
-           const std::vector<unsigned short>& indices,
+    Buffer(const std::vector<float>& vertices_data,
+           const gm::Vertex::Indices& indices,
            const BufferConfiguration& configuration,
            Shader* shader);
 

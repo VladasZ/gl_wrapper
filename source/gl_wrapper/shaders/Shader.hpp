@@ -10,8 +10,8 @@
 
 #include <string>
 
-#include    "Rect.hpp"
-#include   "Color.hpp"
+#include "Rect.hpp"
+#include "Color.hpp"
 #include "Matrix4.hpp"
 
 namespace gl {
@@ -22,14 +22,14 @@ class Shader {
 
     ID _program = 0;
 
-    int _uniform_color       ;
+    int _uniform_color;
     int _viewport_translation;
-    int _uniform_position    ;
-    int _transform           ;
-    int _mvp_matrix          ;
-    int _model_matrix        ;
-    int _light_position      ;
-    int _size                ;
+    int _uniform_position;
+    int _transform;
+    int _mvp_matrix;
+    int _model_matrix;
+    int _light_position;
+    int _size;
 
 public:
     

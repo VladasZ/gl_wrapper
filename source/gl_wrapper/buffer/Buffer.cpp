@@ -53,7 +53,7 @@ Buffer::Buffer(BufferData* data, const BufferConfiguration& configuration, Shade
 }
 
 Buffer::Buffer(const std::vector<float>& vertices,
-               const std::vector<unsigned short>& indices,
+               const gm::Vertex::Indices& indices,
                const BufferConfiguration& configuration,
                Shader* shader)
     : Buffer(new BufferData(vertices, indices), configuration, shader) { }
