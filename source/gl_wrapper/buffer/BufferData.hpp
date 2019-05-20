@@ -20,7 +20,7 @@ class Buffer;
 
 class BufferData {
     
-    const std::vector<float>    vertices_data;
+    const std::vector<float> vertices_data;
     const std::vector<unsigned short> indices;
 
     const size_t vertices_count;
