@@ -23,6 +23,7 @@ Shader::Shader(const std::string& directory, const std::string& name) : name(nam
     _model_matrix   = glGetUniformLocation(_program, "model_matrix"  );
     _light_position = glGetUniformLocation(_program, "light_position");
     _size           = glGetUniformLocation(_program, "size"          );
+    _selected       = glGetUniformLocation(_program, "selected"      );
 }
 
 void Shader::use() const {
@@ -51,4 +52,8 @@ void Shader::set_light_position(const gm::Vector3& light_position) {
 
 void Shader::set_size(const gm::Size& size) {
     GL(glUniform2fv(_size, 1, &size.width));
+}
+
+void Shader::set_selected(bool selected) {
+    GL(glUniform1i(_selected, selected));
 }
