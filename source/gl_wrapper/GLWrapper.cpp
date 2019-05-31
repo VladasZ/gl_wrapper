@@ -113,8 +113,8 @@ void GL::start_main_loop(std::function<void()> on_frame_drawn) {
 
 void GL::set_viewport(const gm::Rect& rect) {
     static const GLint scale = 2;
-    glViewport(static_cast<GLint>  (rect.origin.x) * scale,
-               static_cast<GLint>  (screen_size.height - rect.origin.y - rect.size.height) * scale,
+    glViewport(static_cast<GLint>(rect.origin.x) * scale,
+               static_cast<GLint>(screen_size.height - rect.origin.y - rect.size.height) * scale,
                static_cast<GLsizei>(rect.size.width) * scale,
                static_cast<GLsizei>(rect.size.height) * scale);
 }
