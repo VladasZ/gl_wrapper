@@ -13,7 +13,7 @@
 using namespace std;
 
 std::string ShaderCompiler::shader_version() {
-#ifdef IOS
+#ifdef IOS_BUILD
     return "#version 300 core";
 #else
     return "#version 330 core";
