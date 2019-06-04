@@ -42,7 +42,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 void GL::initialize(const gm::Size& size) {
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
     glfwInit();
     glfwWindowHint(GLFW_SAMPLES, 16); // 4x antialiasing
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
@@ -77,7 +77,7 @@ void GL::initialize(const gm::Size& size) {
     GL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
     glfwSetKeyCallback        (window, key_callback            );
     glfwSetScrollCallback     (window, scroll_callback         );
     glfwSetCursorPosCallback  (window, cursor_position_callback);
@@ -85,7 +85,7 @@ void GL::initialize(const gm::Size& size) {
     glfwSetMouseButtonCallback(window, mouse_button_callback   );
 #endif
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
     cursor::arrow    = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
     cursor::text     = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
 #ifdef WIN32
@@ -98,7 +98,7 @@ void GL::initialize(const gm::Size& size) {
 #endif
 }
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
 void GL::start_main_loop(std::function<void()> on_frame_drawn) {
     do {
         GL(glfwPollEvents());
@@ -135,7 +135,7 @@ void GL::disable_depth_test() {
     GL(glDisable(GL_DEPTH_TEST));
 }
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
 void GL::set_cursor_mode(CursorMode cursor_mode) {
     switch (cursor_mode) {
     case CursorMode::Arrow:

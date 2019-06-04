@@ -51,7 +51,7 @@ struct GL {
 
     static void initialize(const gm::Size& size);
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
     static void start_main_loop(std::function<void()> on_frame_drawn);
 #endif
   
@@ -70,7 +70,7 @@ struct GL {
     static void enable_depth_test();
     static void disable_depth_test();
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
     static void set_cursor_mode(CursorMode);
 #endif
 };
