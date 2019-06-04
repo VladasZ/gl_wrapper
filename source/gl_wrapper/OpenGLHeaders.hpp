@@ -8,8 +8,8 @@
 
 #pragma once
 
-#if IOS_BUILD
-    #include <Foundation.h>
+#ifdef IOS_BUILD
+// #include <Foundation.h>
     #include <OpenGLES/ES3/gl.h>
 #else
     #include <GL/glew.h>

@@ -10,7 +10,7 @@
 #include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
 
-const unsigned int GL::DrawMode::Points        = GL_POINT;
+const unsigned int GL::DrawMode::Points        = 0;//GL_POINT;
 const unsigned int GL::DrawMode::Lines         = GL_LINES;
 const unsigned int GL::DrawMode::LineStrip     = GL_LINE_STRIP;
 const unsigned int GL::DrawMode::LineLoop      = GL_LINE_LOOP;
