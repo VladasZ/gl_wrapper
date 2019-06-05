@@ -8,9 +8,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(gl_wrapper)
 
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-unused-function")
-set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
-
 add_definitions(-DDEBUG=1)
 
 conan_basic_setup()
