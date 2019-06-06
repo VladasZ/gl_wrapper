@@ -23,9 +23,6 @@ class Shader {
     ID _program = 0;
 
     int _uniform_color;
-    int _viewport_translation;
-    int _uniform_position;
-    int _transform;
     int _mvp_matrix;
     int _model_matrix;
     int _light_position;
