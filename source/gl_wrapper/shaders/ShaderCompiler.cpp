@@ -42,9 +42,7 @@ unsigned int ShaderCompiler::compile(const string& vertex_path, const string& fr
 		vertex_shader_stream.close();
 	}
     else {
-        Error("Impossible to open " << vertex_path.c_str());
-		getchar();
-		return 0;
+        Fatal("Impossible to open " << vertex_path.c_str());
 	}
 
 	string fragment_shader_code = shader_version();
