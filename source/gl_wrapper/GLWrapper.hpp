@@ -17,6 +17,8 @@
 #include "Shader.hpp"
 
 struct GL {
+    
+#ifdef DESKTOP_BUILD
 
     enum CursorMode {
         Arrow  ,
@@ -36,6 +38,8 @@ struct GL {
         Up  ,
         Down,
     };
+    
+#endif
 
     struct DrawMode {
         static const unsigned int Points;
@@ -59,7 +63,10 @@ struct GL {
     static inline Event<gm::Point> on_cursor_moved;
     static inline Event<gm::Point> on_scroll_moved;
 
+#ifdef DESKTOP_BUILD
     static inline Event<MouseButton, ButtonState> on_mouse_key_pressed;
+#endif
+    
     static inline Event<char, unsigned int> on_key_pressed;
 
     static void set_viewport(const gm::Rect& rect);
