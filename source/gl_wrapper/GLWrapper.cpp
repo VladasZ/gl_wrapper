@@ -70,6 +70,7 @@ void GL::initialize(const gm::Size& size) {
 
     auto mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     display_resolution = { static_cast<float>(mode->width), static_cast<float>(mode->height) };
+
 #endif
 
     GL(glEnable(GL_DEPTH_TEST));
@@ -96,6 +97,7 @@ void GL::initialize(const gm::Size& size) {
     cursor::h_resize = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
     cursor::v_resize = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
 #endif
+
 }
 
 #ifdef DESKTOP_BUILD
@@ -114,6 +116,10 @@ void GL::start_main_loop(std::function<void()> on_frame_drawn) {
 void GL::set_viewport(const gm::Rect& rect) {
 #ifdef IOS_BUILD
     static const GLint scale = 3;
+#elif WINDOWS
+	static const GLint scale = 1;
+#elif LINUX
+	static const GLint scale = 1;
 #else
     static const GLint scale = 2;
 #endif
