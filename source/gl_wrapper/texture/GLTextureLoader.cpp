@@ -6,8 +6,8 @@
 //  Copyright © 2019 VladasZ. All rights reserved.
 //
 
-#include         "GLDebug.hpp"
-#include   "OpenGLHeaders.hpp"
+#include "GLDebug.hpp"
+#include "OpenGLHeaders.hpp"
 #include "GLTextureLoader.hpp"
 
 using namespace gl;

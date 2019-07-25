@@ -45,10 +45,7 @@ void check_gl_error(LOCATION_PARAMETERS) {
     }
 }
 
-void check_framebuffer_status(unsigned int target,
-                              [[maybe_unused]] const std::string& fileName,
-                              [[maybe_unused]] const char* function,
-                              [[maybe_unused]] int line) {
+void check_framebuffer_status(unsigned int target, LOCATION_PARAMETERS) {
     auto error = glCheckFramebufferStatus(target);
 
     if (!error || error == GL_FRAMEBUFFER_COMPLETE) return;

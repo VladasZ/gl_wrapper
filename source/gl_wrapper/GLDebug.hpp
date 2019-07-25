@@ -8,8 +8,6 @@
 
 #pragma once
 
-#pragma once
-
 #include "Log.hpp"
 
 #ifdef DEBUG
