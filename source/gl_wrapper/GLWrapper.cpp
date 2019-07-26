@@ -69,7 +69,7 @@ void GL::initialize(const gm::Size& size) {
         Fatal("Glew initialization failed");
 
     auto mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    display_resolution = { static_cast<float>(mode->width), static_cast<float>(mode->height) };
+    display_resolution = { mode->width, mode->height };
 
 #endif
 
@@ -102,14 +102,11 @@ void GL::initialize(const gm::Size& size) {
 
 #ifdef DESKTOP_BUILD
 void GL::start_main_loop(std::function<void()> on_frame_drawn) {
-    do {
+    while (true) {
         GL(glfwPollEvents());
         on_frame_drawn();
         GL(glfwSwapBuffers(window));
-    } while (
-        glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
-        glfwWindowShouldClose(window) == 0
-    );
+    }
 }
 #endif
 

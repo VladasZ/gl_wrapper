@@ -21,22 +21,22 @@ struct GL {
 #ifdef DESKTOP_BUILD
 
     enum CursorMode {
-        Arrow  ,
-        Text   ,
-        Drag   ,
+        Arrow,
+        Text,
+        Drag,
         HResize,
-        VResize,
+        VResize
     };
 
     enum MouseButton {
-        Left  ,
-        Right ,
-        Middle,
+        Left,
+        Right,
+        Middle
     };
 
     enum ButtonState {
-        Up  ,
-        Down,
+        Up,
+        Down
     };
     
 #endif
