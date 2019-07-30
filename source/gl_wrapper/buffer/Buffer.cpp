@@ -17,9 +17,7 @@
 
 using namespace gl;
 
-void Buffer::_initialize(BufferData* data, const BufferConfiguration& configuration, Shader* shader) {
-
-    _shader = shader;
+void Buffer::_initialize(BufferData* data, const BufferConfiguration& configuration) {
 
     this->data = data;
     draw_mode = GL_TRIANGLES;
@@ -48,18 +46,17 @@ void Buffer::_initialize(BufferData* data, const BufferConfiguration& configurat
     GL(glBindVertexArray(0));
 }
 
-Buffer::Buffer(BufferData* data, const BufferConfiguration& configuration, Shader* shader) {
-    _initialize(data, configuration, shader);
+Buffer::Buffer(BufferData* data, const BufferConfiguration& configuration) {
+    _initialize(data, configuration);
 }
 
 Buffer::Buffer(const std::vector<float>& vertices,
                const gm::Vertex::Indices& indices,
-               const BufferConfiguration& configuration,
-               Shader* shader)
-    : Buffer(new BufferData(vertices, indices), configuration, shader) { }
+               const BufferConfiguration& configuration)
+    : Buffer(new BufferData(vertices, indices), configuration) { }
 
-Buffer::Buffer(gm::Path* path, Shader* shader)
-    : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2, shader) {
+Buffer::Buffer(gm::Path* path)
+    : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2) {
 
     draw_mode = GL::DrawMode::LineStrip;
 
@@ -76,7 +73,6 @@ Buffer::~Buffer() {
 }
 
 void Buffer::bind() const {
-    _shader->use();
     GL(glBindVertexArray(vertex_array_object));
 }
 
@@ -87,10 +83,6 @@ void Buffer::draw() const {
         GL(glDrawElements(draw_mode, static_cast<GLsizei>(data->vertices_count), GL_UNSIGNED_SHORT, nullptr));
     }
     GL(glBindVertexArray(0));
-}
-
-Shader* Buffer::shader() const {
-    return _shader;
 }
 
 BufferData* Buffer::buffer_data() const {

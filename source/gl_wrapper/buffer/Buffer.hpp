@@ -28,31 +28,27 @@ class Buffer {
     unsigned int vertex_buffer_object = 0;
     unsigned int index_buffer_object  = 0;
 
-    Shader* _shader;
-
 private:
 
-    void _initialize(BufferData* data, const BufferConfiguration& configuration, Shader* shader);
+    void _initialize(BufferData* data, const BufferConfiguration& configuration);
 
 public:
     
     unsigned int draw_mode;
 
-    Buffer(BufferData* data, const BufferConfiguration& configuration, Shader* shader);
+    Buffer(BufferData* data, const BufferConfiguration& configuration);
     
     Buffer(const std::vector<float>& vertices_data,
            const gm::Vertex::Indices& indices,
-           const BufferConfiguration& configuration,
-           Shader* shader);
+           const BufferConfiguration& configuration);
 
-    Buffer(gm::Path*, Shader* shader);
+    Buffer(gm::Path*);
 
     ~Buffer();
 
     void bind() const;
     void draw() const;
 
-    Shader* shader() const;
     BufferData* buffer_data() const;
 
     std::string to_string(unsigned int new_line = 3) const;
