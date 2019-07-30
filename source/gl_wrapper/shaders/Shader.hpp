@@ -27,7 +27,9 @@ class Shader {
     int _model_matrix;
     int _light_position;
     int _size;
-    int _selected;
+	int _selected;
+	int _resolution;
+	int _position;
 
 public:
     
@@ -41,12 +43,14 @@ public:
 
     ID get_program_id() const;
 
-    void set_uniform_color (const gm::Color  &);
-    void set_mvp_matrix    (const gm::Matrix4&);
-    void set_model_matrix  (const gm::Matrix4&);
+    void set_uniform_color(const gm::Color &);
+    void set_mvp_matrix(const gm::Matrix4&);
+    void set_model_matrix(const gm::Matrix4&);
     void set_light_position(const gm::Vector3&);
-    void set_size          (const gm::Size   &);
-    void set_selected      (bool              );
+    void set_size(const gm::Size&);
+	void set_selected(bool);
+	void set_resolution(const gm::Size&);
+	void set_position(const gm::Point&);
 };
 
 }

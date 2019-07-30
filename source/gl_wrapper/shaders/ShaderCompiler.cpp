@@ -111,10 +111,7 @@ unsigned int ShaderCompiler::compile(const string& vertex_path, const string& fr
 	if (info_length > 0) {
 		vector<char> program_error(info_length + 1);
 		GL(glGetProgramInfoLog(program, info_length, NULL, &program_error[0]));
-		Error(&program_error[0]);
-
-		if (program_error[0] == 'E')
-			std::terminate();
+		Fatal(&program_error[0]);
 	}
 
 	GL(glDetachShader(program, vertex));

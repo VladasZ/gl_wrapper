@@ -72,11 +72,8 @@ Buffer::~Buffer() {
     delete data;
 }
 
-void Buffer::bind() const {
-    GL(glBindVertexArray(vertex_array_object));
-}
-
 void Buffer::draw() const {
+	GL(glBindVertexArray(vertex_array_object));
     if (data->indices.empty()) {
         GL(glDrawArrays(draw_mode, 0, static_cast<GLsizei>(data->vertices_count)));
     } else {
@@ -89,6 +86,6 @@ BufferData* Buffer::buffer_data() const {
     return data;
 }
 
-std::string Buffer::to_string(unsigned int new_line) const {
+std::string Buffer::to_string(unsigned new_line) const {
     return data->to_string(new_line);
 }
