@@ -3,7 +3,7 @@
 //  test_engine
 //
 //  Created by Vladas Zakrevskis on 8/17/17.
-//  Copyright © 2017 VladasZ. All rights reserved.
+//  Copyright ï¿½ 2017 VladasZ. All rights reserved.
 //
 
 #include <cstdio>
@@ -76,7 +76,7 @@ unsigned int ShaderCompiler::compile(const string& vertex_path, const string& fr
 	if (info_length > 0) {
 		vector<char> vertex_error_message(info_length + 1);
 		GL(glGetShaderInfoLog(vertex, info_length, NULL, &vertex_error_message[0]));
-		Error(&vertex_error_message[0]);
+		Fatal(&vertex_error_message[0]);
 	}
 
 #if SHADER_COMPILER_OUTPUT
@@ -93,7 +93,7 @@ unsigned int ShaderCompiler::compile(const string& vertex_path, const string& fr
 	if (info_length > 0) {
 		vector<char> fragment_error(info_length + 1);
 		GL(glGetShaderInfoLog(fragment, info_length, NULL, &fragment_error[0]));
-		Error(&fragment_error[0]);
+		Fatal(&fragment_error[0]);
 	}
 
 #if SHADER_COMPILER_OUTPUT
