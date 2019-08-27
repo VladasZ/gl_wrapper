@@ -16,7 +16,7 @@
 #define SHADER_COMPILER_OUTPUT true
 
 #if RENDERING_ERRORS_OUTPUT
-#define GL(x) (x); check_gl_error(LOCATION_INFO)
+#define GL(command) (command); check_gl_error(LOCATION_INFO)
 #else
 #define GL(x) x
 #endif

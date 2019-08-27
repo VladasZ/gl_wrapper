@@ -33,7 +33,7 @@ std::string BufferData::to_string(unsigned int new_line) const {
 
     string += "\n";
 
-    for (unsigned int i = 0; i < indices.size(); i++) {
+    for (unsigned i = 0; i < indices.size(); i++) {
         string += std::to_string(indices[i]) + " ";
         if ((i + 1) % (new_line) == 0)
             string += "\n";

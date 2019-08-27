@@ -31,8 +31,9 @@ TextureID TextureLoader::load(const void* data, const gm::Size& size, unsigned i
 
     GL(glBindTexture(GL_TEXTURE_2D, id));
 
-    if (channels == 1)
+    if (channels == 1) {
         GL(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+    }
 
     GL(glTexImage2D(GL_TEXTURE_2D,
                     0,
