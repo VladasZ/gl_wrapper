@@ -15,7 +15,7 @@ using namespace gl;
 BufferConfiguration::BufferConfiguration(uint8_t first_param, uint8_t second_param, uint8_t third_param) {
     
     if (first_param == 0) {
-        Error("Zero BufferConfiguration");
+        _Error("Zero BufferConfiguration");
         throw "Zero BufferConfiguration";
     }
     
