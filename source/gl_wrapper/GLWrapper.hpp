@@ -42,12 +42,14 @@ struct GL {
 #endif
 
     struct DrawMode {
-        static const unsigned int Points;
-        static const unsigned int Lines;
-        static const unsigned int LineStrip;
-        static const unsigned int LineLoop;
-        static const unsigned int Triangles;
-        static const unsigned int TriangleStrip;
+        static const unsigned Points;
+        static const unsigned Lines;
+        static const unsigned LineStrip;
+        static const unsigned LineLoop;
+        static const unsigned Triangles;
+        static const unsigned TriangleFan;
+        static const unsigned TriangleStrip;
+        static const unsigned Polygon;
     };
 
     static inline gm::Size screen_size;

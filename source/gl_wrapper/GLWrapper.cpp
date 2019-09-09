@@ -10,12 +10,14 @@
 #include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
 
-const unsigned int GL::DrawMode::Points        = 0;//GL_POINT;
-const unsigned int GL::DrawMode::Lines         = GL_LINES;
-const unsigned int GL::DrawMode::LineStrip     = GL_LINE_STRIP;
-const unsigned int GL::DrawMode::LineLoop      = GL_LINE_LOOP;
-const unsigned int GL::DrawMode::Triangles     = GL_TRIANGLES;
-const unsigned int GL::DrawMode::TriangleStrip = GL_TRIANGLE_STRIP;
+const unsigned GL::DrawMode::Points        = 0;//GL_POINT;
+const unsigned GL::DrawMode::Lines         = GL_LINES;
+const unsigned GL::DrawMode::LineStrip     = GL_LINE_STRIP;
+const unsigned GL::DrawMode::LineLoop      = GL_LINE_LOOP;
+const unsigned GL::DrawMode::Triangles     = GL_TRIANGLES;
+const unsigned GL::DrawMode::TriangleFan   = GL_TRIANGLE_FAN;
+const unsigned GL::DrawMode::TriangleStrip = GL_TRIANGLE_STRIP;
+const unsigned GL::DrawMode::Polygon       = GL_POLYGON;
 
 #if DESKTOP_BUILD
 
