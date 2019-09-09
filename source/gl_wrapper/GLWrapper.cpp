@@ -17,7 +17,7 @@ const unsigned GL::DrawMode::LineLoop      = GL_LINE_LOOP;
 const unsigned GL::DrawMode::Triangles     = GL_TRIANGLES;
 const unsigned GL::DrawMode::TriangleFan   = GL_TRIANGLE_FAN;
 const unsigned GL::DrawMode::TriangleStrip = GL_TRIANGLE_STRIP;
-const unsigned GL::DrawMode::Polygon       = GL_POLYGON;
+const unsigned GL::DrawMode::Polygon       = 0;//GL_POLYGON;
 
 #if DESKTOP_BUILD
 
