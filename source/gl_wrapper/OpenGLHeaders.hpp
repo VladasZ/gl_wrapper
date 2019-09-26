@@ -8,6 +8,8 @@
 
 #pragma once
 
+#define GL_SILENCE_DEPRECATION
+
 #ifdef IOS_BUILD
     #include <OpenGLES/ES3/gl.h>
 #else
