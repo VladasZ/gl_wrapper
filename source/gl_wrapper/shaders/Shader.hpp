@@ -34,9 +34,8 @@ class Shader {
 public:
     
     Shader() = default;
-    Shader(const std::string& directory, const std::string& name);
+    Shader(const std::string& path);
 
-    const std::string name;
     const std::string path;
 
     void use() const;

@@ -10,6 +10,6 @@
 
 #include <string>
 
-struct ShaderCompiler final {    
-    static unsigned int compile(const std::string& vertex_path, const std::string& fragment_path);
+namespace ShaderCompiler {    
+    unsigned compile(const std::string& path);
 };

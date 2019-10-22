@@ -6,119 +6,72 @@
 //  Copyright � 2017 VladasZ. All rights reserved.
 //
 
-#include <cstdio>
+#include <string>
 #include <vector>
-#include <fstream>
-#include <stdlib.h>
-#include <algorithm>
 
+#include "File.hpp"
 #include "GLDebug.hpp"
 #include "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
+#include "ExceptionCatch.hpp"
 
+using namespace cu;
 using namespace std;
 
 #ifdef IOS_BUILD
-static const string version = "#version 300 core";
+static const string version = "#version 300 core\n";
 #else
-static const string version = "#version 330 core";
+static const string version = "#version 330 core\n";
 #endif
 
-unsigned int ShaderCompiler::compile(const string& vertex_path, const string& fragment_path)
-{
-	GLuint vertex = GL(glCreateShader(GL_VERTEX_SHADER));
-	GLuint fragment = GL(glCreateShader(GL_FRAGMENT_SHADER));
-
-	string vertex_code = version;
-	ifstream vertex_stream(vertex_path.c_str(), ios::in);
-
-#if SHADER_COMPILER_OUTPUT
-
-	Log(vertex_path);
-	Log(fragment_path);
-
-#endif
-
-	if (vertex_stream.is_open()) {
-		string line = "";
-		while (getline(vertex_stream, line))
-			vertex_code += "\n" + line;
-		vertex_stream.close();
+static void check_programm_error(GLuint program) {
+	static GLint log_length;
+	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
+	if (log_length > 0) {
+		vector<char> message(static_cast<int64_t>(log_length) + 1);
+		GL(glGetShaderInfoLog(program, log_length, nullptr, &message[0]));
+		throw runtime_error(message.data());
 	}
-	else {
-		Fatal("Impossible to open " << vertex_path.c_str());
+}
+
+static GLuint compile_shader(const string& code, unsigned type) {
+	auto shader = GL(glCreateShader(type));
+	auto code_pointer = code.c_str();
+	GL(glShaderSource(shader, 1, &code_pointer, nullptr));
+	GL(glCompileShader(shader));
+	check_programm_error(shader);
+	return shader;
+}
+
+unsigned ShaderCompiler::compile(const std::string& path) {
+
+	unsigned program;
+
+	try {
+		auto vertex_code = version + File::read_to_string(path + ".vert");
+		auto fragment_code = version + File::read_to_string(path + ".frag");
+
+		auto vertex = compile_shader(vertex_code, GL_VERTEX_SHADER);
+		auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
+
+		program = glCreateProgram();
+		GL(glAttachShader(program, vertex));
+		GL(glAttachShader(program, fragment));
+		GL(glLinkProgram(program));
+
+		check_programm_error(program);
+
+		GL(glDetachShader(program, vertex));
+		GL(glDetachShader(program, fragment));
+
+		GL(glDeleteShader(vertex));
+		GL(glDeleteShader(fragment));
 	}
-
-	string fragment_code = version;
-	ifstream fragment_stream(fragment_path.c_str(), ios::in);
-
-	if (fragment_stream.is_open()) {
-		string line = "";
-		while (getline(fragment_stream, line))
-			fragment_code += "\n" + line;
-		fragment_stream.close();
+	catch (...) {
+		throw std::runtime_error(string() +
+			"Failed to compile shader at path: " + path + "\n" +
+			"GLSL error: " + what());
 	}
-
-	GLint result = GL_FALSE;
-	int info_length;
-
-#if SHADER_COMPILER_OUTPUT
-	Log("Compiling shader :" << vertex_path.c_str());
-#endif
-
-	char const* vertex_code_pointer = vertex_code.c_str();
-	GL(glShaderSource(vertex, 1, &vertex_code_pointer, NULL));
-	GL(glCompileShader(vertex));
-
-	GL(glGetShaderiv(vertex, GL_COMPILE_STATUS, &result));
-	GL(glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &info_length));
-
-	if (info_length > 0) {
-		vector<char> vertex_error_message(info_length + 1);
-		GL(glGetShaderInfoLog(vertex, info_length, NULL, &vertex_error_message[0]));
-		Fatal(&vertex_error_message[0]);
-	}
-
-#if SHADER_COMPILER_OUTPUT
-	Log("Compiling shader :" << fragment_path.c_str());
-#endif
-
-	char const* fragment_code_pointer = fragment_code.c_str();
-	GL(glShaderSource(fragment, 1, &fragment_code_pointer, NULL));
-	GL(glCompileShader(fragment));
-
-	GL(glGetShaderiv(fragment, GL_COMPILE_STATUS, &result));
-	GL(glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &info_length));
-
-	if (info_length > 0) {
-		vector<char> fragment_error(info_length + 1);
-		GL(glGetShaderInfoLog(fragment, info_length, NULL, &fragment_error[0]));
-		Fatal(&fragment_error[0]);
-	}
-
-#if SHADER_COMPILER_OUTPUT
-	Log("Linking program");
-#endif
-
-	GLuint program = glCreateProgram();
-	GL(glAttachShader(program, vertex));
-	GL(glAttachShader(program, fragment));
-	GL(glLinkProgram(program));
-
-	GL(glGetProgramiv(program, GL_LINK_STATUS, &result));
-	GL(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &info_length));
-
-	if (info_length > 0) {
-		vector<char> program_error(info_length + 1);
-		GL(glGetProgramInfoLog(program, info_length, NULL, &program_error[0]));
-		Fatal(&program_error[0]);
-	}
-
-	GL(glDetachShader(program, vertex));
-	GL(glDetachShader(program, fragment));
-
-	GL(glDeleteShader(vertex));
-	GL(glDeleteShader(fragment));
 
 	return program;
 }

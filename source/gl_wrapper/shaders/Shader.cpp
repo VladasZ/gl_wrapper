@@ -14,9 +14,9 @@
 
 using namespace gl;
 
-Shader::Shader(const std::string& directory, const std::string& name) : name(name), path(directory) {
-    _program = ShaderCompiler::compile(directory + "/" + name + ".vert",
-                                       directory + "/" + name + ".frag");
+Shader::Shader(const std::string& path) : path(path) {
+
+    _program = ShaderCompiler::compile(path);
 
     _uniform_color  = glGetUniformLocation(_program, "uniform_color" );
     _mvp_matrix     = glGetUniformLocation(_program, "mvp_matrix"    );
