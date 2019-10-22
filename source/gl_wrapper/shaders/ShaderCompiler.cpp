@@ -43,15 +43,21 @@ static GLuint compile_shader(const string& code, unsigned type) {
 	return shader;
 }
 
+static std::string unfold_includes(const std::string& code) {
+
+
+	return version + code;
+}
+
 unsigned ShaderCompiler::compile(const std::string& path) {
 
 	unsigned program;
 
 	try {
-		auto vertex_code = version + File::read_to_string(path + ".vert");
-		auto fragment_code = version + File::read_to_string(path + ".frag");
+		auto vertex_code   = unfold_includes(File::read_to_string(path + ".vert"));
+		auto fragment_code = unfold_includes(File::read_to_string(path + ".frag"));
 
-		auto vertex = compile_shader(vertex_code, GL_VERTEX_SHADER);
+		auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
 		auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
 
 		program = glCreateProgram();
@@ -70,7 +76,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	catch (...) {
 		throw std::runtime_error(string() +
 			"Failed to compile shader at path: " + path + "\n" +
-			"GLSL error: " + what());
+			"GLSL error: " + what()
+		);
 	}
 
 	return program;
