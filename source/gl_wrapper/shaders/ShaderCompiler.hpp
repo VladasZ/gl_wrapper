@@ -10,6 +10,7 @@
 
 #include <string>
 
-namespace ShaderCompiler {    
-    unsigned compile(const std::string& path);
+struct ShaderCompiler {    
+	static inline std::string includes_path;
+    static unsigned compile(const std::string& path);
 };

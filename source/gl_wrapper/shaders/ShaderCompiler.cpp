@@ -6,8 +6,10 @@
 //  Copyright � 2017 VladasZ. All rights reserved.
 //
 
+#include <regex>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "File.hpp"
 #include "GLDebug.hpp"
@@ -23,6 +25,9 @@ static const string version = "#version 300 core\n";
 #else
 static const string version = "#version 330 core\n";
 #endif
+
+const static string quotes_query = "(\"[^ \"]+\")";
+const static string include_query = "#include " + quotes_query;
 
 static void check_programm_error(GLuint program) {
 	static GLint log_length;
@@ -43,8 +48,22 @@ static GLuint compile_shader(const string& code, unsigned type) {
 	return shader;
 }
 
-static std::string unfold_includes(const std::string& code) {
+static std::string unfold_includes(std::string& code) {
 
+	auto includes = String::find_regexpr_matches(code, include_query);
+
+	unordered_map<string, string> files;
+
+	for (auto include : includes) {
+		auto file_name = String::trimmed(String::find_regexpr_match(include, quotes_query));
+		auto file_path = ShaderCompiler::includes_path + "/" + file_name;
+		auto include_code = File::read_to_string(file_path);
+		files[include] = include_code;
+	}
+
+	for (auto [include, include_code] : files) {
+		String::replace(include, include_code, code);
+	}
 
 	return version + code;
 }
