@@ -48,14 +48,15 @@ static GLuint compile_shader(const string& code, unsigned type) {
 	return shader;
 }
 
-static std::string unfold_includes(std::string& code) {
+static void unfold_includes(std::string& code) {
 
 	auto includes = String::find_regexpr_matches(code, include_query);
 
 	unordered_map<string, string> files;
 
 	for (auto include : includes) {
-		auto file_name = String::trimmed(String::find_regexpr_match(include, quotes_query));
+	    auto file_name = String::find_regexpr_match(include, quotes_query);
+		String::trim(file_name);
 		auto file_path = ShaderCompiler::includes_path + "/" + file_name;
 		auto include_code = File::read_to_string(file_path);
 		files[include] = include_code;
@@ -65,7 +66,7 @@ static std::string unfold_includes(std::string& code) {
 		String::replace(include, include_code, code);
 	}
 
-	return version + code;
+    code = version + code;
 }
 
 unsigned ShaderCompiler::compile(const std::string& path) {
@@ -73,8 +74,11 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	unsigned program;
 
 	try {
-		auto vertex_code   = unfold_includes(File::read_to_string(path + ".vert"));
-		auto fragment_code = unfold_includes(File::read_to_string(path + ".frag"));
+		auto vertex_code   = File::read_to_string(path + ".vert");
+		auto fragment_code = File::read_to_string(path + ".frag");
+
+		unfold_includes(vertex_code);
+		unfold_includes(fragment_code);
 
 		auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
 		auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
