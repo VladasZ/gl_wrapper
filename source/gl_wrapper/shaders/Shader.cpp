@@ -26,6 +26,7 @@ Shader::Shader(const std::string& path) : path(path) {
 	_selected       = glGetUniformLocation(_program, "selected"      );
 	_resolution     = glGetUniformLocation(_program, "resolution"    );
 	_position       = glGetUniformLocation(_program, "position"      );
+	_rotation       = glGetUniformLocation(_program, "rotation"      );
 }
 
 void Shader::use() const {
@@ -66,4 +67,8 @@ void Shader::set_resolution(const gm::Size& resolution) {
 
 void Shader::set_position(const gm::Point& point) {
 	GL(glUniform2fv(_position, 1, &point.x));
+}
+
+void Shader::set_rotation(float angle) {
+	glUniform1f(_rotation, angle);
 }

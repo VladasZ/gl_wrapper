@@ -30,6 +30,7 @@ class Shader {
 	int _selected;
 	int _resolution;
 	int _position;
+	int _rotation;
 
 public:
     
@@ -50,6 +51,7 @@ public:
 	void set_selected(bool);
 	void set_resolution(const gm::Size&);
 	void set_position(const gm::Point&);
+	void set_rotation(float);
 };
 
 }
