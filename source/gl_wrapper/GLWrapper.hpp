@@ -13,8 +13,9 @@
 #include "Rect.hpp"
 #include "Color.hpp"
 #include "Event.hpp"
-
 #include "Shader.hpp"
+#include "Monitor.hpp"
+
 
 struct GL {
     
@@ -52,13 +53,15 @@ struct GL {
         static const unsigned Polygon;
     };
 
-    static inline gm::Size screen_size;
-    static inline gm::Size display_resolution;
+    static inline std::vector<gl::Monitor> monitors;
+
+    static inline float screen_scale = 1.0f;
+    static inline gm::Size window_size;
 
     static void initialize(const gm::Size& size);
 
 #ifdef DESKTOP_BUILD
-    static void start_main_loop(std::function<void()> on_frame_drawn);
+    static void start_main_loop(std::function<void()> draw_frame);
 #endif
   
     static inline Event<gm::Size> on_window_size_change;

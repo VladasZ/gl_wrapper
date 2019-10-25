@@ -24,11 +24,11 @@ const unsigned GL::DrawMode::Polygon       = 0;//GL_POLYGON;
 static GLFWwindow* window = nullptr;
 
 namespace cursor {
-static GLFWcursor* arrow;
-static GLFWcursor* text;
-static GLFWcursor* drag;
-static GLFWcursor* h_resize;
-static GLFWcursor* v_resize;
+    static GLFWcursor* arrow;
+    static GLFWcursor* text;
+    static GLFWcursor* drag;
+    static GLFWcursor* h_resize;
+    static GLFWcursor* v_resize;
 }
 #endif
 
@@ -61,17 +61,14 @@ void GL::initialize(const gm::Size& size) {
                               nullptr);
 
     if (window == nullptr)
-        Fatal("GLFW window creation failed");
+    Fatal("GLFW window creation failed");
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Limit fps to 60
     glewExperimental = GL_TRUE;
 
     if (glewInit())
-        Fatal("Glew initialization failed");
-
-    auto mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    display_resolution = { mode->width, mode->height };
+    Fatal("Glew initialization failed");
 
 #endif
 
@@ -86,10 +83,6 @@ void GL::initialize(const gm::Size& size) {
     glfwSetCursorPosCallback  (window, cursor_position_callback);
     glfwSetWindowSizeCallback (window, size_changed            );
     glfwSetMouseButtonCallback(window, mouse_button_callback   );
-
-    auto videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-    display_resolution = { videoMode->width, videoMode->height };
-
 #endif
 
 #ifdef DESKTOP_BUILD
@@ -104,23 +97,40 @@ void GL::initialize(const gm::Size& size) {
     cursor::v_resize = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
 #endif
 
+
+    int monitors_count;
+    auto glfw_monitors = glfwGetMonitors(&monitors_count);
+
+    Log(monitors_count);
+
+    for (int i = 0; i < monitors_count; i++) {
+        monitors.emplace_back(glfw_monitors[i]);
+    }
+
+    for (auto mon : monitors) {
+        Log(mon.to_string());
+    }
+
 }
 
 #ifdef DESKTOP_BUILD
-void GL::start_main_loop(std::function<void()> on_frame_drawn) {
+void GL::start_main_loop(std::function<void()> draw_frame) {
     while (true) {
+        int x, y;
+        glfwGetFramebufferSize(window, &x, &y);
+        screen_scale = x / window_size.width;
         GL(glfwPollEvents());
-        on_frame_drawn();
+        draw_frame();
         GL(glfwSwapBuffers(window));
     }
 }
 #endif
 
 void GL::set_viewport(const gm::Rect& rect) {
-    glViewport(static_cast<GLint>(rect.origin.x),
-               static_cast<GLint>(screen_size.height - rect.origin.y - rect.size.height),
-               static_cast<GLsizei>(rect.size.width),
-               static_cast<GLsizei>(rect.size.height));
+    glViewport(static_cast<GLint>(rect.origin.x * screen_scale),
+               static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
+               static_cast<GLsizei>(rect.size.width * screen_scale),
+               static_cast<GLsizei>(rect.size.height * screen_scale));
 }
 
 void GL::set_clear_color(const gm::Color& color) {
@@ -142,21 +152,21 @@ void GL::disable_depth_test() {
 #ifdef DESKTOP_BUILD
 void GL::set_cursor_mode(CursorMode cursor_mode) {
     switch (cursor_mode) {
-    case CursorMode::Arrow:
-        glfwSetCursor(window, cursor::arrow);
-        break;
-    case CursorMode::Text:
-        glfwSetCursor(window, cursor::text);
-        break;
-    case CursorMode::Drag:
-        glfwSetCursor(window, cursor::drag);
-        break;
-    case CursorMode::HResize:
-        glfwSetCursor(window, cursor::h_resize);
-        break;
-    case CursorMode::VResize:
-        glfwSetCursor(window, cursor::v_resize);
-        break;
+        case CursorMode::Arrow:
+            glfwSetCursor(window, cursor::arrow);
+            break;
+        case CursorMode::Text:
+            glfwSetCursor(window, cursor::text);
+            break;
+        case CursorMode::Drag:
+            glfwSetCursor(window, cursor::drag);
+            break;
+        case CursorMode::HResize:
+            glfwSetCursor(window, cursor::h_resize);
+            break;
+        case CursorMode::VResize:
+            glfwSetCursor(window, cursor::v_resize);
+            break;
     }
 }
 
@@ -166,9 +176,9 @@ static void size_changed(GLFWwindow* window, int width, int height) {
 }
 
 static void mouse_button_callback([[maybe_unused]] GLFWwindow* window,
-int glfw_button,
-int action,
-[[maybe_unused]] int mods) {
+                                  int glfw_button,
+                                  int action,
+                                  [[maybe_unused]] int mods) {
     auto button = GL::MouseButton::Left;
     if      (glfw_button == GLFW_MOUSE_BUTTON_RIGHT ) button = GL::MouseButton::Right ;
     else if (glfw_button == GLFW_MOUSE_BUTTON_MIDDLE) button = GL::MouseButton::Middle;
@@ -184,10 +194,10 @@ static void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset,
 }
 
 static void key_callback([[maybe_unused]] GLFWwindow* window,
-                 int key,
-[[maybe_unused]] int scancode,
-                 int action,
-[[maybe_unused]] int mods) {
+                         int key,
+                         [[maybe_unused]] int scancode,
+                         int action,
+                         [[maybe_unused]] int mods) {
     GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
 }
 
