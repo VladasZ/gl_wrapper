@@ -54,8 +54,13 @@ struct GL {
     };
 
     static inline std::vector<gl::Monitor> monitors;
-
+    
+#ifdef IOS_BUILD
+    static inline float screen_scale = 3.0f;
+#else
     static inline float screen_scale = 1.0f;
+#endif
+    
     static inline gm::Size window_size;
 
     static void initialize(const gm::Size& size);

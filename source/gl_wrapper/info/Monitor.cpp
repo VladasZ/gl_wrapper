@@ -13,6 +13,8 @@ using namespace gm;
 using namespace gl;
 
 Monitor::Monitor(void* pointer) {
+    
+#ifdef DESKTOP_BUILD
 
     auto monitor = static_cast<GLFWmonitor*>(pointer);
 
@@ -29,6 +31,9 @@ Monitor::Monitor(void* pointer) {
     float xscale, yscale;
     glfwGetMonitorContentScale(monitor, &xscale, &yscale);
     _scale = { xscale, yscale };
+    
+#endif
+    
 }
 
 std::string Monitor::name() const {

@@ -98,6 +98,8 @@ void GL::initialize(const gm::Size& size) {
 #endif
 
 
+#ifdef DESKTOP_BUILD
+    
     int monitors_count;
     auto glfw_monitors = glfwGetMonitors(&monitors_count);
 
@@ -110,6 +112,8 @@ void GL::initialize(const gm::Size& size) {
     for (auto mon : monitors) {
         Log(mon.to_string());
     }
+    
+#endif
 
 }
 
