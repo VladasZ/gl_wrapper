@@ -20,4 +20,6 @@ add_library(${PROJECT_NAME} ${SOURCE})
 link_project_at_path(geometry  ${geometry_path} )
 link_project_at_path(cpp_utils ${cpp_utils_path})
 
+if(${NEEDS_CONAN})
 conan_target_link_libraries(${PROJECT_NAME})
+endif()
