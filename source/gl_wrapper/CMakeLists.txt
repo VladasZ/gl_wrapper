@@ -11,6 +11,3 @@ set(CMAKE_C_FLAGS   "-x objective-c")
 set(CMAKE_CXX_FLAGS "-x objective-c++")
 
 endif()
-
-link_project_at_path(geometry  ${geometry_path} )
-link_project_at_path(cpp_utils ${cpp_utils_path})
