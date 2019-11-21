@@ -12,7 +12,11 @@
 
 #ifdef IOS_BUILD
     #include <OpenGLES/ES3/gl.h>
-#else
+#elif ANDROID_BUILD
+    #include <GLES3/gl3.h>
+#elif DESKTOP_BUILD
     #include <GL/glew.h>
     #include <GLFW/glfw3.h>
+#else
+    INVALID_PLATFORM
 #endif
