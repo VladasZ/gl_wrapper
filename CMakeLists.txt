@@ -5,9 +5,3 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
 setup_project(gl_wrapper)
-
-add_subdirectory(source/gl_wrapper)
-
-if(${DESKTOP_BUILD})
-  add_subdirectory(source/gl_wrapper_test)
-endif()
