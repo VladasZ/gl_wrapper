@@ -97,10 +97,14 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		GL(glDeleteShader(fragment));
 	}
 	catch (...) {
+#if ANDROID_BUILD
+        return 0;
+#else
 		throw std::runtime_error(string() +
 			"Failed to compile shader at path: " + path + "\n" +
 			"GLSL error: " + what()
 		);
+#endif
 	}
 
 	return program;
