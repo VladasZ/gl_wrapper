@@ -26,14 +26,14 @@ static const string version = "#version 300 core\n";
 static const string version = "#version 330 core\n";
 #endif
 
-const static string quotes_query = "(\"[^ \"]+\")";
+const static string quotes_query = R"(("[^ "]+"))";
 const static string include_query = "#include " + quotes_query;
 
 static void check_programm_error(GLuint program) {
 	static GLint log_length;
 	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
 	if (log_length > 0) {
-		vector<char> message(static_cast<int64_t>(log_length) + 1);
+		vector<char> message(static_cast<unsigned>(log_length) + 1);
 		GL(glGetShaderInfoLog(program, log_length, nullptr, &message[0]));
 		throw runtime_error(message.data());
 	}
@@ -97,14 +97,10 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		GL(glDeleteShader(fragment));
 	}
 	catch (...) {
-#if ANDROID_BUILD
-        return 0;
-#else
 		throw std::runtime_error(string() +
 			"Failed to compile shader at path: " + path + "\n" +
 			"GLSL error: " + what()
 		);
-#endif
 	}
 
 	return program;
