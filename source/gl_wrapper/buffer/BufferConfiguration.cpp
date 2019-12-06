@@ -16,15 +16,16 @@ BufferConfiguration::BufferConfiguration(uint8_t first_param, uint8_t second_par
     
     if (first_param == 0) {
         _Error("Zero BufferConfiguration");
-        throw "Zero BufferConfiguration";
+        throw std::runtime_error("Zero BufferConfiguration");
     }
     
                                   configuration[0] = first_param;
     if (second_param > 0) size++; configuration[1] = second_param;
     if (third_param  > 0) size++; configuration[2] = third_param;
     
-    for (uint8_t i = 0; i < size; i ++)
+    for (uint8_t i = 0; i < size; i++) {
         vertex_size += configuration[i];
+    }
 }
 
 uint8_t BufferConfiguration::stride_for_index(uint8_t index) const {
@@ -34,8 +35,9 @@ uint8_t BufferConfiguration::stride_for_index(uint8_t index) const {
     
     uint8_t stride = vertex_size;
     
-    for (uint8_t i = size - 1; i >= index; i--)
+    for (uint8_t i = size - 1; i >= index; i--) {
         stride -= configuration[i];
+    }
     
     return stride;
 }
@@ -44,16 +46,16 @@ void BufferConfiguration::set_pointers() const {
     
     for (uint8_t i = 0; i < size; i++) {
         
-        int attribureSize = configuration[i];
+        auto attributeSize = configuration[i];
         
         GL(glEnableVertexAttribArray(i));
         
         GL(glVertexAttribPointer(i,
-                                 attribureSize,
+                                 attributeSize,
                                  GL_FLOAT,
                                  GL_FALSE,
-                                 vertex_size* sizeof(GLfloat),
-                                 reinterpret_cast<GLvoid*>((stride_for_index(i) * sizeof(GLfloat)))));
+                                 vertex_size * sizeof(GLfloat),
+                                 reinterpret_cast<GLvoid*>(stride_for_index(i) * sizeof(GLfloat))));
     }
 }
 

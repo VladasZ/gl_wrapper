@@ -42,7 +42,6 @@ void Buffer::_initialize(BufferData* data, const BufferConfiguration& configurat
     }
 
     configuration.set_pointers();
-    GL(glEnableVertexAttribArray(0));
     GL(glBindVertexArray(0));
 }
 
