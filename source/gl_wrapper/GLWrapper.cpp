@@ -61,14 +61,15 @@ void GL::initialize(const gm::Size& size) {
                               nullptr);
 
     if (window == nullptr)
-    Fatal("GLFW window creation failed");
+    Log("GLFW window creation failed");
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Limit fps to 60
     glewExperimental = GL_TRUE;
 
-    if (glewInit())
-    Fatal("Glew initialization failed");
+    if (glewInit()) {
+        Fatal("Glew initialization failed");
+    }
 
 #endif
 

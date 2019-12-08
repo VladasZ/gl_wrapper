@@ -13,6 +13,7 @@
 
 #include "File.hpp"
 #include "GLDebug.hpp"
+#include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
 #include "ExceptionCatch.hpp"

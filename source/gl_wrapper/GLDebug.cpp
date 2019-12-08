@@ -13,7 +13,7 @@
 #include "GLDebug.hpp"
 #include "OpenGLHeaders.hpp"
 
-void check_gl_error(LOCATION_PARAMETERS) {
+void check_gl_error(const std::string& fileName, const char* function, int line) {
     GLenum err = glGetError();
     while(err != GL_NO_ERROR) {
         char* error = new char[255];
@@ -39,13 +39,14 @@ void check_gl_error(LOCATION_PARAMETERS) {
             break;
         }
 
-        UTILS_INTERNAL_LOG_ERROR("Rendering error: " << error, fileName, function, line);
+        cu::Log::log(std::string() + "Rendering error: " + error, fileName, function, line);
+
         delete[] error;
         err = glGetError();
     }
 }
 
-void check_framebuffer_status(unsigned int target, LOCATION_PARAMETERS) {
+void check_framebuffer_status(unsigned int target, const std::string& fileName, const char* function, int line) {
     auto error = glCheckFramebufferStatus(target);
 
     if (!error || error == GL_FRAMEBUFFER_COMPLETE) return;
@@ -70,7 +71,7 @@ void check_framebuffer_status(unsigned int target, LOCATION_PARAMETERS) {
             break;
     }
 
-    UTILS_INTERNAL_LOG_ERROR("Framebuffer error: " << errorString, fileName, function, line);
+    cu::Log::log(std::string() + "Framebuffer error: " + errorString, fileName, function, line);
 }
 
 #endif

@@ -16,15 +16,15 @@
 #define SHADER_COMPILER_OUTPUT true
 
 #if RENDERING_ERRORS_OUTPUT
-#define GL(command) (command); check_gl_error(LOCATION_INFO)
+#define GL(command) (command); check_gl_error(__FILE__, __func__, __LINE__)
 #else
 #define GL(x) x
 #endif
 
 #define CHECK_FRAMEBUFFER check_framebuffer_status(GL_FRAMEBUFFER, LOCATION_INFO)
 
-void check_gl_error(LOCATION_PARAMETERS);
-void check_framebuffer_status(unsigned int target, LOCATION_PARAMETERS);
+void check_gl_error(const std::string& fileName, const char* function, int line);
+void check_framebuffer_status(unsigned int target, const std::string& fileName, const char* function, int line);
 
 #else
 
