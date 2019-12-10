@@ -33,10 +33,11 @@ const static string include_query = "#include " + quotes_query;
 static void check_programm_error(GLuint program) {
 	static GLint log_length;
 	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
+	Logvar(log_length);
 	if (log_length > 0) {
 		vector<char> message(static_cast<unsigned>(log_length) + 1);
 		GL(glGetShaderInfoLog(program, log_length, nullptr, &message[0]));
-		throw runtime_error(message.data());
+		Fatal(message.data());
 	}
 }
 
@@ -78,6 +79,9 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		auto vertex_code   = File::read_to_string(path + ".vert");
 		auto fragment_code = File::read_to_string(path + ".frag");
 
+		Log(vertex_code);
+		Log(fragment_code);
+
 		unfold_includes(vertex_code);
 		unfold_includes(fragment_code);
 
@@ -98,7 +102,7 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		GL(glDeleteShader(fragment));
 	}
 	catch (...) {
-		throw std::runtime_error(string() +
+		Fatal(string() +
 			"Failed to compile shader at path: " + path + "\n" +
 			"GLSL error: " + what()
 		);
@@ -106,6 +110,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 
 	Log("Shader compiled:");
 	Log(path);
+	Log(program);
+
 
 	return program;
 }
