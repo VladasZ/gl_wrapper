@@ -39,6 +39,8 @@ void check_gl_error(const std::string& fileName, const char* function, int line)
             break;
         }
 
+        Log("Error");
+
         cu::Log::log(std::string() + "Rendering error: " + error, fileName, function, line);
 
         delete[] error;

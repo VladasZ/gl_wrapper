@@ -104,5 +104,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		);
 	}
 
+	Log("Shader compiled:");
+	Log(path);
+
 	return program;
 }
