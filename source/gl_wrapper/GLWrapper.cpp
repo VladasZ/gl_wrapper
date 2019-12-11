@@ -10,6 +10,10 @@
 #include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
 
+#ifdef ANDROID_BUILD
+#include <EGL/egl.h>
+#endif
+
 const unsigned GL::DrawMode::Points        = 0;//GL_POINT;
 const unsigned GL::DrawMode::Lines         = GL_LINES;
 const unsigned GL::DrawMode::LineStrip     = GL_LINE_STRIP;
@@ -71,7 +75,10 @@ void GL::initialize(const gm::Size& size) {
         Fatal("Glew initialization failed");
     }
 
+#elif ANDROID_BUILD
+    GL::create_context();
 #endif
+
 
     GL(glEnable(GL_DEPTH_TEST));
     GL(glEnable(GL_BLEND));
@@ -204,6 +211,15 @@ static void key_callback([[maybe_unused]] GLFWwindow* window,
                          int action,
                          [[maybe_unused]] int mods) {
     GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
+}
+
+#endif
+
+#ifdef ANDROID_BUILD
+
+void GL::create_context() {
+    auto display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    Logvar(display);
 }
 
 #endif

@@ -79,9 +79,6 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		auto vertex_code   = File::read_to_string(path + ".vert");
 		auto fragment_code = File::read_to_string(path + ".frag");
 
-		Log(vertex_code);
-		Log(fragment_code);
-
 		unfold_includes(vertex_code);
 		unfold_includes(fragment_code);
 
@@ -89,6 +86,7 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 		auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
 
 		program = glCreateProgram();
+		Logvar(program);
 		GL(glAttachShader(program, vertex));
 		GL(glAttachShader(program, fragment));
 		GL(glLinkProgram(program));
@@ -109,8 +107,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	}
 
 	Log("Shader compiled:");
-	Log(path);
-	Log(program);
+	Logvar(path);
+	Logvar(program);
 
 
 	return program;

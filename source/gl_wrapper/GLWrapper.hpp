@@ -90,4 +90,9 @@ struct GL {
 #ifdef DESKTOP_BUILD
     static void set_cursor_mode(CursorMode);
 #endif
+
+#ifdef ANDROID_BUILD
+    static void create_context();
+#endif
+
 };
