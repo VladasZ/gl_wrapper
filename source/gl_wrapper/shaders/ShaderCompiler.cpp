@@ -30,14 +30,17 @@ static const string version = "#version 330 core\n";
 const static string quotes_query = R"(("[^ "]+"))";
 const static string include_query = "#include " + quotes_query;
 
+static char errror_message_buffer[1024];
+
 static void check_programm_error(GLuint program) {
 	static GLint log_length;
 	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
 	Logvar(log_length);
 	if (log_length > 2) {
-		vector<char> message(static_cast<unsigned>(log_length) + 1);
-		GL(glGetShaderInfoLog(program, log_length, nullptr, &message[0]));
-		Fatal(message.data());
+	    char* message = errror_message_buffer;
+		GL(glGetShaderInfoLog(program, log_length, nullptr, message));
+	    Logvar(message);
+		Fatal(message);
 	}
 }
 
