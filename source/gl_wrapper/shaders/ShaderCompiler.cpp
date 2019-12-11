@@ -33,6 +33,9 @@ const static string include_query = "#include " + quotes_query;
 static char errror_message_buffer[1024];
 
 static void check_programm_error(GLuint program) {
+#ifdef ANDROID_BUILD
+    return;
+#else
 	static GLint log_length;
 	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
 	Logvar(log_length);
@@ -42,6 +45,7 @@ static void check_programm_error(GLuint program) {
 	    Logvar(message);
 		Fatal(message);
 	}
+#endif
 }
 
 static GLuint compile_shader(const string& code, unsigned type) {
