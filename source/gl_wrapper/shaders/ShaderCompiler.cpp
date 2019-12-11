@@ -21,8 +21,8 @@
 using namespace cu;
 using namespace std;
 
-#ifdef IOS_BUILD
-static const string version = "#version 300 core\n";
+#if defined(IOS_BUILD) || defined(ANDROID_BUILD)
+static const string version = "#version 300 es\n";
 #else
 static const string version = "#version 330 core\n";
 #endif
@@ -34,7 +34,7 @@ static void check_programm_error(GLuint program) {
 	static GLint log_length;
 	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
 	Logvar(log_length);
-	if (log_length > 0) {
+	if (log_length > 2) {
 		vector<char> message(static_cast<unsigned>(log_length) + 1);
 		GL(glGetShaderInfoLog(program, log_length, nullptr, &message[0]));
 		Fatal(message.data());
@@ -57,7 +57,7 @@ static void unfold_includes(std::string& code) {
 	unordered_map<string, string> files;
 
 	for (auto include : includes) {
-	    auto file_name = String::find_regexpr_match(include, quotes_query);
+		auto file_name = String::find_regexpr_match(include, quotes_query);
 		String::trim(file_name);
 		auto file_path = ShaderCompiler::includes_path + "/" + file_name;
 		auto include_code = File::read_to_string(file_path);
@@ -68,48 +68,39 @@ static void unfold_includes(std::string& code) {
 		String::replace(include, include_code, code);
 	}
 
-    code = version + code;
+	code = version + code;
 }
 
 unsigned ShaderCompiler::compile(const std::string& path) {
 
 	unsigned program;
 
-	try {
-		auto vertex_code   = File::read_to_string(path + ".vert");
-		auto fragment_code = File::read_to_string(path + ".frag");
+	auto vertex_code   = File::read_to_string(path + ".vert");
+	auto fragment_code = File::read_to_string(path + ".frag");
 
-		unfold_includes(vertex_code);
-		unfold_includes(fragment_code);
+	unfold_includes(vertex_code);
+	unfold_includes(fragment_code);
 
-		auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
-		auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
+	auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
+	auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
 
-		program = glCreateProgram();
-		Logvar(program);
-		GL(glAttachShader(program, vertex));
-		GL(glAttachShader(program, fragment));
-		GL(glLinkProgram(program));
+	program = glCreateProgram();
+	Logvar(program);
+	GL(glAttachShader(program, vertex));
+	GL(glAttachShader(program, fragment));
+	GL(glLinkProgram(program));
 
-		check_programm_error(program);
+	check_programm_error(program);
 
-		GL(glDetachShader(program, vertex));
-		GL(glDetachShader(program, fragment));
+	GL(glDetachShader(program, vertex));
+	GL(glDetachShader(program, fragment));
 
-		GL(glDeleteShader(vertex));
-		GL(glDeleteShader(fragment));
-	}
-	catch (...) {
-		Fatal(string() +
-			"Failed to compile shader at path: " + path + "\n" +
-			"GLSL error: " + what()
-		);
-	}
+	GL(glDeleteShader(vertex));
+	GL(glDeleteShader(fragment));
 
 	Log("Shader compiled:");
 	Logvar(path);
 	Logvar(program);
-
 
 	return program;
 }
