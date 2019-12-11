@@ -11,7 +11,7 @@
 #include "OpenGLHeaders.hpp"
 
 #ifdef ANDROID_BUILD
-#include <EGL/egl.h>
+//#include <EGL/egl.h>
 #endif
 
 const unsigned GL::DrawMode::Points        = 0;//GL_POINT;
@@ -218,8 +218,8 @@ static void key_callback([[maybe_unused]] GLFWwindow* window,
 #ifdef ANDROID_BUILD
 
 void GL::create_context() {
-    auto display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-    Logvar(display);
+  //  auto display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+  //  Logvar(display);
 }
 
 #endif
