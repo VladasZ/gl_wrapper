@@ -10,9 +10,6 @@
 #include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
 
-#ifdef ANDROID_BUILD
-//#include <EGL/egl.h>
-#endif
 
 const unsigned GL::DrawMode::Points        = 0;//GL_POINT;
 const unsigned GL::DrawMode::Lines         = GL_LINES;

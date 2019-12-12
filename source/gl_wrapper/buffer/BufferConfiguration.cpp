@@ -47,7 +47,7 @@ void BufferConfiguration::set_pointers() const {
     for (uint8_t i = 0; i < size; i++) {
         
         auto attributeSize = configuration[i];
-        
+
         GL(glEnableVertexAttribArray(i));
         
         GL(glVertexAttribPointer(i,

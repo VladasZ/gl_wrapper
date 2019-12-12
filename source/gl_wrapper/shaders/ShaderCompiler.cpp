@@ -38,11 +38,9 @@ static void check_programm_error(GLuint program) {
 #else
 	static GLint log_length;
 	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
-	Logvar(log_length);
 	if (log_length > 2) {
 	    char* message = errror_message_buffer;
 		GL(glGetShaderInfoLog(program, log_length, nullptr, message));
-	    Logvar(message);
 		Fatal(message);
 	}
 #endif
