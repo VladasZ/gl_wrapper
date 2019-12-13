@@ -10,10 +10,19 @@
 
 #define GL_SILENCE_DEPRECATION
 
+//#define OPENGL2_BUILD
+
 #ifdef IOS_BUILD
     #include <OpenGLES/ES3/gl.h>
 #elif ANDROID_BUILD
-    #include <GLES3/gl3.h>
+
+#ifdef OPENGL2_BUILD
+#include <GLES/gl.h>
+#include <GLES2/gl2.h>
+#else
+#include <GLES3/gl3.h>
+#endif
+
 #elif DESKTOP_BUILD
     #include <GL/glew.h>
     #include <GLFW/glfw3.h>

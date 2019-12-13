@@ -14,7 +14,7 @@ using namespace gl;
 
 static unsigned int mode_for_channels(unsigned int channels) {
     switch (channels) {
-#if IOS_BUILD
+#if defined(IOS_BUILD) || defined(OPENGL2_BUILD)
     case 1: return GL_LUMINANCE;
 #else
     case 1: return GL_RED;

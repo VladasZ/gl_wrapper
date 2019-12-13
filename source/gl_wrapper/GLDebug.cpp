@@ -56,9 +56,11 @@ void check_framebuffer_status(unsigned int target, const std::string& fileName, 
     std::string errorString;
 
     switch (error) {
+#ifndef OPENGL2_BUILD
         case GL_FRAMEBUFFER_UNDEFINED:
             errorString = "GL_FRAMEBUFFER_UNDEFINED";
             break;
+#endif
         case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
             errorString = "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT";
             break;
