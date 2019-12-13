@@ -61,8 +61,9 @@ void GL::initialize(const gm::Size& size) {
                               nullptr,
                               nullptr);
 
-    if (window == nullptr)
-    Log("GLFW window creation failed");
+    if (window == nullptr) {
+        Fatal("GLFW window creation failed");
+    }
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Limit fps to 60
