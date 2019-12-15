@@ -3,7 +3,7 @@
 //  test_engine
 //
 //  Created by Vladas Zakrevskis on 8/17/17.
-//  Copyright � 2017 VladasZ. All rights reserved.
+//  Copyright © 2017 VladasZ. All rights reserved.
 //
 
 #include <regex>
@@ -21,7 +21,9 @@
 using namespace cu;
 using namespace std;
 
-#if defined(IOS_BUILD) || defined(ANDROID_BUILD)
+#ifdef IPHONE_4S_BUILD
+static const string version = "#version 100\n";
+#elif defined(IOS_BUILD) || defined(ANDROID_BUILD)
 static const string version = "#version 300 es\n";
 #else
 static const string version = "#version 330 core\n";
@@ -78,6 +80,10 @@ static void unfold_includes(std::string& code) {
 
 unsigned ShaderCompiler::compile(const std::string& path) {
 
+#ifdef SHADER_COMPILER_OUTPUT
+    Log("Compiling: " + path);
+#endif
+    
 	unsigned program;
 
 	auto vertex_code   = File::read_to_string(path + ".vert");
