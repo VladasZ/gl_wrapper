@@ -13,6 +13,7 @@
 
 #include "File.hpp"
 #include "GLDebug.hpp"
+#include "GLWrapper.hpp"
 #include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
@@ -21,20 +22,44 @@
 using namespace cu;
 using namespace std;
 
-#ifdef IPHONE_4S_BUILD
-static const string version = "#version 100\n";
-#elif defined(IOS_BUILD) || defined(ANDROID_BUILD)
-static const string version = "#version 300 es\n";
-#else
-static const string version = "#version 330 core\n";
-#endif
 
-static string vorsion() {
+static string version() {
+
     string result = "#version ";
-    
-    
+    result += to_string(GL::glsl_version_number);
 
-    
+    if (GL::is_gles) {
+        if (GL::gl_major_version > 2) {
+            result += " es";
+        }
+    }
+    else {
+        result += " core";
+    }
+
+    result += "\n";
+
+    return result;
+}
+
+static string defines(unsigned type) {
+
+    if (not GL::is_gl2) {
+        return
+        "#define IN in\n"
+        "#define OUT out\n";
+    }
+
+    if (type == GL_VERTEX_SHADER) {
+        return
+        "#define IN attribute\n"
+        "#define OUT varying\n";
+    }
+
+    return
+    "#define IN varying\n"
+    "#define OUT\n";
+
 }
 
 const static string quotes_query = R"(("[^ "]+"))";
@@ -54,10 +79,6 @@ static void check_programm_error(GLuint program) {
 		Fatal(message);
 	}
 #endif
-}
-
-static void add_definitions(std::string& code, unsigned type) {
-    
 }
 
 static void unfold_includes(std::string& code) {
@@ -84,8 +105,8 @@ static GLuint compile_shader(string& code, unsigned type) {
     
     unfold_includes(code);
     
-    code = version + code;
-    
+    code = version() + "\n" + defines(type) + "\n" + code;
+
     auto shader = GL(glCreateShader(type));
     auto code_pointer = code.c_str();
     GL(glShaderSource(shader, 1, &code_pointer, nullptr));

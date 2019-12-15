@@ -18,9 +18,9 @@ void size_changed(GLFWwindow* window, int width, int height) {
 }
 
 void mouse_button_callback([[maybe_unused]] GLFWwindow* window,
-                                  int glfw_button,
-                                  int action,
-                                  [[maybe_unused]] int mods) {
+                           int glfw_button,
+                           int action,
+                           [[maybe_unused]] int mods) {
     auto button = GL::MouseButton::Left;
     if      (glfw_button == GLFW_MOUSE_BUTTON_RIGHT ) button = GL::MouseButton::Right ;
     else if (glfw_button == GLFW_MOUSE_BUTTON_MIDDLE) button = GL::MouseButton::Middle;
@@ -36,10 +36,10 @@ void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double
 }
 
 void key_callback([[maybe_unused]] GLFWwindow* window,
-                         int key,
-                         [[maybe_unused]] int scancode,
-                         int action,
-                         [[maybe_unused]] int mods) {
+                  int key,
+                  [[maybe_unused]] int scancode,
+                  int action,
+                  [[maybe_unused]] int mods) {
     GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
 }
 

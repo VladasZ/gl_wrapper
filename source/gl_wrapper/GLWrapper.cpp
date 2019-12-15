@@ -78,21 +78,7 @@ void GL::initialize(const gm::Size& size) {
 
 #endif
 
-    string full_gl_version = Log::to_string(glGetString(GL_VERSION));
-
-    is_gles = String::contains(full_gl_version, "ES");
-
-    gl_version =
-    String::find_regexpr_match(full_gl_version,
-                               gl_version_query);
-
-    glsl_version =
-    String::find_regexpr_match(Log::to_string(glGetString(GL_SHADING_LANGUAGE_VERSION)),
-                               glsl_version_query);
-
-    Logvar(gl_version);
-    Logvar(glsl_version);
-    Logvar(is_gles);
+    _get_gl_info();
 
     GL(glEnable(GL_DEPTH_TEST));
     GL(glEnable(GL_BLEND));
@@ -176,7 +162,30 @@ void GL::disable_depth_test() {
 }
 
 void GL::_get_gl_info() {
+    string full_gl_version = Log::to_string(glGetString(GL_VERSION));
 
+    is_gles = String::contains(full_gl_version, "ES");
+
+    gl_version =
+            String::find_regexpr_match(full_gl_version,
+                                       gl_version_query);
+
+    glsl_version =
+            String::find_regexpr_match(Log::to_string(glGetString(GL_SHADING_LANGUAGE_VERSION)),
+                                       glsl_version_query);
+
+    glsl_version_number = stoi(String::remove(glsl_version, '.'));
+
+    gl_major_version = gl_version.front() - '0';
+
+    is_gl2 = gl_major_version == 2;
+
+    Logvar(gl_major_version);
+    Logvar(gl_version);
+    Logvar(glsl_version);
+    Logvar(glsl_version_number);
+    Logvar(is_gles);
+    Logvar(is_gl2);
 }
 
 #ifdef DESKTOP_BUILD

@@ -52,12 +52,14 @@ struct GL {
         static const unsigned TriangleStrip;
         static const unsigned Polygon;
     };
-    
-    static inline bool is_gles;
 
     static inline unsigned gl_major_version;
     static inline std::string gl_version;
     static inline std::string glsl_version;
+    static inline unsigned glsl_version_number;
+
+    static inline bool is_gles;
+    static inline bool is_gl2;
 
     static inline std::vector<gl::Monitor> monitors;
     
