@@ -44,7 +44,7 @@ static string version() {
 
 static string defines(unsigned type) {
 
-    if (not GL::is_gl2) {
+    if (!GL::is_gl2) {
         return
         "#define IN in\n"
         "#define OUT out\n";
