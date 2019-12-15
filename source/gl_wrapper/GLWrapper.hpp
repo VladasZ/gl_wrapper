@@ -54,7 +54,8 @@ struct GL {
     };
     
     static inline bool is_gles;
-    
+
+    static inline unsigned gl_major_version;
     static inline std::string gl_version;
     static inline std::string glsl_version;
 
@@ -99,5 +100,9 @@ struct GL {
 #ifdef ANDROID_BUILD
     static void create_context();
 #endif
+
+private:
+
+    static void _get_gl_info();
 
 };

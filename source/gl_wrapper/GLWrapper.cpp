@@ -13,6 +13,10 @@
 #include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
 
+#if DESKTOP_BUILD
+#include "GLWFCallbacks.hpp"
+#endif
+
 using namespace cu;
 using namespace std;
 
@@ -39,16 +43,6 @@ namespace cursor {
     static GLFWcursor* h_resize;
     static GLFWcursor* v_resize;
 }
-#endif
-
-#if DESKTOP_BUILD
-
-static void size_changed(GLFWwindow* window, int width, int height);
-static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-static void cursor_position_callback(GLFWwindow* window, double x, double y);
-static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
 #endif
 
 void GL::initialize(const gm::Size& size) {
@@ -181,7 +175,12 @@ void GL::disable_depth_test() {
     GL(glDisable(GL_DEPTH_TEST));
 }
 
+void GL::_get_gl_info() {
+
+}
+
 #ifdef DESKTOP_BUILD
+
 void GL::set_cursor_mode(CursorMode cursor_mode) {
     switch (cursor_mode) {
         case CursorMode::Arrow:
@@ -200,46 +199,6 @@ void GL::set_cursor_mode(CursorMode cursor_mode) {
             glfwSetCursor(window, cursor::v_resize);
             break;
     }
-}
-
-static void size_changed(GLFWwindow* window, int width, int height) {
-    GL::on_window_size_change({ static_cast<float>(width), static_cast<float>(height) });
-    GL(glfwSwapBuffers(window));
-}
-
-static void mouse_button_callback([[maybe_unused]] GLFWwindow* window,
-                                  int glfw_button,
-                                  int action,
-                                  [[maybe_unused]] int mods) {
-    auto button = GL::MouseButton::Left;
-    if      (glfw_button == GLFW_MOUSE_BUTTON_RIGHT ) button = GL::MouseButton::Right ;
-    else if (glfw_button == GLFW_MOUSE_BUTTON_MIDDLE) button = GL::MouseButton::Middle;
-    GL::on_mouse_key_pressed(button, action == GLFW_PRESS ? GL::ButtonState::Down : GL::ButtonState::Up);
-}
-
-static void cursor_position_callback([[maybe_unused]] GLFWwindow* window, double x, double y) {
-    GL::on_cursor_moved({ static_cast<float>(x), static_cast<float>(y) });
-}
-
-static void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double yoffset) {
-    GL::on_scroll_moved({ static_cast<float>(xoffset), static_cast<float>(yoffset) });
-}
-
-static void key_callback([[maybe_unused]] GLFWwindow* window,
-                         int key,
-                         [[maybe_unused]] int scancode,
-                         int action,
-                         [[maybe_unused]] int mods) {
-    GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
-}
-
-#endif
-
-#ifdef ANDROID_BUILD
-
-void GL::create_context() {
-  //  auto display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-  //  Logvar(display);
 }
 
 #endif
