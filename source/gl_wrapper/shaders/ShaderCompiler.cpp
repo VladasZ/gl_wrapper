@@ -29,6 +29,14 @@ static const string version = "#version 300 es\n";
 static const string version = "#version 330 core\n";
 #endif
 
+static string vorsion() {
+    string result = "#version ";
+    
+    
+
+    
+}
+
 const static string quotes_query = R"(("[^ "]+"))";
 const static string include_query = "#include " + quotes_query;
 
@@ -48,13 +56,8 @@ static void check_programm_error(GLuint program) {
 #endif
 }
 
-static GLuint compile_shader(const string& code, unsigned type) {
-	auto shader = GL(glCreateShader(type));
-	auto code_pointer = code.c_str();
-	GL(glShaderSource(shader, 1, &code_pointer, nullptr));
-	GL(glCompileShader(shader));
-	check_programm_error(shader);
-	return shader;
+static void add_definitions(std::string& code, unsigned type) {
+    
 }
 
 static void unfold_includes(std::string& code) {
@@ -75,7 +78,20 @@ static void unfold_includes(std::string& code) {
 		String::replace(include, include_code, code);
 	}
 
-	code = version + code;
+}
+
+static GLuint compile_shader(string& code, unsigned type) {
+    
+    unfold_includes(code);
+    
+    code = version + code;
+    
+    auto shader = GL(glCreateShader(type));
+    auto code_pointer = code.c_str();
+    GL(glShaderSource(shader, 1, &code_pointer, nullptr));
+    GL(glCompileShader(shader));
+    check_programm_error(shader);
+    return shader;
 }
 
 unsigned ShaderCompiler::compile(const std::string& path) {
@@ -88,9 +104,6 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 
 	auto vertex_code   = File::read_to_string(path + ".vert");
 	auto fragment_code = File::read_to_string(path + ".frag");
-
-	unfold_includes(vertex_code);
-	unfold_includes(fragment_code);
 
 	auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
 	auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
@@ -108,10 +121,6 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 
 	GL(glDeleteShader(vertex));
 	GL(glDeleteShader(fragment));
-
-	Log("Shader compiled:");
-	Logvar(path);
-	Logvar(program);
 
 	return program;
 }

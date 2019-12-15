@@ -6,10 +6,18 @@
 //  Copyright © 2018 VladasZ. All rights reserved.
 //
 
+#include <iostream>
+
 #include "GLDebug.hpp"
 #include "GLWrapper.hpp"
+#include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
 
+using namespace cu;
+using namespace std;
+
+const static string glsl_version_query = R"((\d\.)(\d\d))";
+const static string gl_version_query   = R"((\d\.)(\d))";
 
 const unsigned GL::DrawMode::Points        = 0;//GL_POINT;
 const unsigned GL::DrawMode::Lines         = GL_LINES;
@@ -47,6 +55,7 @@ void GL::initialize(const gm::Size& size) {
 
 #ifdef DESKTOP_BUILD
     glfwInit();
+
     glfwWindowHint(GLFW_SAMPLES, 16); // 4x antialiasing
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -73,10 +82,23 @@ void GL::initialize(const gm::Size& size) {
         Fatal("Glew initialization failed");
     }
 
-#elif ANDROID_BUILD
-    GL::create_context();
 #endif
 
+    string full_gl_version = Log::to_string(glGetString(GL_VERSION));
+
+    is_gles = String::contains(full_gl_version, "ES");
+
+    gl_version =
+    String::find_regexpr_match(full_gl_version,
+                               gl_version_query);
+
+    glsl_version =
+    String::find_regexpr_match(Log::to_string(glGetString(GL_SHADING_LANGUAGE_VERSION)),
+                               glsl_version_query);
+
+    Logvar(gl_version);
+    Logvar(glsl_version);
+    Logvar(is_gles);
 
     GL(glEnable(GL_DEPTH_TEST));
     GL(glEnable(GL_BLEND));
@@ -124,7 +146,7 @@ void GL::initialize(const gm::Size& size) {
 }
 
 #ifdef DESKTOP_BUILD
-void GL::start_main_loop(std::function<void()> draw_frame) {
+void GL::start_main_loop(function<void()> draw_frame) {
     while (true) {
         int x, y;
         glfwGetFramebufferSize(window, &x, &y);
