@@ -130,7 +130,6 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
 
 	program = glCreateProgram();
-	Logvar(program);
 	GL(glAttachShader(program, vertex));
 	GL(glAttachShader(program, fragment));
 	GL(glLinkProgram(program));
