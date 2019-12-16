@@ -139,14 +139,24 @@ void GL::start_main_loop(function<void()> draw_frame) {
 #endif
 
 void GL::set_viewport(const gm::Rect& rect) {
-    glViewport(static_cast<GLint>(rect.origin.x * screen_scale),
-               static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
-               static_cast<GLsizei>(rect.size.width * screen_scale),
-               static_cast<GLsizei>(rect.size.height * screen_scale));
+    GL(glViewport(static_cast<GLint>(rect.origin.x * screen_scale),
+                  static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
+                  static_cast<GLsizei>(rect.size.width * screen_scale),
+                  static_cast<GLsizei>(rect.size.height * screen_scale)));
 }
 
 void GL::set_clear_color(const gm::Color& color) {
-    glClearColor(color.r, color.g, color.b, color.a);
+    GL(glClearColor(color.r, color.g, color.b, color.a));
+}
+
+void GL::scissor(const gm::Rect& rect, DrawBlock draw) {
+    GL(glEnable(GL_SCISSOR_TEST));
+    GL(glScissor(static_cast<GLint>(rect.origin.x * screen_scale),
+                 static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
+                 static_cast<GLsizei>(rect.size.width * screen_scale),
+                 static_cast<GLsizei>(rect.size.height * screen_scale)));
+    draw();
+    GL(glDisable(GL_SCISSOR_TEST));
 }
 
 void GL::clear() {

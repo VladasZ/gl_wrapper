@@ -41,6 +41,8 @@ struct GL {
     };
     
 #endif
+    
+    using DrawBlock = std::function<void()>;
 
     struct DrawMode {
         static const unsigned Points;
@@ -89,6 +91,8 @@ struct GL {
 
     static void set_viewport(const gm::Rect& rect);
     static void set_clear_color(const gm::Color& color);
+    
+    static void scissor(const gm::Rect& rect, DrawBlock draw);
 
     static void clear();
 
