@@ -18,8 +18,10 @@
 using namespace gl;
 
 void Buffer::_initialize(BufferData* data, const BufferConfiguration& configuration) {
-#ifndef OPENGL2_BUILD
+
     this->data = data;
+
+#ifndef OPENGL2_BUILD
     draw_mode = GL_TRIANGLES;
 
     GL(glGenVertexArrays(1, &vertex_array_object));
@@ -67,14 +69,13 @@ Buffer::Buffer(gm::Path* path)
 
 Buffer::~Buffer() {
 #ifndef OPENGL2_BUILD
-
     GL(glDeleteBuffers(1, &vertex_buffer_object));
     if (index_buffer_object != 0) {
         GL(glDeleteBuffers(1, &index_buffer_object));
     }
     GL(glDeleteVertexArrays(1, &vertex_array_object));
-    delete data;
 #endif
+    delete data;
 }
 
 void Buffer::draw() const {
