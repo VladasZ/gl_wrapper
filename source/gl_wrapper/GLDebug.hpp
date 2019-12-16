@@ -10,11 +10,11 @@
 
 #include "Log.hpp"
 
-#ifdef DEBUG
-
 #ifdef ANDROID_BUILD
 #define OPENGL2_BUILD
 #endif
+
+#ifdef DEBUG
 
 #define RENDERING_ERRORS_OUTPUT true
 #define SHADER_COMPILER_OUTPUT true
