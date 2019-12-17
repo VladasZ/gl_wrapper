@@ -23,14 +23,16 @@ Shader::Shader(const std::string& path) : path(path) {
     _model_matrix   = glGetUniformLocation(_program, "model_matrix"  );
     _light_position = glGetUniformLocation(_program, "light_position");
     _size           = glGetUniformLocation(_program, "size"          );
-	_selected       = glGetUniformLocation(_program, "selected"      );
-	_resolution     = glGetUniformLocation(_program, "resolution"    );
-	_position       = glGetUniformLocation(_program, "position"      );
-	_rotation       = glGetUniformLocation(_program, "rotation"      );
+    _selected       = glGetUniformLocation(_program, "selected"      );
+    _resolution     = glGetUniformLocation(_program, "resolution"    );
+    _position       = glGetUniformLocation(_program, "position"      );
+    _rotation       = glGetUniformLocation(_program, "rotation"      );
 }
 
 void Shader::use() const {
+#ifndef ANDROID_BUILD
     GL(glUseProgram(_program));
+#endif
 }
 
 Shader::ID Shader::get_program_id() const {
@@ -38,11 +40,15 @@ Shader::ID Shader::get_program_id() const {
 }
 
 void Shader::set_uniform_color(const gm::Color& color) {
+#ifndef ANDROID_BUILD
     GL(glUniform4fv(_uniform_color, 1, &color.r));
+#endif
 }
 
 void Shader::set_mvp_matrix(const gm::Matrix4& mvp) {
+#ifndef ANDROID_BUILD
     GL(glUniformMatrix4fv(_mvp_matrix, 1, false, &mvp.data[0][0]));
+#endif
 }
 
 void Shader::set_model_matrix(const gm::Matrix4& model_matrix) {
@@ -54,21 +60,33 @@ void Shader::set_light_position(const gm::Vector3& light_position) {
 }
 
 void Shader::set_size(const gm::Size& size) {
+#ifndef ANDROID_BUILD
     GL(glUniform2fv(_size, 1, &size.width));
+#endif
+
 }
 
 void Shader::set_selected(bool selected) {
+#ifndef ANDROID_BUILD
     GL(glUniform1i(_selected, selected));
+#endif
+
 }
 
 void Shader::set_resolution(const gm::Size& resolution) {
-	GL(glUniform2fv(_resolution, 1, &resolution.width));
+    GL(glUniform2fv(_resolution, 1, &resolution.width));
 }
 
 void Shader::set_position(const gm::Point& point) {
-	GL(glUniform2fv(_position, 1, &point.x));
+#ifndef ANDROID_BUILD
+    GL(glUniform2fv(_position, 1, &point.x));
+#endif
+
 }
 
 void Shader::set_rotation(float angle) {
-	glUniform1f(_rotation, angle);
+#ifndef ANDROID_BUILD
+    glUniform1f(_rotation, angle);
+#endif
+
 }
