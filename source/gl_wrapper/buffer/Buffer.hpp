@@ -11,9 +11,9 @@
 #include <string>
 #include <vector>
 
-#include "Path.hpp"
 #include "Shader.hpp"
 #include "Vertex.hpp"
+#include "PointsPath.hpp"
 
 namespace gl {
 
@@ -42,7 +42,7 @@ public:
            const gm::Vertex::Indices& indices,
            const BufferConfiguration& configuration);
 
-    Buffer(gm::Path*);
+    Buffer(gm::PointsPath*);
 
     ~Buffer();
 

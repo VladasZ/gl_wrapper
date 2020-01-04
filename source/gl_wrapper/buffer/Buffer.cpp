@@ -58,12 +58,12 @@ Buffer::Buffer(const std::vector<float>& vertices,
                const BufferConfiguration& configuration)
     : Buffer(new BufferData(vertices, indices), configuration) { }
 
-Buffer::Buffer(gm::Path* path)
+Buffer::Buffer(gm::PointsPath* path)
     : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2) {
 
     draw_mode = GL::DrawMode::LineStrip;
 
-    if (path->draw_mode == gm::Path::DrawMode::Lines)
+    if (path->draw_mode == gm::PointsPath::DrawMode::Lines)
         draw_mode = GL::DrawMode::Lines;
 }
 
