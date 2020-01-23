@@ -72,7 +72,8 @@ static void check_programm_error(GLuint program) {
     return;
 #else
 	static GLint log_length;
-	GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
+    glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length);
+ //   GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
 	if (log_length > 2) {
 	    char* message = errror_message_buffer;
 		GL(glGetShaderInfoLog(program, log_length, nullptr, message));
@@ -136,7 +137,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 
 	check_programm_error(program);
 
-	GL(glDetachShader(program, vertex));
+    //GL(glDetachShader(program, vertex));
+    glDetachShader(program, vertex);
 	GL(glDetachShader(program, fragment));
 
 	GL(glDeleteShader(vertex));
