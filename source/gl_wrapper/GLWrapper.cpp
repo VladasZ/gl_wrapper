@@ -111,14 +111,14 @@ void GL::initialize(const gm::Size& size) {
     int monitors_count;
     auto glfw_monitors = glfwGetMonitors(&monitors_count);
 
-    Log(monitors_count);
+  //  Log(monitors_count);
 
     for (int i = 0; i < monitors_count; i++) {
         monitors.emplace_back(glfw_monitors[i]);
     }
 
     for (auto mon : monitors) {
-        Log(mon.to_string());
+      //  Log(mon.to_string());
     }
     
 #endif
@@ -190,12 +190,12 @@ void GL::_get_gl_info() {
 
     is_gl2 = gl_major_version == 2;
 
-    Logvar(gl_major_version);
-    Logvar(gl_version);
-    Logvar(glsl_version);
-    Logvar(glsl_version_number);
-    Logvar(is_gles);
-    Logvar(is_gl2);
+//    Logvar(gl_major_version);
+//    Logvar(gl_version);
+//    Logvar(glsl_version);
+//    Logvar(glsl_version_number);
+//    Logvar(is_gles);
+//    Logvar(is_gl2);
 }
 
 #ifdef DESKTOP_BUILD
