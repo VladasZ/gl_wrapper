@@ -149,13 +149,15 @@ void GL::set_clear_color(const gm::Color& color) {
     GL(glClearColor(color.r, color.g, color.b, color.a));
 }
 
-void GL::scissor(const gm::Rect& rect, DrawBlock draw) {
+void GL::scissor_begin(const gm::Rect& rect) {
     GL(glEnable(GL_SCISSOR_TEST));
     GL(glScissor(static_cast<GLint>(rect.origin.x * screen_scale),
                  static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
                  static_cast<GLsizei>(rect.size.width * screen_scale),
                  static_cast<GLsizei>(rect.size.height * screen_scale)));
-    draw();
+}
+
+void GL::scissor_end() {
     GL(glDisable(GL_SCISSOR_TEST));
 }
 

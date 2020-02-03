@@ -91,8 +91,9 @@ struct GL {
 
     static void set_viewport(const gm::Rect& rect);
     static void set_clear_color(const gm::Color& color);
-    
-    static void scissor(const gm::Rect& rect, DrawBlock draw);
+
+    static void scissor_begin(const gm::Rect& rect);
+    static void scissor_end();
 
     static void clear();
 
