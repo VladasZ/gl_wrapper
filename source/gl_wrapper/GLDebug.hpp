@@ -17,7 +17,7 @@
 #ifdef DEBUG
 
 #define RENDERING_ERRORS_OUTPUT true
-#define SHADER_COMPILER_OUTPUT true
+//#define SHADER_COMPILER_OUTPUT
 
 #if RENDERING_ERRORS_OUTPUT
 #define GL(command) (command); check_gl_error(__FILE__, __func__, __LINE__)
