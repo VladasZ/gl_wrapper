@@ -16,6 +16,8 @@
 #include "BufferConfiguration.hpp"
 
 using namespace gl;
+using namespace gm;
+
 
 void Buffer::_initialize(BufferData* data, const BufferConfiguration& configuration) {
 
@@ -53,7 +55,7 @@ Buffer::Buffer(BufferData* data, const BufferConfiguration& configuration) {
     _initialize(data, configuration);
 }
 
-Buffer::Buffer(const std::vector<float>& vertices,
+Buffer::Buffer(const std::vector<Float>& vertices,
                const gm::Vertex::Indices& indices,
                const BufferConfiguration& configuration)
     : Buffer(new BufferData(vertices, indices), configuration) { }

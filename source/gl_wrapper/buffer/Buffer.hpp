@@ -8,50 +8,50 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 
 #include "Shader.hpp"
 #include "Vertex.hpp"
 #include "PointsPath.hpp"
 
+
 namespace gl {
 
-class BufferData;
-class BufferConfiguration;
+    class BufferData;
+    class BufferConfiguration;
 
-class Buffer {
-    
-    BufferData* data;
-    
-    unsigned vertex_array_object  = 0;
-    unsigned vertex_buffer_object = 0;
-    unsigned index_buffer_object  = 0;
+    class Buffer {
 
-private:
+        BufferData* data;
 
-    void _initialize(BufferData* data, const BufferConfiguration& configuration);
+        unsigned vertex_array_object  = 0;
+        unsigned vertex_buffer_object = 0;
+        unsigned index_buffer_object  = 0;
 
-public:
-    
-    unsigned draw_mode;
+    private:
 
-    Buffer(BufferData* data, const BufferConfiguration& configuration);
-    
-    Buffer(const std::vector<float>& vertices_data,
-           const gm::Vertex::Indices& indices,
-           const BufferConfiguration& configuration);
+        void _initialize(BufferData* data, const BufferConfiguration& configuration);
 
-    Buffer(gm::PointsPath*);
+    public:
 
-    ~Buffer();
+        unsigned draw_mode;
 
-    void draw() const;
+        Buffer(BufferData* data, const BufferConfiguration& configuration);
 
-    BufferData* buffer_data() const;
+        Buffer(const std::vector<gm::Float>& vertices_data,
+               const gm::Vertex::Indices& indices,
+               const BufferConfiguration& configuration);
 
-    std::string to_string(unsigned new_line = 3) const;
+        Buffer(gm::PointsPath*);
 
-};
+        ~Buffer();
+
+        void draw() const;
+
+        BufferData* buffer_data() const;
+
+        std::string to_string(unsigned new_line = 3) const;
+
+    };
 
 }

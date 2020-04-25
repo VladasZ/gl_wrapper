@@ -13,12 +13,13 @@
 using namespace gl;
 using namespace gm;
 
+
 static const std::vector<unsigned short> rect_indices = { 0, 1, 3, 2 };
 
-BufferData::BufferData(const std::vector<float>& vertices, const std::vector<unsigned short>& indices)
+BufferData::BufferData(const std::vector<Float>& vertices, const std::vector<unsigned short>& indices)
     : vertices_data(vertices), indices(indices), vertices_count(indices.size()) { }
 
-BufferData::BufferData(const std::vector<float>& vertices_data, size_t vertices_count)
+BufferData::BufferData(const std::vector<Float>& vertices_data, size_t vertices_count)
     : vertices_data(vertices_data), vertices_count(vertices_count) { }
 
 std::string BufferData::to_string(unsigned int new_line) const {
@@ -46,7 +47,7 @@ std::string BufferData::to_string(unsigned int new_line) const {
 }
 
 BufferData* BufferData::from_size(const Size& size) {
-    const std::vector<float> vertices = {
+    const std::vector<Float> vertices = {
         0,          0,
         0,          size.height,
         size.width, size.height,
@@ -56,7 +57,7 @@ BufferData* BufferData::from_size(const Size& size) {
 }
 
 BufferData* BufferData::from_rect(const Rect& rect) {
-    const std::vector<float> vertices = {
+    const std::vector<Float> vertices = {
         rect.origin.x,                   rect.origin.y,
         rect.origin.x,                   rect.size.height + rect.origin.y,
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y,
@@ -66,7 +67,7 @@ BufferData* BufferData::from_rect(const Rect& rect) {
 }
 
 BufferData* BufferData::from_rect_to_image(const Rect& rect) {
-    const std::vector<float> vertices = {
+    const std::vector<Float> vertices = {
         rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
         rect.origin.x,                   rect.size.height + rect.origin.y, 0.0f,  0.0f, //|_ |
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y, 1.0f,  0.0f, //| _|
@@ -76,7 +77,7 @@ BufferData* BufferData::from_rect_to_image(const Rect& rect) {
 }
 
 BufferData* BufferData::from_rect_to_rectangle(const gm::Rect& rect) {
-    const std::vector<float> vertices = {
+    const std::vector<Float> vertices = {
         rect.origin.x,                   rect.origin.y,
         rect.origin.x,                   rect.size.height + rect.origin.y,
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y,
@@ -86,7 +87,7 @@ BufferData* BufferData::from_rect_to_rectangle(const gm::Rect& rect) {
 }
 
 BufferData* BufferData::from_rect_to_framebuffer(const Rect& rect) {
-    const std::vector<float> vertices = {
+    const std::vector<Float> vertices = {
         rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
         rect.origin.x,                   rect.size.height + rect.origin.y, 0.0f,  0.0f, //| _|
         rect.size.width + rect.origin.x, rect.size.height + rect.origin.y, 1.0f,  0.0f, //| -|
