@@ -139,6 +139,12 @@ void GL::start_main_loop(function<void()> draw_frame) {
 #endif
 
 void GL::set_viewport(const gm::Rect& rect) {
+#ifdef DEBUG
+    if (rect.size.is_negative()) {
+        Log("Invalid size");
+        return;
+    }
+#endif
     GL(glViewport(static_cast<GLint>(rect.origin.x * screen_scale),
                   static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
                   static_cast<GLsizei>(rect.size.width * screen_scale),
