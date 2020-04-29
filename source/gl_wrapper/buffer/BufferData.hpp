@@ -16,29 +16,29 @@
 
 namespace gl {
 
-class Buffer;
+    class Buffer;
 
-class BufferData {
-    
-    const std::vector<gm::Float> vertices_data;
-    const std::vector<unsigned short> indices;
+    class BufferData {
 
-    const size_t vertices_count;
-    
-    friend Buffer;
-    
-public:
-        
-    BufferData(const std::vector<gm::Float>& vertices_data, const std::vector<unsigned short>& indices);
-    BufferData(const std::vector<gm::Float>& vertices_data, size_t vertices_count);
+        const std::vector<gm::Float> vertices_data;
+        const std::vector<unsigned short> indices;
 
-    std::string to_string(unsigned int new_line = 3) const;
-    
-    static BufferData* from_size               (const gm::Size&);
-    static BufferData* from_rect               (const gm::Rect&);
-    static BufferData* from_rect_to_image      (const gm::Rect&);
-    static BufferData* from_rect_to_rectangle  (const gm::Rect&);
-    static BufferData* from_rect_to_framebuffer(const gm::Rect&);
-};
+        const size_t vertices_count;
+
+        friend Buffer;
+
+    public:
+
+        BufferData(const std::vector<gm::Float>& vertices_data, const std::vector<unsigned short>& indices);
+        BufferData(const std::vector<gm::Float>& vertices_data, size_t vertices_count);
+
+        std::string to_string(unsigned int new_line = 3) const;
+
+        static BufferData* from_size               (const gm::Size&);
+        static BufferData* from_rect               (const gm::Rect&);
+        static BufferData* from_rect_to_image      (const gm::Rect&);
+        static BufferData* from_rect_to_rectangle  (const gm::Rect&);
+        static BufferData* from_rect_to_framebuffer(const gm::Rect&);
+    };
 
 }
