@@ -20,22 +20,18 @@ namespace gl {
 
     class BufferData {
 
+    public:
+
         template <class T>
         using Array = cu::ArrayView<T>;
 
-        const Array<gm::Float> _vertices_data;
-        const Array<gm::Vertex::Index> _indices;
+        const Array<gm::Float> vertices_data;
+        const Array<gm::Vertex::Index> indices;
 
-        const size_t _vertices_count;
-
-    public:
+        const size_t vertices_count;
 
         BufferData(const Array<gm::Float>& vertices_data, const Array<gm::Vertex::Index>& indices);
         BufferData(const Array<gm::Float>& vertices_data, size_t vertices_count);
-
-        const Array<gm::Float>& vertices_data() const;
-        const Array<gm::Vertex::Index>& indices() const;
-        size_t vertices_count() const;
 
         std::string to_string(unsigned int new_line = 3) const;
 

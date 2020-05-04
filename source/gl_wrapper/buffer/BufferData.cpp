@@ -16,18 +16,22 @@ using namespace gl;
 
 
 BufferData::BufferData(const Array<Float>& vertices, const Array<Vertex::Index>& indices)
-    : _vertices_data(vertices), _indices(indices), _vertices_count(indices.size()) { }
+    :
+    vertices_data(vertices),
+    indices(indices),
+    vertices_count(indices.size()) { }
 
 BufferData::BufferData(const Array<Float>& vertices_data, size_t vertices_count)
-    : _vertices_data(vertices_data),
-    _vertices_count(vertices_count) { }
+    :
+    vertices_data(vertices_data),
+    vertices_count(vertices_count) { }
 
 std::string BufferData::to_string(unsigned int new_line) const {
     std::string string;
     string = "\n";
 
-    for (size_t i = 0; i < _vertices_data.size(); i++) {
-        string += std::to_string(_vertices_data[i]) + " ";
+    for (size_t i = 0; i < vertices_data.size(); i++) {
+        string += std::to_string(vertices_data[i]) + " ";
         if ((i + 1) % (new_line) == 0) {
             string += "\n";
         }
@@ -35,27 +39,15 @@ std::string BufferData::to_string(unsigned int new_line) const {
 
     string += "\n";
 
-    for (unsigned i = 0; i < _indices.size(); i++) {
-        string += std::to_string(_indices[i]) + " ";
+    for (unsigned i = 0; i < indices.size(); i++) {
+        string += std::to_string(indices[i]) + " ";
         if ((i + 1) % (new_line) == 0) {
             string += "\n";
         }
     }
 
     string += "\n";
-    string += std::to_string(_vertices_count);
+    string += std::to_string(vertices_count);
 
     return string;
-}
-
-const BufferData::Array<gm::Float>& BufferData::vertices_data() const {
-    return _vertices_data;
-}
-
-const BufferData::Array<Vertex::Index>& BufferData::indices() const {
-    return _indices;
-}
-
-size_t BufferData::vertices_count() const {
-    return _vertices_count;
 }
