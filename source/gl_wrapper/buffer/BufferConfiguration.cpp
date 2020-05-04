@@ -16,9 +16,7 @@ using namespace gl;
 
 BufferConfiguration::BufferConfiguration(uint8_t first, uint8_t second, uint8_t third) {
 
-    if (first == 0) {
-        Fatal("Zero BufferConfiguration");
-    }
+    if (first == 0) Fatal("Zero BufferConfiguration");
 
     configuration[0] = first;
     configuration[1] = second;

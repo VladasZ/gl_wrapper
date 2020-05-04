@@ -8,37 +8,37 @@
 
 #pragma once
 
+#include <string>
 #include <vector>
 
-#include "Size.hpp"
-#include "Rect.hpp"
+#include "Vertex.hpp"
+#include "Geometry.hpp"
+#include "ArrayView.hpp"
 
 
 namespace gl {
 
-    class Buffer;
-
     class BufferData {
 
-        const std::vector<gm::Float> vertices_data;
-        const std::vector<unsigned short> indices;
+        template <class T>
+        using Array = cu::ArrayView<T>;
 
-        const size_t vertices_count;
+        const Array<gm::Float> _vertices_data;
+        const Array<gm::Vertex::Index> _indices;
 
-        friend Buffer;
+        const size_t _vertices_count;
 
     public:
 
-        BufferData(const std::vector<gm::Float>& vertices_data, const std::vector<unsigned short>& indices);
-        BufferData(const std::vector<gm::Float>& vertices_data, size_t vertices_count);
+        BufferData(const Array<gm::Float>& vertices_data, const Array<gm::Vertex::Index>& indices);
+        BufferData(const Array<gm::Float>& vertices_data, size_t vertices_count);
+
+        const Array<gm::Float>& vertices_data() const;
+        const Array<gm::Vertex::Index>& indices() const;
+        size_t vertices_count() const;
 
         std::string to_string(unsigned int new_line = 3) const;
 
-        static BufferData* from_size               (const gm::Size&);
-        static BufferData* from_rect               (const gm::Rect&);
-        static BufferData* from_rect_to_image      (const gm::Rect&);
-        static BufferData* from_rect_to_rectangle  (const gm::Rect&);
-        static BufferData* from_rect_to_framebuffer(const gm::Rect&);
     };
 
 }

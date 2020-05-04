@@ -32,16 +32,16 @@ void Buffer::_initialize(BufferData* data, const BufferConfiguration& configurat
     GL(glGenBuffers(1, &vertex_buffer_object));
     GL(glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_object));
     GL(glBufferData(GL_ARRAY_BUFFER,
-                    static_cast<uint16_t>(data->vertices_data.size() * sizeof(GLfloat)),
-                    data->vertices_data.data(),
+                    static_cast<uint16_t>(data->vertices_data().size() * sizeof(GLfloat)),
+                    data->vertices_data().data(),
                     GL_STATIC_DRAW));
 
-    if (!data->indices.empty()) {
+    if (!data->indices().empty()) {
         GL(glGenBuffers(1, &index_buffer_object));
         GL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_object));
         GL(glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                        static_cast<uint16_t>(data->indices.size() * sizeof(GLushort)),
-                        data->indices.data(),
+                        static_cast<uint16_t>(data->indices().size() * sizeof(GLushort)),
+                        data->indices().data(),
                         GL_STATIC_DRAW));
     }
 
@@ -83,10 +83,10 @@ Buffer::~Buffer() {
 void Buffer::draw() const {
 #ifndef OPENGL2_BUILD
     GL(glBindVertexArray(vertex_array_object));
-    if (data->indices.empty()) {
-        GL(glDrawArrays(draw_mode, 0, static_cast<GLsizei>(data->vertices_count)));
+    if (data->indices().empty()) {
+        GL(glDrawArrays(draw_mode, 0, static_cast<GLsizei>(data->vertices_count())));
     } else {
-        GL(glDrawElements(draw_mode, static_cast<GLsizei>(data->vertices_count), GL_UNSIGNED_SHORT, nullptr));
+        GL(glDrawElements(draw_mode, static_cast<GLsizei>(data->vertices_count()), GL_UNSIGNED_SHORT, nullptr));
     }
     GL(glBindVertexArray(0));
 #endif

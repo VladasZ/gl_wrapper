@@ -10,90 +10,52 @@
 
 #include "BufferData.hpp"
 
-using namespace gl;
+using namespace cu;
 using namespace gm;
+using namespace gl;
 
 
-static const std::vector<unsigned short> rect_indices = { 0, 1, 3, 2 };
+BufferData::BufferData(const Array<Float>& vertices, const Array<Vertex::Index>& indices)
+    : _vertices_data(vertices), _indices(indices), _vertices_count(indices.size()) { }
 
-BufferData::BufferData(const std::vector<Float>& vertices, const std::vector<unsigned short>& indices)
-    : vertices_data(vertices), indices(indices), vertices_count(indices.size()) { }
-
-BufferData::BufferData(const std::vector<Float>& vertices_data, size_t vertices_count)
-    : vertices_data(vertices_data), vertices_count(vertices_count) { }
+BufferData::BufferData(const Array<Float>& vertices_data, size_t vertices_count)
+    : _vertices_data(vertices_data),
+    _vertices_count(vertices_count) { }
 
 std::string BufferData::to_string(unsigned int new_line) const {
     std::string string;
     string = "\n";
 
-    for (size_t i = 0; i < vertices_data.size(); i++) {
-        string += std::to_string(vertices_data[i]) + " ";
-        if ((i + 1) % (new_line) == 0)
+    for (size_t i = 0; i < _vertices_data.size(); i++) {
+        string += std::to_string(_vertices_data[i]) + " ";
+        if ((i + 1) % (new_line) == 0) {
             string += "\n";
+        }
     }
 
     string += "\n";
 
-    for (unsigned i = 0; i < indices.size(); i++) {
-        string += std::to_string(indices[i]) + " ";
-        if ((i + 1) % (new_line) == 0)
+    for (unsigned i = 0; i < _indices.size(); i++) {
+        string += std::to_string(_indices[i]) + " ";
+        if ((i + 1) % (new_line) == 0) {
             string += "\n";
+        }
     }
 
     string += "\n";
-    string += std::to_string(vertices_count);
+    string += std::to_string(_vertices_count);
 
     return string;
 }
 
-BufferData* BufferData::from_size(const Size& size) {
-    const std::vector<Float> vertices = {
-        0,          0,
-        0,          size.height,
-        size.width, size.height,
-        size.width, 0
-    };
-    return new BufferData(vertices, rect_indices);
+const BufferData::Array<gm::Float>& BufferData::vertices_data() const {
+    return _vertices_data;
 }
 
-BufferData* BufferData::from_rect(const Rect& rect) {
-    const std::vector<Float> vertices = {
-        rect.origin.x,                   rect.origin.y,
-        rect.origin.x,                   rect.size.height + rect.origin.y,
-        rect.size.width + rect.origin.x, rect.size.height + rect.origin.y,
-        rect.size.width + rect.origin.x, rect.origin.y
-    };
-    return new BufferData(vertices, rect_indices);
+const BufferData::Array<Vertex::Index>& BufferData::indices() const {
+    return _indices;
 }
 
-BufferData* BufferData::from_rect_to_image(const Rect& rect) {
-    const std::vector<Float> vertices = {
-        rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
-        rect.origin.x,                   rect.size.height + rect.origin.y, 0.0f,  0.0f, //|_ |
-        rect.size.width + rect.origin.x, rect.size.height + rect.origin.y, 1.0f,  0.0f, //| _|
-        rect.size.width + rect.origin.x, rect.origin.y,                    1.0f,  1.0f  //| -|
-    };
-    return new BufferData(vertices, rect_indices);
+size_t BufferData::vertices_count() const {
+    return _vertices_count;
 }
-
-BufferData* BufferData::from_rect_to_rectangle(const gm::Rect& rect) {
-    const std::vector<Float> vertices = {
-        rect.origin.x,                   rect.origin.y,
-        rect.origin.x,                   rect.size.height + rect.origin.y,
-        rect.size.width + rect.origin.x, rect.size.height + rect.origin.y,
-        rect.size.width + rect.origin.x, rect.origin.y
-    };
-    return new BufferData(vertices, { 0, 1, 2, 3 });
-}
-
-BufferData* BufferData::from_rect_to_framebuffer(const Rect& rect) {
-    const std::vector<Float> vertices = {
-        rect.origin.x,                   rect.origin.y,                    0.0f,  1.0f, //|- |
-        rect.origin.x,                   rect.size.height + rect.origin.y, 0.0f,  0.0f, //| _|
-        rect.size.width + rect.origin.x, rect.size.height + rect.origin.y, 1.0f,  0.0f, //| -|
-        rect.size.width + rect.origin.x, rect.origin.y,                    1.0f,  1.0f  //| _|
-    };
-    return new BufferData(vertices, rect_indices);
-}
-
-
