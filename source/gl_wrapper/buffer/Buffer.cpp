@@ -54,7 +54,7 @@ Buffer::Buffer(BufferData* data, const BufferConfiguration& configuration) {
 }
 
 Buffer::Buffer(gm::PointsPath* path)
-    : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2) {
+    : Buffer(new BufferData( cu::ArrayView<Float> { path->data(), path->data_size() }, path->size()), BufferConfiguration::_2) {
 
     draw_mode = GL::DrawMode::LineStrip;
 
