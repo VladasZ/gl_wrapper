@@ -12,41 +12,47 @@
 
 #include "Shader.hpp"
 #include "Vertex.hpp"
+#include "ArrayView.hpp"
 #include "PointsPath.hpp"
+#include "BufferConfiguration.hpp"
 
 
 namespace gl {
 
-    class BufferData;
-    class BufferConfiguration;
-
     class Buffer {
 
-        BufferData* data;
+        template <class T>
+        using Array = cu::ArrayView<T>;
+
+        const Array<gm::Float> vertices_data;
+        const Array<gm::Vertex::Index> indices;
+
+        const size_t vertices_count;
+
+        const BufferConfiguration& configuration;
 
         unsigned vertex_array_object  = 0;
         unsigned vertex_buffer_object = 0;
         unsigned index_buffer_object  = 0;
 
-    private:
-
-        void _initialize(BufferData* data, const BufferConfiguration& configuration);
 
     public:
 
         unsigned draw_mode;
 
-        Buffer(BufferData* data, const BufferConfiguration& configuration);
 
-        Buffer(gm::PointsPath*);
+        Buffer(const Array<gm::Float>& vertices_data, const Array<gm::Vertex::Index>& indices, const BufferConfiguration& configuration);
+        Buffer(const Array<gm::Float>& vertices_data, size_t vertices_count,                   const BufferConfiguration& configuration);
 
         ~Buffer();
 
         void draw() const;
 
-        BufferData* buffer_data() const;
-
         std::string to_string(unsigned new_line = 3) const;
+
+    private:
+
+        void _init();
 
     };
 
