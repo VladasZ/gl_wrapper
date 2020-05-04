@@ -17,17 +17,38 @@ using namespace gl;
 using namespace gm;
 
 
-Buffer::Buffer(const Buffer::Array<Float>& vertices_data, const Buffer::Array<Vertex::Index>& indices,
-               const BufferConfiguration& configuration)
-        :
-        vertices_data(vertices_data), indices(indices), vertices_count(-1), configuration(configuration)
-{ _init(); }
+Buffer::Buffer(const BufferConfiguration& configuration, const Buffer::Array<Float>& vertices_data,
+               const Buffer::Array<Vertex::Index>& indices)
+    :
+    vertices_data(vertices_data),
+    indices(indices),
+    vertices_count(indices.size() == 0 ? -1 : vertices_data.size() / configuration.size()),
+    configuration(configuration)
+    {
+        draw_mode = GL_TRIANGLES;
 
-Buffer::Buffer(const Buffer::Array<Float>& vertices_data, size_t vertices_count,
-               const BufferConfiguration& configuration)
-        :
-        vertices_data(vertices_data), vertices_count(vertices_count), configuration(configuration)
-{ _init(); }
+        GL(glGenVertexArrays(1, &vertex_array_object));
+        GL(glBindVertexArray(vertex_array_object));
+
+        GL(glGenBuffers(1, &vertex_buffer_object));
+        GL(glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_object));
+        GL(glBufferData(GL_ARRAY_BUFFER,
+                        static_cast<uint16_t>(vertices_data.size() * sizeof(GLfloat)),
+                        vertices_data.data(),
+                        GL_STATIC_DRAW));
+
+        if (!indices.empty()) {
+            GL(glGenBuffers(1, &index_buffer_object));
+            GL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_object));
+            GL(glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                            static_cast<uint16_t>(indices.size() * sizeof(GLushort)),
+                            indices.data(),
+                            GL_STATIC_DRAW));
+        }
+
+        configuration.set_pointers();
+        GL(glBindVertexArray(0));
+}
 
 Buffer::~Buffer() {
     GL(glDeleteBuffers(1, &vertex_buffer_object));
@@ -71,32 +92,4 @@ std::string Buffer::to_string(unsigned new_line) const {
     string += std::to_string(vertices_count);
 
     return string;
-}
-
-void Buffer::_init() {
-
-    draw_mode = GL_TRIANGLES;
-
-    GL(glGenVertexArrays(1, &vertex_array_object));
-    GL(glBindVertexArray(vertex_array_object));
-
-    GL(glGenBuffers(1, &vertex_buffer_object));
-    GL(glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_object));
-    GL(glBufferData(GL_ARRAY_BUFFER,
-                    static_cast<uint16_t>(vertices_data.size() * sizeof(GLfloat)),
-                    vertices_data.data(),
-                    GL_STATIC_DRAW));
-
-    if (!indices.empty()) {
-        GL(glGenBuffers(1, &index_buffer_object));
-        GL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_object));
-        GL(glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                        static_cast<uint16_t>(indices.size() * sizeof(GLushort)),
-                        indices.data(),
-                        GL_STATIC_DRAW));
-    }
-
-    configuration.set_pointers();
-    GL(glBindVertexArray(0));
-
 }

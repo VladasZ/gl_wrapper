@@ -17,9 +17,9 @@ namespace gl {
 
     private:
 
-        uint8_t size;
-        uint8_t configuration[3];
-        uint8_t vertex_size = 0;
+        uint8_t _size;
+        uint8_t _configuration[3];
+        uint8_t _vertex_size = 0;
 
         uint8_t stride_for_index(uint8_t index) const;
 
@@ -27,6 +27,7 @@ namespace gl {
 
     public:
 
+        uint8_t size() const;
         void set_pointers() const;
 
     public:

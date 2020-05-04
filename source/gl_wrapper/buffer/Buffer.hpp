@@ -35,24 +35,17 @@ namespace gl {
         unsigned vertex_buffer_object = 0;
         unsigned index_buffer_object  = 0;
 
-
     public:
 
         unsigned draw_mode;
 
-
-        Buffer(const Array<gm::Float>& vertices_data, const Array<gm::Vertex::Index>& indices, const BufferConfiguration& configuration);
-        Buffer(const Array<gm::Float>& vertices_data, size_t vertices_count,                   const BufferConfiguration& configuration);
+        Buffer(const BufferConfiguration& configuration, const Array<gm::Float>& vertices_data, const Array<gm::Vertex::Index>& indices = { });
 
         ~Buffer();
 
         void draw() const;
 
         std::string to_string(unsigned new_line = 3) const;
-
-    private:
-
-        void _init();
 
     };
 
