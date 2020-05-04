@@ -8,11 +8,8 @@
 
 #pragma once
 
-#include "Log.hpp"
+#include <string>
 
-#ifdef ANDROID_BUILD
-#define OPENGL2_BUILD
-#endif
 
 #ifdef DEBUG
 
@@ -20,12 +17,12 @@
 //#define SHADER_COMPILER_OUTPUT
 
 #if RENDERING_ERRORS_OUTPUT
-#define GL(command) (command); check_gl_error(__FILE__, __func__, __LINE__)
+#define GL(command) command; check_gl_error(__FILE__, __func__, __LINE__)
 #else
 #define GL(x) x
 #endif
 
-#define CHECK_FRAMEBUFFER check_framebuffer_status(GL_FRAMEBUFFER, LOCATION_INFO)
+#define CHECK_FRAMEBUFFER check_framebuffer_status(GL_FRAMEBUFFER, __FILE__, __func__, __LINE__)
 
 void check_gl_error(const std::string& fileName, const char* function, int line);
 void check_framebuffer_status(unsigned int target, const std::string& fileName, const char* function, int line);

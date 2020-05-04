@@ -8,16 +8,15 @@
 
 #include <regex>
 #include <string>
-#include <vector>
 #include <unordered_map>
 
+#include "Log.hpp"
 #include "File.hpp"
 #include "GLDebug.hpp"
 #include "GLWrapper.hpp"
 #include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
 #include "ShaderCompiler.hpp"
-#include "ExceptionCatch.hpp"
 
 using namespace cu;
 using namespace std;

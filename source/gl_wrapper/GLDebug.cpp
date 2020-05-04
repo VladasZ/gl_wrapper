@@ -8,10 +8,11 @@
 
 #ifdef DEBUG
 
-#include <string.h>
 
+#include "Log.hpp"
 #include "GLDebug.hpp"
 #include "OpenGLHeaders.hpp"
+
 
 void check_gl_error(const std::string& fileName, const char* function, int line) {
     GLenum err = glGetError();
@@ -19,24 +20,24 @@ void check_gl_error(const std::string& fileName, const char* function, int line)
         char* error = new char[255];
         switch(err) {
             case GL_INVALID_OPERATION:
-            strcpy(error, "GL_INVALID_OPERATION");
-            break;
+                strcpy(error, "GL_INVALID_OPERATION");
+                break;
             case GL_INVALID_ENUM:
-            strcpy(error, "GL_INVALID_ENUM");
-            break;
+                strcpy(error, "GL_INVALID_ENUM");
+                break;
             case GL_INVALID_VALUE:
-            strcpy(error, "GL_INVALID_VALUE");
-            break;
+                strcpy(error, "GL_INVALID_VALUE");
+                break;
             case GL_OUT_OF_MEMORY:
-            strcpy(error, "GL_OUT_OF_MEMORY");
-            break;
+                strcpy(error, "GL_OUT_OF_MEMORY");
+                break;
             case GL_INVALID_FRAMEBUFFER_OPERATION:
-            strcpy(error, "GL_INVALID_FRAMEBUFFER_OPERATION");
-            check_framebuffer_status(GL_FRAMEBUFFER, fileName, function, line);
-            break;
+                strcpy(error, "GL_INVALID_FRAMEBUFFER_OPERATION");
+                check_framebuffer_status(GL_FRAMEBUFFER, fileName, function, line);
+                break;
             default:
-            strcpy(error, "Unknown error");
-            break;
+                strcpy(error, "Unknown error");
+                break;
         }
 
         Log("Error");
@@ -79,4 +80,3 @@ void check_framebuffer_status(unsigned int target, const std::string& fileName, 
 }
 
 #endif
-

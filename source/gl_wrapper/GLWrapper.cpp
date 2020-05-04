@@ -8,6 +8,7 @@
 
 #include <iostream>
 
+#include "Log.hpp"
 #include "GLDebug.hpp"
 #include "GLWrapper.hpp"
 #include "StringUtils.hpp"

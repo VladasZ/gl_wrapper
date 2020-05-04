@@ -6,52 +6,43 @@
 //  Copyright © 2017 VladasZ. All rights reserved.
 //
 
+#include "Log.hpp"
 #include "GLDebug.hpp"
 #include "OpenGLHeaders.hpp"
 #include "BufferConfiguration.hpp"
 
 using namespace gl;
 
-BufferConfiguration::BufferConfiguration(uint8_t first_param, uint8_t second_param, uint8_t third_param) {
-    
-    if (first_param == 0) {
-        Log("Zero BufferConfiguration");
-        throw std::runtime_error("Zero BufferConfiguration");
+
+BufferConfiguration::BufferConfiguration(uint8_t first, uint8_t second, uint8_t third) {
+
+    if (first == 0) {
+        Fatal("Zero BufferConfiguration");
     }
-    
-                                  configuration[0] = first_param;
-    if (second_param > 0) size++; configuration[1] = second_param;
-    if (third_param  > 0) size++; configuration[2] = third_param;
-    
-    for (uint8_t i = 0; i < size; i++) {
-        vertex_size += configuration[i];
-    }
+
+    configuration[0] = first;
+    configuration[1] = second;
+    configuration[2] = third;
+
+    size = 1;
+    if (second > 0) size++;
+    if (third  > 0) size++;
+
+    vertex_size = first + second + third;
+
 }
 
 uint8_t BufferConfiguration::stride_for_index(uint8_t index) const {
-    
-    if (index == 0)
-        return 0;
-    
-    uint8_t stride = vertex_size;
-    
-    for (uint8_t i = size - 1; i >= index; i--) {
-        stride -= configuration[i];
-    }
-    
-    return stride;
+    if (index == 0) return 0;
+    if (index == 1) return vertex_size - configuration[1] - configuration[2];
+                    return vertex_size                    - configuration[2];
 }
 
 void BufferConfiguration::set_pointers() const {
-    
     for (uint8_t i = 0; i < size; i++) {
-        
-        auto attributeSize = configuration[i];
-
         GL(glEnableVertexAttribArray(i));
-        
         GL(glVertexAttribPointer(i,
-                                 attributeSize,
+                                 configuration[i],
                                  GL_FLOAT,
                                  GL_FALSE,
                                  vertex_size * sizeof(GLfloat),
@@ -59,9 +50,9 @@ void BufferConfiguration::set_pointers() const {
     }
 }
 
-const BufferConfiguration BufferConfiguration::_2     = { 2, 0, 0 };
-const BufferConfiguration BufferConfiguration::_2_2   = { 2, 2, 0 };
-const BufferConfiguration BufferConfiguration::_3_3   = { 3, 3, 0 };
-const BufferConfiguration BufferConfiguration::_3_3_2 = { 3, 3, 2 };
-const BufferConfiguration BufferConfiguration::_3_3_3 = { 3, 3, 3 };
-const BufferConfiguration BufferConfiguration::_3_3_4 = { 3, 3, 4 };
+const BufferConfiguration BufferConfiguration::_2     { 2, 0, 0 };
+const BufferConfiguration BufferConfiguration::_2_2   { 2, 2, 0 };
+const BufferConfiguration BufferConfiguration::_3_3   { 3, 3, 0 };
+const BufferConfiguration BufferConfiguration::_3_3_2 { 3, 3, 2 };
+const BufferConfiguration BufferConfiguration::_3_3_3 { 3, 3, 3 };
+const BufferConfiguration BufferConfiguration::_3_3_4 { 3, 3, 4 };
