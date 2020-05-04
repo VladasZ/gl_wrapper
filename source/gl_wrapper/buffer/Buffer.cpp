@@ -23,7 +23,6 @@ void Buffer::_initialize(BufferData* data, const BufferConfiguration& configurat
 
     this->data = data;
 
-#ifndef OPENGL2_BUILD
     draw_mode = GL_TRIANGLES;
 
     GL(glGenVertexArrays(1, &vertex_array_object));
@@ -48,40 +47,32 @@ void Buffer::_initialize(BufferData* data, const BufferConfiguration& configurat
     configuration.set_pointers();
     GL(glBindVertexArray(0));
 
-#endif
 }
 
 Buffer::Buffer(BufferData* data, const BufferConfiguration& configuration) {
     _initialize(data, configuration);
 }
 
-Buffer::Buffer(const std::vector<Float>& vertices,
-               const gm::Vertex::Indices& indices,
-               const BufferConfiguration& configuration)
-    : Buffer(new BufferData(vertices, indices), configuration) { }
-
 Buffer::Buffer(gm::PointsPath* path)
     : Buffer(new BufferData(path->floats_vector(), path->points().size()), BufferConfiguration::_2) {
 
     draw_mode = GL::DrawMode::LineStrip;
 
-    if (path->draw_mode == gm::PointsPath::DrawMode::Lines)
+    if (path->draw_mode == gm::PointsPath::DrawMode::Lines) {
         draw_mode = GL::DrawMode::Lines;
+    }
 }
 
 Buffer::~Buffer() {
-#ifndef OPENGL2_BUILD
     GL(glDeleteBuffers(1, &vertex_buffer_object));
     if (index_buffer_object != 0) {
         GL(glDeleteBuffers(1, &index_buffer_object));
     }
     GL(glDeleteVertexArrays(1, &vertex_array_object));
-#endif
     delete data;
 }
 
 void Buffer::draw() const {
-#ifndef OPENGL2_BUILD
     GL(glBindVertexArray(vertex_array_object));
     if (data->indices().empty()) {
         GL(glDrawArrays(draw_mode, 0, static_cast<GLsizei>(data->vertices_count())));
@@ -89,7 +80,6 @@ void Buffer::draw() const {
         GL(glDrawElements(draw_mode, static_cast<GLsizei>(data->vertices_count()), GL_UNSIGNED_SHORT, nullptr));
     }
     GL(glBindVertexArray(0));
-#endif
 }
 
 BufferData* Buffer::buffer_data() const {

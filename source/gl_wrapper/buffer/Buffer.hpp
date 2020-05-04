@@ -38,10 +38,6 @@ namespace gl {
 
         Buffer(BufferData* data, const BufferConfiguration& configuration);
 
-        Buffer(const std::vector<gm::Float>& vertices_data,
-               const gm::Vertex::Indices& indices,
-               const BufferConfiguration& configuration);
-
         Buffer(gm::PointsPath*);
 
         ~Buffer();
