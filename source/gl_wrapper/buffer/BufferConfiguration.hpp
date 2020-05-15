@@ -10,10 +10,12 @@
 
 #include <cstdint>
 
+#include "NonCopyable.hpp"
+
 
 namespace gl {
 
-    class BufferConfiguration {
+    class BufferConfiguration : cu::NonCopyable {
 
     private:
 

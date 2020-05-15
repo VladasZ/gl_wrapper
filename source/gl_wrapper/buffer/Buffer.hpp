@@ -19,7 +19,7 @@
 
 namespace gl {
 
-    class Buffer {
+    class Buffer : cu::NonCopyable {
 
         template <class T>
         using Array = cu::ArrayView<T>;
