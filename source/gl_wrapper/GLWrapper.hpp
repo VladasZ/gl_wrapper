@@ -87,7 +87,7 @@ struct GL {
     static inline cu::Event<MouseButton, ButtonState> on_mouse_key_pressed;
 #endif
     
-    static inline cu::Event<char, unsigned, unsigned> on_key_pressed;
+    static inline cu::Event<int, int, int> on_key_pressed;
 
     static void set_viewport(const gm::Rect& rect);
     static void set_clear_color(const gm::Color& color);
