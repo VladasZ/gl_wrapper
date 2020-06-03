@@ -39,8 +39,8 @@ void key_callback([[maybe_unused]] GLFWwindow* window,
                   int key,
                   [[maybe_unused]] int scancode,
                   int action,
-                  [[maybe_unused]] int mods) {
-    GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned int>(action));
+                  int mod) {
+    GL::on_key_pressed(static_cast<char>(key), static_cast<unsigned>(mod), static_cast<unsigned>(action));
 }
 
 #endif
