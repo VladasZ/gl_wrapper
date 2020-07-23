@@ -184,6 +184,7 @@ void GL::_get_gl_info() {
     string full_gl_version = Log::to_string(glGetString(GL_VERSION));
 
     is_gles = String::contains(full_gl_version, "ES");
+    is_gles = false;
 
     gl_version =
             String::find_regexpr_match(full_gl_version,
@@ -199,12 +200,12 @@ void GL::_get_gl_info() {
 
     is_gl2 = gl_major_version == 2;
 
-//    Logvar(gl_major_version);
-//    Logvar(gl_version);
-//    Logvar(glsl_version);
-//    Logvar(glsl_version_number);
-//    Logvar(is_gles);
-//    Logvar(is_gl2);
+    Logvar(gl_major_version);
+    Logvar(gl_version);
+    Logvar(glsl_version);
+    Logvar(glsl_version_number);
+    Logvar(is_gles);
+    Logvar(is_gl2);
 }
 
 #ifdef DESKTOP_BUILD
