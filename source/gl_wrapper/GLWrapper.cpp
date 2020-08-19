@@ -142,7 +142,7 @@ void GL::start_main_loop(function<void()> draw_frame) {
 void GL::set_viewport(const gm::Rect& rect) {
 #ifdef DEBUG
     if (rect.size.is_negative()) {
-        Log("Invalid size");
+        Log << "Invalid size";
         return;
     }
 #endif
@@ -181,7 +181,7 @@ void GL::disable_depth_test() {
 }
 
 void GL::_get_gl_info() {
-    string full_gl_version = Log::to_string(glGetString(GL_VERSION));
+    string full_gl_version = cu::log::to_string(glGetString(GL_VERSION));
 
     is_gles = String::contains(full_gl_version, "ES");
     is_gles = false;
@@ -191,7 +191,7 @@ void GL::_get_gl_info() {
                                        gl_version_query);
 
     glsl_version =
-            String::find_regexpr_match(Log::to_string(glGetString(GL_SHADING_LANGUAGE_VERSION)),
+            String::find_regexpr_match(cu::log::to_string(glGetString(GL_SHADING_LANGUAGE_VERSION)),
                                        glsl_version_query);
 
     glsl_version_number = stoi(String::remove(glsl_version, '.'));

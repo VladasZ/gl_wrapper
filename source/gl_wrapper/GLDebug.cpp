@@ -40,9 +40,9 @@ void check_gl_error(const std::string& fileName, const char* function, int line)
                 break;
         }
 
-        Log("Error");
+        Log << "Error";
 
-        cu::Log::log(std::string() + "Rendering error: " + error, fileName, function, line);
+        cu::log::_logger_instance.start_log(fileName, function, line) << "Rendering error: " << error;
 
         delete[] error;
         err = glGetError();
@@ -76,7 +76,8 @@ void check_framebuffer_status(unsigned int target, const std::string& fileName, 
             break;
     }
 
-    cu::Log::log(std::string() + "Framebuffer error: " + errorString, fileName, function, line);
+    cu::log::_logger_instance.start_log(fileName, function, line) << "Framebuffer error: " << errorString;
+
 }
 
 #endif
