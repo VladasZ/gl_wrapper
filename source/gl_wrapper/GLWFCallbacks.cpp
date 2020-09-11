@@ -6,6 +6,10 @@
 //  Copyright © 2019 VladasZ. All rights reserved.
 //
 
+#include "GLWFCallbacks.hpp"
+
+#ifdef DESKTOP_BUILD
+
 #include "GLDebug.hpp"
 #include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
@@ -41,3 +45,5 @@ void key_callback([[maybe_unused]] GLFWwindow* window,
                   int mod) {
     GL::on_key_pressed(key, mod, action);
 }
+
+#endif
