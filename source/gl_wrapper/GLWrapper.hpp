@@ -15,6 +15,7 @@
 #include "Event.hpp"
 #include "Shader.hpp"
 #include "Monitor.hpp"
+#include "OpenGLHeaders.hpp"
 
 
 struct GL {

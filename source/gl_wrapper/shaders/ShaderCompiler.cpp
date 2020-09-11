@@ -119,7 +119,7 @@ static GLuint compile_shader(string& code, unsigned type) {
 unsigned ShaderCompiler::compile(const std::string& path) {
 
 #ifdef SHADER_COMPILER_OUTPUT
-    Log("Compiling: " + path);
+    Log << "Compiling: " + path;
 #endif
     
 	unsigned program;

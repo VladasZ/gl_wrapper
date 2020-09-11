@@ -72,7 +72,7 @@ std::string Buffer::to_string(unsigned new_line) const {
     std::string string;
     string = "\n";
 
-    for (size_t i = 0; i < vertices_data.size(); i++) {
+    for (int i = 0; i < vertices_data.size(); i++) {
         string += std::to_string(vertices_data[i]) + " ";
         if ((i + 1) % (new_line) == 0) {
             string += "\n";

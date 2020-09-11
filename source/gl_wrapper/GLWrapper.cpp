@@ -14,9 +14,8 @@
 #include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
 
-#if DESKTOP_BUILD
 #include "GLWFCallbacks.hpp"
-#endif
+
 
 using namespace cu;
 using namespace std;
@@ -33,7 +32,7 @@ const unsigned GL::DrawMode::TriangleFan   = GL_TRIANGLE_FAN;
 const unsigned GL::DrawMode::TriangleStrip = GL_TRIANGLE_STRIP;
 const unsigned GL::DrawMode::Polygon       = 0;//GL_POLYGON;
 
-#if DESKTOP_BUILD
+#ifdef DESKTOP_BUILD
 
 static GLFWwindow* window = nullptr;
 
@@ -112,14 +111,11 @@ void GL::initialize(const gm::Size& size) {
     int monitors_count;
     auto glfw_monitors = glfwGetMonitors(&monitors_count);
 
-  //  Log(monitors_count);
-
     for (int i = 0; i < monitors_count; i++) {
         monitors.emplace_back(glfw_monitors[i]);
     }
 
     for (auto mon : monitors) {
-      //  Log(mon.to_string());
     }
     
 #endif

@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include "Platform.hpp"
+
 #define GL_SILENCE_DEPRECATION
 
 #ifdef IOS_BUILD

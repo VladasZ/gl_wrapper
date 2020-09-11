@@ -6,11 +6,10 @@
 //  Copyright © 2019 VladasZ. All rights reserved.
 //
 
-#ifdef DESKTOP_BUILD
-
 #include "GLDebug.hpp"
 #include "GLWrapper.hpp"
 #include "OpenGLHeaders.hpp"
+
 
 void size_changed(GLFWwindow* window, int width, int height) {
     GL::on_window_size_change({ static_cast<float>(width), static_cast<float>(height) });
@@ -42,5 +41,3 @@ void key_callback([[maybe_unused]] GLFWwindow* window,
                   int mod) {
     GL::on_key_pressed(key, mod, action);
 }
-
-#endif
