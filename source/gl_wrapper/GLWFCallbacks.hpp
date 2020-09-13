@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Platform.hpp"
+#include "OpenGLHeaders.hpp"
 
 #ifdef DESKTOP_BUILD
 
