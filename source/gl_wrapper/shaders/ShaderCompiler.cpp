@@ -92,7 +92,7 @@ static void unfold_includes(std::string& code) {
 		auto file_name = String::find_regexpr_match(include, quotes_query);
 		String::trim(file_name);
 		auto file_path = ShaderCompiler::includes_path + "/" + file_name;
-		auto include_code = File::read_to_string(file_path);
+		auto include_code = File::read(file_path);
 		files[include] = include_code;
 	}
 
@@ -124,8 +124,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
     
 	unsigned program;
 
-	auto vertex_code   = File::read_to_string(path + ".vert");
-	auto fragment_code = File::read_to_string(path + ".frag");
+	auto vertex_code   = File::read(path + ".vert");
+	auto fragment_code = File::read(path + ".frag");
 
 	auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
 	auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
