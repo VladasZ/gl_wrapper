@@ -10,7 +10,9 @@
 
 #include "Platform.hpp"
 
+#ifndef GL_SILENCE_DEPRECATION
 #define GL_SILENCE_DEPRECATION
+#endif
 
 #ifdef IOS_BUILD
 
