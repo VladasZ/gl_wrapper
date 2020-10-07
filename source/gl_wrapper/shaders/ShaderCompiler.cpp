@@ -88,7 +88,7 @@ static void unfold_includes(std::string& code) {
 
 	unordered_map<string, string> files;
 
-	for (auto include : includes) {
+	for (auto& include : includes) {
 		auto file_name = String::find_regexpr_match(include, quotes_query);
 		String::trim(file_name);
 		auto file_path = ShaderCompiler::includes_path + "/" + file_name;
@@ -96,7 +96,7 @@ static void unfold_includes(std::string& code) {
 		files[include] = include_code;
 	}
 
-	for (auto [include, include_code] : files) {
+	for (auto& [include, include_code] : files) {
 		String::replace(include, include_code, code);
 	}
 
