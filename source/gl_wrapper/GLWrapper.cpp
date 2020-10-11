@@ -180,7 +180,6 @@ void GL::_get_gl_info() {
     string full_gl_version = cu::log::to_string(glGetString(GL_VERSION));
 
     is_gles = String::contains(full_gl_version, "ES");
-    is_gles = false;
 
     gl_version =
             String::find_regexpr_match(full_gl_version,
