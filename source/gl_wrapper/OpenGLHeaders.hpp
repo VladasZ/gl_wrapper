@@ -20,7 +20,7 @@
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES3/gl.h>
 
-#elif ANDROID_BUILD
+#elif __ANDROID__
 
 #include <GLES/gl.h>
 #include <GLES2/gl2.h>
