@@ -10,17 +10,19 @@
 
 #include <string>
 
-#include "Rect.hpp"
+#include "Size.hpp"
+#include "Point.hpp"
 #include "Color.hpp"
 #include "Matrix4.hpp"
+
 
 namespace gl {
 
 class Shader {
 
-    using ID = unsigned int;
+    using ID = unsigned;
 
-    ID _program = 0;
+    ID _program = -1;
 
     int _uniform_color;
     int _mvp_matrix;
@@ -33,9 +35,8 @@ class Shader {
 	int _rotation;
 
 public:
-    
-    Shader() = default;
-    Shader(const std::string& path);
+
+    explicit Shader(const std::string& path);
 
     const std::string path;
 
@@ -43,15 +44,15 @@ public:
 
     ID get_program_id() const;
 
-    void set_uniform_color(const gm::Color &);
-    void set_mvp_matrix(const gm::Matrix4&);
-    void set_model_matrix(const gm::Matrix4&);
-    void set_light_position(const gm::Vector3&);
-    void set_size(const gm::Size&);
-	void set_selected(bool);
-	void set_resolution(const gm::Size&);
-	void set_position(const gm::Point&);
-	void set_rotation(float);
+    void set_uniform_color(const gm::Color&) const;
+    void set_mvp_matrix(const gm::Matrix4&) const;
+    void set_model_matrix(const gm::Matrix4&) const;
+    void set_light_position(const gm::Vector3&) const;
+    void set_size(const gm::Size&) const;
+	void set_selected(bool) const;
+	void set_resolution(const gm::Size&) const;
+	void set_position(const gm::Point&) const;
+	void set_rotation(float) const;
 };
 
 }
