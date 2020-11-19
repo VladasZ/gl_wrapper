@@ -66,7 +66,7 @@ const static string include_query = "#include " + quotes_query;
 
 static char errror_message_buffer[1024];
 
-static void check_programm_error(GLuint program) {
+static void check_programm_error(const std::string& file_name, GLuint program) {
 #ifdef ANDROID_BUILD
     return;
 #else
@@ -77,6 +77,7 @@ static void check_programm_error(GLuint program) {
 	if (log_length > 2) {
 	    char* message = errror_message_buffer;
 		GL(glGetShaderInfoLog(program, log_length, nullptr, message));
+        Log << file_name;
 		Fatal(message);
 	}
 #endif
@@ -102,7 +103,7 @@ static void unfold_includes(std::string& code) {
 
 }
 
-static GLuint compile_shader(string& code, unsigned type) {
+static GLuint compile_shader(const std::string& file_name, string& code, unsigned type) {
     
     unfold_includes(code);
     
@@ -112,7 +113,7 @@ static GLuint compile_shader(string& code, unsigned type) {
     auto code_pointer = code.c_str();
     GL(glShaderSource(shader, 1, &code_pointer, nullptr));
     GL(glCompileShader(shader));
-    check_programm_error(shader);
+    check_programm_error(file_name, shader);
     return shader;
 }
 
@@ -127,15 +128,15 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	auto vertex_code   = File::read(path + ".vert");
 	auto fragment_code = File::read(path + ".frag");
 
-	auto vertex   = compile_shader(vertex_code, GL_VERTEX_SHADER);
-	auto fragment = compile_shader(fragment_code, GL_FRAGMENT_SHADER);
+	auto vertex   = compile_shader(path + ".vert", vertex_code,   GL_VERTEX_SHADER);
+	auto fragment = compile_shader(path + ".frag", fragment_code, GL_FRAGMENT_SHADER);
 
 	program = glCreateProgram();
 	GL(glAttachShader(program, vertex));
 	GL(glAttachShader(program, fragment));
 	GL(glLinkProgram(program));
 
-	check_programm_error(program);
+	check_programm_error(path, program);
 
     GL(glDetachShader(program, vertex));
 	GL(glDetachShader(program, fragment));
