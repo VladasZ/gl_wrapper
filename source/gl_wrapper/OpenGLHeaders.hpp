@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "Platform.hpp"
+#include "Target.hpp"
 
 #ifndef GL_SILENCE_DEPRECATION
 #define GL_SILENCE_DEPRECATION
