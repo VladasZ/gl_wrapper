@@ -24,7 +24,7 @@ class Shader {
 
     ID _program = -1;
 
-    int _uniform_color;
+    int _color;
     int _mvp_matrix;
     int _model_matrix;
     int _light_position;
@@ -44,7 +44,7 @@ public:
 
     ID get_program_id() const;
 
-    void set_uniform_color(const gm::Color&) const;
+    void set_color(const gm::Color&) const;
     void set_mvp_matrix(const gm::Matrix4&) const;
     void set_model_matrix(const gm::Matrix4&) const;
     void set_light_position(const gm::Vector3&) const;

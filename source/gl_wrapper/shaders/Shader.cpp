@@ -18,7 +18,7 @@ Shader::Shader(const std::string& path) : path(path) {
 
     _program = ShaderCompiler::compile(path);
 
-    _uniform_color  = glGetUniformLocation(_program, "uniform_color" );
+    _color          = glGetUniformLocation(_program, "color"         );
     _mvp_matrix     = glGetUniformLocation(_program, "mvp_matrix"    );
     _model_matrix   = glGetUniformLocation(_program, "model_matrix"  );
     _light_position = glGetUniformLocation(_program, "light_position");
@@ -37,8 +37,8 @@ Shader::ID Shader::get_program_id() const {
     return _program;
 }
 
-void Shader::set_uniform_color(const gm::Color& color) const {
-    GL(glUniform4fv(_uniform_color, 1, &color.r));
+void Shader::set_color(const gm::Color& color) const {
+    GL(glUniform4fv(_color, 1, &color.r));
 }
 
 void Shader::set_mvp_matrix(const gm::Matrix4& mvp) const {
