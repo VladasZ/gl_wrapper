@@ -62,7 +62,6 @@ struct GL {
     static inline unsigned glsl_version_number;
 
     static inline bool is_gles;
-    static inline bool is_gl2;
 
     static inline std::vector<gl::Monitor> monitors;
     

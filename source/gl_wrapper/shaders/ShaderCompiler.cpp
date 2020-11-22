@@ -25,12 +25,11 @@ using namespace std;
 static string version() {
 
     string result = "#version ";
+
     result += to_string(GL::glsl_version_number);
 
     if (GL::is_gles) {
-        if (GL::gl_major_version > 2) {
-            result += " es";
-        }
+        result += " es";
     }
     else {
         result += " core";
@@ -41,35 +40,12 @@ static string version() {
     return result;
 }
 
-static string defines(unsigned type) {
-
-    if (!GL::is_gl2) {
-        return
-        "#define IN in\n"
-        "#define OUT out\n";
-    }
-
-    if (type == GL_VERTEX_SHADER) {
-        return
-        "#define IN attribute\n"
-        "#define OUT varying\n";
-    }
-
-    return
-    "#define IN varying\n"
-    "#define OUT\n";
-
-}
-
 const static string quotes_query = R"(("[^ "]+"))";
 const static string include_query = "#include " + quotes_query;
 
 static char errror_message_buffer[1024];
 
-static void check_programm_error(const std::string& file_name, GLuint program) {
-#ifdef ANDROID_BUILD
-    return;
-#else
+static void check_programm_error(const std::string& file_name, GLuint program, const std::string& code = "") {
 	static GLint log_length;
     glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length);
  //   GL(glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length));
@@ -78,9 +54,9 @@ static void check_programm_error(const std::string& file_name, GLuint program) {
 	    char* message = errror_message_buffer;
 		GL(glGetShaderInfoLog(program, log_length, nullptr, message));
         Log << file_name;
-		Fatal(message);
+        Log << "\n" << code;
+        Fatal(message);
 	}
-#endif
 }
 
 static void unfold_includes(std::string& code) {
@@ -107,13 +83,13 @@ static GLuint compile_shader(const std::string& file_name, string& code, unsigne
     
     unfold_includes(code);
     
-    code = version() + "\n" + defines(type) + "\n" + code;
+    code = version() + "\n" + code;
 
     auto shader = GL(glCreateShader(type));
     auto code_pointer = code.c_str();
     GL(glShaderSource(shader, 1, &code_pointer, nullptr));
     GL(glCompileShader(shader));
-    check_programm_error(file_name, shader);
+    check_programm_error(file_name, shader, code);
     return shader;
 }
 
@@ -131,7 +107,8 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	auto vertex   = compile_shader(path + ".vert", vertex_code,   GL_VERTEX_SHADER);
 	auto fragment = compile_shader(path + ".frag", fragment_code, GL_FRAGMENT_SHADER);
 
-	program = glCreateProgram();
+	program = glCreateProgram(); GL(;);
+
 	GL(glAttachShader(program, vertex));
 	GL(glAttachShader(program, fragment));
 	GL(glLinkProgram(program));

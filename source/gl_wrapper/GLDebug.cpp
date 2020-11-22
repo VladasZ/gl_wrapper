@@ -42,7 +42,9 @@ void check_gl_error(const std::string& fileName, const char* function, int line)
 
         Log << "Error";
 
-        cu::log::_logger_instance.start_log(cu::log::location(fileName, function, line)) << "Rendering error: " << error;
+        auto location = cu::log::location(fileName, function, line);
+
+        cu::log::_logger_instance.start_log(location) << "Rendering error: " << error;
 
         delete[] error;
         err = glGetError();
@@ -57,11 +59,9 @@ void check_framebuffer_status(unsigned int target, const std::string& fileName, 
     std::string errorString;
 
     switch (error) {
-#ifndef OPENGL2_BUILD
         case GL_FRAMEBUFFER_UNDEFINED:
             errorString = "GL_FRAMEBUFFER_UNDEFINED";
             break;
-#endif
         case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
             errorString = "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT";
             break;

@@ -193,7 +193,9 @@ void GL::_get_gl_info() {
 
     gl_major_version = gl_version.front() - '0';
 
-    is_gl2 = gl_major_version == 2;
+    if (gl_major_version < 3) {
+        Fatal("OpenGL version is too low.");
+    }
 
     //Logvar(gl_major_version);
     //Logvar(gl_version);
