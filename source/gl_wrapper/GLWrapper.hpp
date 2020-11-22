@@ -67,6 +67,8 @@ struct GL {
     
 #ifdef IOS_BUILD
     static inline float screen_scale = 2.0f;
+#elif ANDROID_BUILD
+    static inline float screen_scale = 1.0f;
 #else
     static inline float screen_scale = 1.0f;
 #endif
