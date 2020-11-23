@@ -114,12 +114,14 @@ void GL::initialize(const gm::Size& size) {
     for (int i = 0; i < monitors_count; i++) {
         monitors.emplace_back(glfw_monitors[i]);
     }
+    
+#elif IOS_BUILD
+    monitors.push_back(gl::Monitor());
+#endif
 
     for (auto monitor : monitors) {
         Log << monitor;
     }
-    
-#endif
 
 #ifdef IOS_BUILD
     render_scale = 3.0f;
@@ -148,10 +150,10 @@ void GL::set_viewport(const gm::Rect& rect) {
         return;
     }
 #endif
-    GL(glViewport(static_cast<GLint>(rect.origin.x * render_scale),
-                  static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * render_scale),
-                  static_cast<GLsizei>(rect.size.width * render_scale),
-                  static_cast<GLsizei>(rect.size.height * render_scale)));
+    GL(glViewport(static_cast<GLint>(rect.origin.x),
+                  static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height)),
+                  static_cast<GLsizei>(rect.size.width),
+                  static_cast<GLsizei>(rect.size.height)));
 }
 
 void GL::set_clear_color(const gm::Color& color) {
@@ -160,10 +162,10 @@ void GL::set_clear_color(const gm::Color& color) {
 
 void GL::scissor_begin(const gm::Rect& rect) {
     GL(glEnable(GL_SCISSOR_TEST));
-    GL(glScissor(static_cast<GLint>(rect.origin.x * render_scale),
-                 static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * render_scale),
-                 static_cast<GLsizei>(rect.size.width * render_scale),
-                 static_cast<GLsizei>(rect.size.height * render_scale)));
+    GL(glScissor(static_cast<GLint>(rect.origin.x),
+                 static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height)),
+                 static_cast<GLsizei>(rect.size.width),
+                 static_cast<GLsizei>(rect.size.height)));
 }
 
 void GL::scissor_end() {
