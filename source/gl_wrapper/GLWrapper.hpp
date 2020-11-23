@@ -22,7 +22,7 @@ struct GL {
     
 #ifdef DESKTOP_BUILD
 
-    enum CursorMode {
+    enum class CursorMode {
         Arrow,
         Text,
         Drag,
@@ -30,21 +30,19 @@ struct GL {
         VResize
     };
 
-    enum MouseButton {
+    enum class MouseButton {
         Left,
         Right,
         Middle
     };
 
-    enum ButtonState {
+    enum class ButtonState {
         Up,
         Down
     };
     
 #endif
     
-    using DrawBlock = std::function<void()>;
-
     struct DrawMode {
         static const unsigned Points;
         static const unsigned Lines;
@@ -65,13 +63,7 @@ struct GL {
 
     static inline std::vector<gl::Monitor> monitors;
     
-#ifdef IOS_BUILD
-    static inline float screen_scale = 3.0f;
-#elif ANDROID_BUILD
-    static inline float screen_scale = 1.0f;
-#else
-    static inline float screen_scale = 1.0f;
-#endif
+    static inline float render_scale;
     
     static inline gm::Size window_size;
 
@@ -104,10 +96,6 @@ struct GL {
 
 #ifdef DESKTOP_BUILD
     static void set_cursor_mode(CursorMode);
-#endif
-
-#ifdef ANDROID_BUILD
-    static void create_context();
 #endif
 
 private:

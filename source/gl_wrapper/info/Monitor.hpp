@@ -10,6 +10,7 @@
 
 #include "Size.hpp"
 
+
 namespace gl {
 
     class Monitor {
@@ -24,7 +25,8 @@ namespace gl {
 
     public:
 
-        Monitor(void*);
+        Monitor();
+        Monitor(void* info);
 
         std::string name() const;
 
@@ -33,6 +35,9 @@ namespace gl {
         gm::Size scale() const;
         gm::Size resolution() const;
         gm::Size physical_size() const;
+
+        float diagonal() const;
+        float ppi() const;
 
         std::string to_string() const;
 

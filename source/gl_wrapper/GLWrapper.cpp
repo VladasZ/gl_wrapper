@@ -115,9 +115,18 @@ void GL::initialize(const gm::Size& size) {
         monitors.emplace_back(glfw_monitors[i]);
     }
 
-    for (auto mon : monitors) {
+    for (auto monitor : monitors) {
+        Log << monitor;
     }
     
+#endif
+
+#ifdef IOS_BUILD
+    render_scale = 3.0f;
+#elif ANDROID_BUILD
+    render_scale = 1.0f;
+#else
+    render_scale = 1.5f;
 #endif
 
 }
@@ -125,9 +134,6 @@ void GL::initialize(const gm::Size& size) {
 #ifdef DESKTOP_BUILD
 void GL::start_main_loop(function<void()> draw_frame) {
     while (true) {
-        int x, y;
-        glfwGetFramebufferSize(window, &x, &y);
-        screen_scale = x / window_size.width;
         GL(glfwPollEvents());
         draw_frame();
         GL(glfwSwapBuffers(window));
@@ -142,10 +148,10 @@ void GL::set_viewport(const gm::Rect& rect) {
         return;
     }
 #endif
-    GL(glViewport(static_cast<GLint>(rect.origin.x * screen_scale),
-                  static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
-                  static_cast<GLsizei>(rect.size.width * screen_scale),
-                  static_cast<GLsizei>(rect.size.height * screen_scale)));
+    GL(glViewport(static_cast<GLint>(rect.origin.x * render_scale),
+                  static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * render_scale),
+                  static_cast<GLsizei>(rect.size.width * render_scale),
+                  static_cast<GLsizei>(rect.size.height * render_scale)));
 }
 
 void GL::set_clear_color(const gm::Color& color) {
@@ -154,10 +160,10 @@ void GL::set_clear_color(const gm::Color& color) {
 
 void GL::scissor_begin(const gm::Rect& rect) {
     GL(glEnable(GL_SCISSOR_TEST));
-    GL(glScissor(static_cast<GLint>(rect.origin.x * screen_scale),
-                 static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * screen_scale),
-                 static_cast<GLsizei>(rect.size.width * screen_scale),
-                 static_cast<GLsizei>(rect.size.height * screen_scale)));
+    GL(glScissor(static_cast<GLint>(rect.origin.x * render_scale),
+                 static_cast<GLint>((window_size.height - rect.origin.y - rect.size.height) * render_scale),
+                 static_cast<GLsizei>(rect.size.width * render_scale),
+                 static_cast<GLsizei>(rect.size.height * render_scale)));
 }
 
 void GL::scissor_end() {
