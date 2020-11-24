@@ -117,6 +117,8 @@ void GL::initialize(const gm::Size& size) {
     
 #elif IOS_BUILD
     monitors.push_back(gl::Monitor());
+#elif ANDROID_BUILD
+    monitors.push_back(gl::Monitor(3, 60, { 1920, 1080 }, { 1, 1 }, "Xiaoumi"));
 #endif
 
     for (const auto& monitor : monitors) {
