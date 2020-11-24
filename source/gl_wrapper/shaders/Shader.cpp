@@ -72,3 +72,7 @@ void Shader::set_position(const gm::Point& point) const {
 void Shader::set_rotation(float angle) const {
     GL(glUniform1f(_rotation, angle));
 }
+
+void Shader::set_camera_position(const gm::Point& pos) const {
+    GL(glUniform2fv(_camera_position, 1, &pos.x));
+}

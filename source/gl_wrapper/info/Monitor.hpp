@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Size.hpp"
+#include "Target.hpp"
 
 
 namespace gl {

@@ -17,8 +17,8 @@ using namespace gl;
 using namespace gm;
 
 
-Buffer::Buffer(const BufferConfiguration& configuration, const Buffer::Array<Float>& vertices_data,
-               const Buffer::Array<Vertex::Index>& indices)
+Buffer::Buffer(const BufferConfiguration& configuration, const Buffer::Array<float>& vertices_data,
+               const Buffer::Array<Index>& indices)
     :
     vertices_data(vertices_data),
     indices(indices),

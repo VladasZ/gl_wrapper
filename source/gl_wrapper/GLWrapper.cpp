@@ -123,13 +123,7 @@ void GL::initialize(const gm::Size& size) {
         Log << monitor;
     }
 
-#ifdef IOS_BUILD
-    render_scale = 3.0f;
-#elif ANDROID_BUILD
-    render_scale = 1.0f;
-#else
-    render_scale = 3.0f;
-#endif
+    render_scale = monitors.front().scale();
 
 }
 

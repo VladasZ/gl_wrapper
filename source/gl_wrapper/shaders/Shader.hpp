@@ -33,6 +33,7 @@ class Shader {
 	int _resolution;
 	int _position;
 	int _rotation;
+    int _camera_position;
 
 public:
 
@@ -53,6 +54,7 @@ public:
 	void set_resolution(const gm::Size&) const;
 	void set_position(const gm::Point&) const;
 	void set_rotation(float) const;
+    void set_camera_position(const gm::Point&) const;
 };
 
 }

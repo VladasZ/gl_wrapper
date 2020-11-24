@@ -24,8 +24,10 @@ namespace gl {
         template <class T>
         using Array = cu::ArrayView<T>;
 
-        const Array<gm::Float> vertices_data;
-        const Array<gm::Vertex::Index> indices;
+        using Index = gm::Vertex::Index;
+
+        const Array<float> vertices_data;
+        const Array<Index> indices;
 
         const size_t vertices_count;
 
@@ -39,7 +41,7 @@ namespace gl {
 
         unsigned draw_mode;
 
-        Buffer(const BufferConfiguration& configuration, const Array<gm::Float>& vertices_data, const Array<gm::Vertex::Index>& indices = { });
+        Buffer(const BufferConfiguration& configuration, const Array<float>& vertices_data, const Array<Index>& indices = { });
 
         ~Buffer();
 

@@ -31,11 +31,11 @@ void mouse_button_callback([[maybe_unused]] GLFWwindow* window,
 }
 
 void cursor_position_callback([[maybe_unused]] GLFWwindow* window, double x, double y) {
-    GL::on_cursor_moved({ static_cast<float>(x), static_cast<float>(y) });
+    GL::on_cursor_moved({ x / GL::render_scale, y / GL::render_scale });
 }
 
 void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double yoffset) {
-    GL::on_scroll_moved({ static_cast<float>(xoffset), static_cast<float>(yoffset) });
+    GL::on_scroll_moved({ xoffset, yoffset });
 }
 
 void key_callback([[maybe_unused]] GLFWwindow* window,
