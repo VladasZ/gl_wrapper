@@ -20,20 +20,20 @@ namespace gl {
 
 class Shader {
 
-    using ID = unsigned;
+    using ID = int;
 
-    ID _program = -1;
+    ID program = -1;
 
-    int _color;
-    int _mvp_matrix;
-    int _model_matrix;
-    int _light_position;
-    int _size;
-	int _selected;
-	int _resolution;
-	int _position;
-	int _rotation;
-    int _camera_position;
+    int color;
+    int mvp_matrix;
+    int model_matrix;
+    int light_position;
+    int size;
+	int selected;
+	int resolution;
+	int position;
+	int rotation;
+    int camera_position;
 
 public:
 
