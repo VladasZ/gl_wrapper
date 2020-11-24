@@ -16,7 +16,7 @@
 
 
 void size_changed(GLFWwindow* window, int width, int height) {
-    GL::on_window_size_change({ static_cast<float>(width), static_cast<float>(height) });
+    GL::on_window_size_change({ static_cast<float>(width * GL::render_scale), static_cast<float>(height * GL::render_scale) });
     GL(glfwSwapBuffers(window));
 }
 
