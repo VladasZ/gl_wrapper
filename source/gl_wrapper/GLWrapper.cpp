@@ -119,7 +119,7 @@ void GL::initialize(const gm::Size& size) {
     monitors.push_back(gl::Monitor());
 #endif
 
-    for (auto monitor : monitors) {
+    for (const auto& monitor : monitors) {
         Log << monitor;
     }
 
@@ -128,7 +128,7 @@ void GL::initialize(const gm::Size& size) {
 #elif ANDROID_BUILD
     render_scale = 1.0f;
 #else
-    render_scale = 1.5f;
+    render_scale = 3.0f;
 #endif
 
 }
