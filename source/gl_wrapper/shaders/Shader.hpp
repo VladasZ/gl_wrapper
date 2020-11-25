@@ -34,6 +34,7 @@ class Shader {
 	int position;
 	int rotation;
     int camera_position;
+    int flip;
 
 public:
 
@@ -55,6 +56,7 @@ public:
 	void set_position(const gm::Point&) const;
 	void set_rotation(float) const;
     void set_camera_position(const gm::Point&) const;
+    void set_flip(bool) const;
 };
 
 }

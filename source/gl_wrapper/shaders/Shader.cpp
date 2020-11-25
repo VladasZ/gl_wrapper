@@ -30,6 +30,7 @@ Shader::Shader(const std::string& path) : path(path) {
     GET_UNIFORM(position);
     GET_UNIFORM(rotation);
     GET_UNIFORM(camera_position);
+    GET_UNIFORM(flip);
 
 }
 
@@ -61,8 +62,8 @@ void Shader::set_size(const gm::Size& s) const {
     GL(glUniform2fv(size, 1, &s.width));
 }
 
-void Shader::set_selected(bool selected) const {
-    GL(glUniform1i(selected, selected));
+void Shader::set_selected(bool s) const {
+    GL(glUniform1i(selected, s));
 }
 
 void Shader::set_resolution(const gm::Size& res) const {
@@ -79,4 +80,8 @@ void Shader::set_rotation(float angle) const {
 
 void Shader::set_camera_position(const gm::Point& pos) const {
     GL(glUniform2fv(camera_position, 1, &pos.x));
+}
+
+void Shader::set_flip(bool f) const {
+    GL(glUniform1i(flip, f));
 }
