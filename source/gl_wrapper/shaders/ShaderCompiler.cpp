@@ -44,7 +44,7 @@ const static string quotes_query = R"(("[^ "]+"))";
 const static string include_query = "#include " + quotes_query;
 
 static char errror_message_buffer[1024];
-
+ 
 static void check_programm_error(const std::string& file_name, GLuint program, const std::string& code = "") {
 	static GLint log_length;
     glGetShaderiv(program, GL_INFO_LOG_LENGTH, &log_length);
@@ -107,7 +107,7 @@ unsigned ShaderCompiler::compile(const std::string& path) {
 	auto vertex   = compile_shader(path + ".vert", vertex_code,   GL_VERTEX_SHADER);
 	auto fragment = compile_shader(path + ".frag", fragment_code, GL_FRAGMENT_SHADER);
 
-	program = glCreateProgram(); GL(;);
+	program = GL(glCreateProgram());
 
 	GL(glAttachShader(program, vertex));
 	GL(glAttachShader(program, fragment));
