@@ -127,7 +127,7 @@ void GL::initialize(const gm::Size& size) {
 
     for (auto i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
         if (glfwJoystickPresent(i)) {
-            Log << glfwGetGamepadName(i);
+            Log << "Gamepad: " << glfwGetGamepadName(i);
         }
     }
 
