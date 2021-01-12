@@ -125,6 +125,12 @@ void GL::initialize(const gm::Size& size) {
         Log << monitor;
     }
 
+    for (auto i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
+        if (glfwJoystickPresent(i)) {
+            Log << glfwGetGamepadName(i);
+        }
+    }
+
     render_scale = monitors.front().scale();
 
 }
