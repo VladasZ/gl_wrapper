@@ -6,10 +6,9 @@
 //  Copyright © 2018 VladasZ. All rights reserved.
 //
 
-#include <iostream>
-
 #include "Log.hpp"
 #include "GLDebug.hpp"
+#include "Dispatch.hpp"
 #include "GLWrapper.hpp"
 #include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
@@ -125,13 +124,41 @@ void GL::initialize(const gm::Size& size) {
         Log << monitor;
     }
 
+    using GamepadID = decltype(GLFW_JOYSTICK_LAST);
+
+    GamepadID gamepad = -1;
+
+    Log << "Gamepads:";
     for (auto i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
         if (glfwJoystickPresent(i)) {
             Log << "Gamepad: " << glfwGetGamepadName(i);
+            gamepad = i;
         }
     }
 
     render_scale = monitors.front().scale();
+
+    if (gamepad == -1)
+        return;
+
+    Dispatch::each(0.1, [=] {
+        GLFWgamepadstate state;
+
+        if (glfwGetGamepadState(gamepad, &state))
+        {
+
+            for (int i = 0; i <= GLFW_GAMEPAD_BUTTON_LAST; i++) {
+                Log << state.buttons[i];
+            }
+
+            for (int i = 0; i <= GLFW_GAMEPAD_AXIS_LAST; i++) {
+                Log << state.axes[i];
+            }
+        }
+        else {
+            Log << "Izmena";
+        }
+    });
 
 }
 
