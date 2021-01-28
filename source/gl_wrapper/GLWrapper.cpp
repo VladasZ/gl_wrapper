@@ -124,6 +124,8 @@ void GL::initialize(const gm::Size& size) {
         Log << monitor;
     }
 
+#ifdef DESKTOP_BUILD
+
     using GamepadID = decltype(GLFW_JOYSTICK_LAST);
 
     GamepadID gamepad = -1;
@@ -159,6 +161,8 @@ void GL::initialize(const gm::Size& size) {
             Log << "Izmena";
         }
     });
+
+#endif
 
 }
 
