@@ -162,6 +162,8 @@ void GL::initialize(const gm::Size& size) {
         }
     });
 
+#elif IOS_BUILD
+    render_scale = 1;
 #endif
 
 }
