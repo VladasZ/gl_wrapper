@@ -41,6 +41,8 @@ struct GL {
         Down
     };
 
+#endif
+    
     struct GamepadData {
         bool a;
         bool b;
@@ -56,17 +58,15 @@ struct GL {
         float lt;
         float rt;
 
-        bool up    = false;
-        bool right = false;
-        bool down  = false;
-        bool left  = false;
+        bool up;
+        bool right;
+        bool down;
+        bool left;
 
         gm::Point left_stick;
         gm::Point right_stick;
     };
-    
-#endif
-    
+        
     struct DrawMode {
         static const unsigned Points;
         static const unsigned Lines;
