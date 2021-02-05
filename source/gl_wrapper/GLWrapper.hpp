@@ -40,6 +40,30 @@ struct GL {
         Up,
         Down
     };
+
+    struct GamepadData {
+        bool a;
+        bool b;
+        bool x;
+        bool y;
+
+        bool lb;
+        bool rb;
+
+        bool back;
+        bool start;
+
+        float lt;
+        float rt;
+
+        bool up    = false;
+        bool right = false;
+        bool down  = false;
+        bool left  = false;
+
+        gm::Point left_stick;
+        gm::Point right_stick;
+    };
     
 #endif
     
@@ -76,6 +100,7 @@ struct GL {
     static inline cu::Event<gm::Size> on_window_size_change;
     static inline cu::Event<gm::Point> on_cursor_moved;
     static inline cu::Event<gm::Point> on_scroll_moved;
+    static inline cu::Event<const GamepadData&> on_gamepad_update;
 
 #ifdef DESKTOP_BUILD
     static inline cu::Event<MouseButton, ButtonState> on_mouse_key_pressed;
@@ -97,6 +122,8 @@ struct GL {
 #ifdef DESKTOP_BUILD
     static void set_cursor_mode(CursorMode);
 #endif
+
+    static inline GamepadData gamepad;
 
 private:
 

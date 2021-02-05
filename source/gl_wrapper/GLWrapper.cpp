@@ -124,42 +124,65 @@ void GL::initialize(const gm::Size& size) {
         Log << monitor;
     }
 
+    render_scale = monitors.front().scale();
+
 #ifdef DESKTOP_BUILD
 
     using GamepadID = decltype(GLFW_JOYSTICK_LAST);
 
-    GamepadID gamepad = -1;
+    static GamepadID gamepad_id = -1;
 
-    Log << "Gamepads:";
-    for (auto i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
-        if (glfwJoystickPresent(i)) {
-            Log << "Gamepad: " << glfwGetGamepadName(i);
-            gamepad = i;
+    Dispatch::each(1, [&] {
+        for (auto i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
+            if (glfwJoystickPresent(i)) {
+                Log << "Gamepad: " << glfwGetGamepadName(i);
+                gamepad_id = i;
+            }
         }
-    }
+        if (gamepad_id == -1) {
+            Log << "No gamepad";
+        }
+    });
 
-    render_scale = monitors.front().scale();
+    Dispatch::each(0.01, [&] {
 
-    if (gamepad == -1)
-        return;
+        if (gamepad_id == -1) return;
 
-    Dispatch::each(0.1, [=] {
         GLFWgamepadstate state;
 
-        if (glfwGetGamepadState(gamepad, &state))
+        if (glfwGetGamepadState(gamepad_id, &state))
         {
+            gamepad.a = state.buttons[GLFW_GAMEPAD_BUTTON_A];
+            gamepad.b = state.buttons[GLFW_GAMEPAD_BUTTON_B];
+            gamepad.x = state.buttons[GLFW_GAMEPAD_BUTTON_X];
+            gamepad.y = state.buttons[GLFW_GAMEPAD_BUTTON_Y];
 
-            for (int i = 0; i <= GLFW_GAMEPAD_BUTTON_LAST; i++) {
-                Log << state.buttons[i];
-            }
+            gamepad.lb = state.buttons[GLFW_GAMEPAD_BUTTON_LEFT_THUMB];
+            gamepad.rb = state.buttons[GLFW_GAMEPAD_BUTTON_RIGHT_THUMB];
 
-            for (int i = 0; i <= GLFW_GAMEPAD_AXIS_LAST; i++) {
-                Log << state.axes[i];
-            }
+            gamepad.back  = state.buttons[GLFW_GAMEPAD_BUTTON_BACK];
+            gamepad.start = state.buttons[GLFW_GAMEPAD_BUTTON_START];
+
+            gamepad.lt = state.axes[GLFW_GAMEPAD_AXIS_LEFT_TRIGGER];
+            gamepad.rt = state.axes[GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER];
+
+            gamepad.up    = state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP];
+            gamepad.right = state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT];
+            gamepad.down  = state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN];
+            gamepad.left  = state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT];
+
+            gamepad.left_stick.x = state.axes[GLFW_GAMEPAD_AXIS_LEFT_X];
+            gamepad.left_stick.y = state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y];
+
+            gamepad.right_stick.x = state.axes[GLFW_GAMEPAD_AXIS_RIGHT_X];
+            gamepad.right_stick.y = state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y];
+
+            on_gamepad_update(gamepad);
         }
         else {
             Log << "Izmena";
         }
+
     });
 
 #elif IOS_BUILD
