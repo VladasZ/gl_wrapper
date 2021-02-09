@@ -140,7 +140,7 @@ void GL::initialize(const gm::Size& size) {
             }
         }
         if (gamepad_id == -1) {
-            Log << "No gamepad";
+            //Log << "No gamepad";
         }
     });
 
@@ -184,9 +184,7 @@ void GL::initialize(const gm::Size& size) {
         }
 
     });
-
-#elif IOS_BUILD
-    render_scale = 1;
+    
 #endif
 
 }
