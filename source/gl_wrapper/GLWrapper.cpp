@@ -257,16 +257,15 @@ void GL::_get_gl_info() {
 
     gl_major_version = gl_version.front() - '0';
 
+    Logvar(gl_major_version);
+    Logvar(gl_version);
+    Logvar(glsl_version);
+    Logvar(glsl_version_number);
+    Logvar(is_gles);
+
     if (gl_major_version < 3) {
         Fatal("OpenGL version is too low.");
     }
-
-    //Logvar(gl_major_version);
-    //Logvar(gl_version);
-    //Logvar(glsl_version);
-    //Logvar(glsl_version_number);
-    //Logvar(is_gles);
-    //Logvar(is_gl2);
 }
 
 #ifdef DESKTOP_BUILD
