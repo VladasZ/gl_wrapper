@@ -12,8 +12,8 @@
 #include "GLWrapper.hpp"
 #include "StringUtils.hpp"
 #include "OpenGLHeaders.hpp"
-
 #include "GLWFCallbacks.hpp"
+#include "ExceptionCatch.hpp"
 
 
 using namespace cu;
@@ -57,11 +57,11 @@ void GL::initialize(const gm::Size& size) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 #endif
 
-    window = glfwCreateWindow(static_cast<int>(size.width),
-                              static_cast<int>(size.height),
-                              "Test Engine",
-                              nullptr,
-                              nullptr);
+    window = GL(glfwCreateWindow(static_cast<int>(size.width),
+                                 static_cast<int>(size.height),
+                                 "Test Engine",
+                                 nullptr,
+                                 nullptr));
 
     if (window == nullptr) {
         Fatal("GLFW window creation failed");
@@ -241,31 +241,39 @@ void GL::disable_depth_test() {
 }
 
 void GL::_get_gl_info() {
-    string full_gl_version = cu::log::to_string(glGetString(GL_VERSION));
 
-    is_gles = String::contains(full_gl_version, "ES");
+    try {
+        string full_gl_version = cu::log::to_string(glGetString(GL_VERSION));
 
-    gl_version =
+        is_gles = String::contains(full_gl_version, "ES");
+
+        gl_version =
             String::find_regexpr_match(full_gl_version,
                                        gl_version_query);
 
-    glsl_version =
+        glsl_version =
             String::find_regexpr_match(cu::log::to_string(glGetString(GL_SHADING_LANGUAGE_VERSION)),
                                        glsl_version_query);
 
-    glsl_version_number = stoi(String::remove(glsl_version, '.'));
+        glsl_version_number = stoi(String::remove(glsl_version, '.'));
 
-    gl_major_version = gl_version.front() - '0';
+        gl_major_version = gl_version.front() - '0';
 
-    Logvar(gl_major_version);
-    Logvar(gl_version);
-    Logvar(glsl_version);
-    Logvar(glsl_version_number);
-    Logvar(is_gles);
+        Logvar(full_gl_version);
+        Logvar(gl_major_version);
+        Logvar(gl_version);
+        Logvar(glsl_version);
+        Logvar(glsl_version_number);
+        Logvar(is_gles);
 
-    if (gl_major_version < 3) {
-        Fatal("OpenGL version is too low.");
+        if (gl_major_version < 3) {
+            Fatal("OpenGL version is too low.");
+        }
     }
+    catch(...) {
+        Fatal("Failed to get OpenGL info. " + what());
+    }
+
 }
 
 #ifdef DESKTOP_BUILD
