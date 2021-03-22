@@ -52,7 +52,7 @@ Buffer::Buffer(const BufferConfiguration& configuration, const Buffer::Array<flo
 
 Buffer::~Buffer() {
     GL(glDeleteBuffers(1, &vertex_buffer_object));
-    if (index_buffer_object != 0) {
+    if (index_buffer_object != -1) {
         GL(glDeleteBuffers(1, &index_buffer_object));
     }
     GL(glDeleteVertexArrays(1, &vertex_array_object));

@@ -33,9 +33,9 @@ namespace gl {
 
         const BufferConfiguration& configuration;
 
-        unsigned vertex_array_object  = 0;
-        unsigned vertex_buffer_object = 0;
-        unsigned index_buffer_object  = 0;
+        unsigned vertex_array_object  = -1;
+        unsigned vertex_buffer_object = -1;
+        unsigned index_buffer_object  = -1;
 
     public:
 
