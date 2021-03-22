@@ -22,7 +22,7 @@ Buffer::Buffer(const BufferConfiguration& configuration, const Buffer::Array<flo
     :
     vertices_data(vertices_data),
     indices(indices),
-    vertices_count(indices.size() == 0 ? vertices_data.size() / configuration.size() : -1) ,
+    vertices_count(indices.empty() ? vertices_data.size() / configuration.size() : -1) ,
     configuration(configuration)
     {
         draw_mode = GL_TRIANGLES;
