@@ -72,20 +72,14 @@ std::string Buffer::to_string(unsigned new_line) const {
     std::string string;
     string = "\n";
 
-    for (int i = 0; i < vertices_data.size(); i++) {
-        string += std::to_string(vertices_data[i]) + " ";
-        if ((i + 1) % (new_line) == 0) {
-            string += "\n";
-        }
+    for (unsigned i = 0; i < indices.size(); i++) {
+        string += std::to_string(indices[i]) + " ";
     }
 
     string += "\n";
 
-    for (unsigned i = 0; i < indices.size(); i++) {
-        string += std::to_string(indices[i]) + " ";
-        if ((i + 1) % (new_line) == 0) {
-            string += "\n";
-        }
+    for (int i = 0; i < vertices_data.size(); i++) {
+        string += std::to_string(vertices_data[i]) + " ";
     }
 
     string += "\n";
