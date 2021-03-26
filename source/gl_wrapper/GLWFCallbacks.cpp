@@ -20,11 +20,11 @@ void size_changed(GLFWwindow* window, int width, int height) {
     GL(glfwSwapBuffers(window));
 }
 
-void mouse_button_callback([[maybe_unused]] GLFWwindow* window,
+void mouse_button_callback(GLFWwindow*,
                            int glfw_button,
                            int action,
-                           [[maybe_unused]] int mods) {
-    auto button = GL::MouseButton::Left;
+                           int) {
+    auto button  = GL::MouseButton::Left;
     if      (glfw_button == GLFW_MOUSE_BUTTON_RIGHT ) button = GL::MouseButton::Right ;
     else if (glfw_button == GLFW_MOUSE_BUTTON_MIDDLE) button = GL::MouseButton::Middle;
     GL::on_mouse_key_pressed(button, action == GLFW_PRESS ? GL::ButtonState::Down : GL::ButtonState::Up);
