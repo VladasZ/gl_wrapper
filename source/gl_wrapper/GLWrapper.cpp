@@ -19,8 +19,8 @@
 using namespace cu;
 using namespace std;
 
-const static string glsl_version_query = R"((\d\.)(\d\d))";
-const static string gl_version_query   = R"((\d\.)(\d))";
+const static char* glsl_version_query = R"((\d\.)(\d\d))";
+const static char* gl_version_query   = R"((\d\.)(\d))";
 
 const unsigned GL::DrawMode::Points        = 0;//GL_POINT;
 const unsigned GL::DrawMode::Lines         = GL_LINES;
