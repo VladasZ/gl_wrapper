@@ -94,7 +94,7 @@ struct GL {
     static void initialize(const gm::Size& size);
 
 #ifdef DESKTOP_BUILD
-    static void start_main_loop(std::function<void()> draw_frame);
+    static void start_main_loop(const std::function<void()>& draw_frame);
 #endif
   
     static inline cu::Event<gm::Size> on_window_size_change;

@@ -190,12 +190,14 @@ void GL::initialize(const gm::Size& size) {
 }
 
 #ifdef DESKTOP_BUILD
-void GL::start_main_loop(function<void()> draw_frame) {
-    while (true) {
+void GL::start_main_loop(const function<void()>& draw_frame) {
+    while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
         GL(glfwPollEvents());
         draw_frame();
         GL(glfwSwapBuffers(window));
     }
+	glfwDestroyWindow(window);
+    glfwTerminate();
 }
 #endif
 
@@ -243,7 +245,7 @@ void GL::disable_depth_test() {
 void GL::_get_gl_info() {
 
     try {
-        string full_gl_version = cu::log::to_string(glGetString(GL_VERSION));
+	    const string full_gl_version = cu::log::to_string(glGetString(GL_VERSION));
 
         is_gles = String::contains(full_gl_version, "ES");
 
